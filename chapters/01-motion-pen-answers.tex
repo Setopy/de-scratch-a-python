@@ -1,0 +1,47 @@
+\subsection*{Parte 1: Apuntar en una dirección (la tabla)}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{P{2.8cm} P{6.0cm} P{3.0cm} P{2.8cm}}
+\toprule
+\textbf{Dirección en Scratch} & \textbf{Código de Python} & \textbf{Dirección en Python} & \textbf{¿Hacia dónde?} \\
+\midrule
+90 & \py|setheading(90 - 90)| & 0 & derecha \\
+0 & \py|setheading(90 - 0)| & 90 & arriba \\
+-90 & \py|setheading(90 - -90)| & 180 & izquierda \\
+45 & \py|setheading(90 - 45)| & 45 & arriba y a la derecha \\
+135 & \py|setheading(90 - 135)| & $-45$ & abajo y a la derecha \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Restar un número negativo es lo mismo que sumar, así que $90 - (-90) = 180$. Python también entiende $-45$: es la misma dirección que 315.
+
+\subsection*{Parte 1: Tradúcelo tú}
+
+\begin{code}
+from ColabTurtlePlus.Turtle import *
+clearscreen()
+initializeTurtle((480, 360))
+penup()
+goto(-100, 0)
+pendown()
+pencolor("red")
+pensize(4)
+setheading(90 - 0)
+forward(80)
+right(90)
+forward(80)
+stamp()
+\end{code}
+
+La tortuga dibuja una línea roja hacia arriba desde $(-100, 0)$, gira a la derecha, dibuja una línea de lado a lado y se sella en $(-20, 80)$. Escribir \py|setheading(90)| en lugar de \py|setheading(90 - 0)| también funciona. Si agregaste \py|shape("turtle")|, ¡muy bien!: tu sello se ve como una tortuga.
+
+\subsection*{Parte 1: Acertijo de dos líneas}
+
+\begin{code}
+setheading(90 - 180)
+forward(100)
+\end{code}
+
+\py|setheading(-90)| también funciona, y también \py|right(90)| en lugar de \py|setheading|, porque la tortuga empieza mirando a la derecha. Un cuarto de vuelta en el sentido de las agujas del reloj la deja mirando hacia abajo.

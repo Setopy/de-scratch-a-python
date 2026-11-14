@@ -1,0 +1,824 @@
+% =====================================================================
+% PARTE 1: Movimiento y Lápiz
+% =====================================================================
+\partopener{motion}{PARTE 1}{Movimiento y Lápiz}{Haz que la tortuga camine, gire y dibuje, igual que un objeto con la extensión Lápiz.}
+
+En Scratch, los bloques azules de \textbf{Movimiento} mueven tu objeto por el escenario, y los bloques verdes de \textbf{Lápiz} le permiten dibujar. En Python, la \textbf{tortuga} hace los dos trabajos. Es un objeto que siempre lleva un lápiz.
+
+En esta parte aprenderás el Python de bloques como estos:
+
+{\raggedright \chip[motion]{mover 10 pasos} \chip[motion]{girar $\circlearrowright$ 15 grados} \chip[motion]{ir a x: 0 y: 0} \chip[motion]{desplazar en 1 segs a x: 0 y: 0} \chip[motion]{apuntar en dirección 90} \chip[motion]{cambiar x en 10} \chip[motion]{posición en x} \chip[pen]{bajar lápiz} \chip[pen]{subir lápiz} \chip[pen]{fijar color de lápiz a} \chip[pen]{fijar tamaño de lápiz a 1} \chip[pen]{borrar todo} \chip[pen]{sellar}\par}
+
+Y aprenderás algunos trucos de Python que Scratch \textbf{no puede} hacer, como círculos, puntos, figuras rellenas de color y escribir palabras en el escenario.
+
+\subsection*{Antes de empezar}
+
+Todos los programas de dibujo de esta parte empiezan con \textbf{las tres líneas de inicio}. Son como \chip[events]{al presionar bandera verde}. Traen a la tortuga, limpian el escenario y lo hacen del mismo tamaño que el escenario de Scratch.
+
+\begin{typethis}[Las tres líneas de inicio]
+from ColabTurtlePlus.Turtle import *
+clearscreen()
+initializeTurtle((480, 360))
+\end{typethis}
+
+En las páginas de conceptos que vienen, los recuadros muestran solo las líneas nuevas. Escribe primero las tres líneas de inicio, luego las líneas nuevas debajo, y presiona \playbtn.
+
+\begin{think}[¿Dónde empieza la tortuga?]
+\begin{itemize}
+  \item En el centro del escenario, en $(0, 0)$, igual que un objeto nuevo.
+  \item Mirando a la \textbf{derecha}, igual que un objeto nuevo (dirección 90 en Scratch).
+  \item Con el lápiz \textbf{abajo}. ¡Esto es diferente! Un objeto de Scratch solo dibuja después de \chip[pen]{bajar lápiz}, pero la tortuga dibuja una línea cada vez que se mueve.
+\end{itemize}
+\end{think}
+
+% ---------------------------------------------------------------------
+\needspace{10\baselineskip}
+\subsection*{Mover y girar}
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}
+\blockmove{mover \ovalnum{100} pasos}
+\blockmove{girar \turnright{} \ovalnum{90} grados}
+\blockmove{mover \ovalnum{100} pasos}
+\blockmove{girar \turnleft{} \ovalnum{45} grados}
+\blockmove{mover \ovalnum{-50} pasos}
+\end{scratch}
+\end{tcolorbox}
+\begin{code}
+forward(100)
+right(90)
+forward(100)
+left(45)
+backward(50)
+\end{code}
+\end{tcbraster}
+
+\textbf{Cómo funciona:} \py|forward(100)| es \chip[motion]{mover 100 pasos}. El número va dentro de los paréntesis \texttt{( )}, igual que va dentro de la burbuja blanca del bloque. Un paso es un píxel en los dos, así que tus números de Scratch también sirven en Python. Para caminar hacia atrás, Scratch usa un número negativo, pero Python tiene su propia palabra, \py|backward| («hacia atrás»).
+
+\py|right(90)| gira en el sentido de las agujas del reloj, como la flecha $\circlearrowright$, y \py|left(45)| gira al revés, como la flecha $\circlearrowleft$. La buena noticia: girar funciona \textbf{exactamente} igual en Scratch y en Python.
+
+Python habla inglés: sus palabras (\py|forward|, \py|right|, \py|left|, \py|print|...) siempre van en inglés. \py|forward| quiere decir «adelante», \py|right| «derecha» y \py|left| «izquierda».
+
+\begin{watchout}[¡Cuidado: solo minúsculas!]
+A Python le importan mucho las mayúsculas. \py|forward(100)| funciona, pero \py|Forward(100)| da un error. Todos los comandos de esta parte se escriben con letras minúsculas. (Python siempre escribe sus mensajes de error en inglés. Lo importante es el nombre del error, como \texttt{NameError}.)
+\end{watchout}
+
+% ---------------------------------------------------------------------
+\needspace{14\baselineskip}
+\subsection*{Ir a un lugar}
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}
+\blockmove{ir a x: \ovalnum{100} y: \ovalnum{50}}
+\blockmove{ir a x: \ovalnum{-100} y: \ovalnum{50}}
+\blockmove{ir a x: \ovalnum{0} y: \ovalnum{0}}
+\end{scratch}
+\end{tcolorbox}
+\begin{code}
+goto(100, 50)
+goto(-100, 50)
+goto(0, 0)
+\end{code}
+\end{tcbraster}
+
+\textbf{Cómo funciona:} \py|goto(100, 50)| quiere decir «ir a x: 100, y: 50». Siempre va primero el número x, luego una coma y luego el número y. El escenario es igual que en Scratch: $(0, 0)$ es el centro, x va de $-240$ a $240$ y y va de $-180$ a $180$. Como el lápiz está abajo, ¡este programa dibuja un triángulo!
+
+% ---------------------------------------------------------------------
+\needspace{13\baselineskip}
+\subsection*{Desplazarse despacio}
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}[scale=0.89]
+\blockmove{desplazar en \ovalnum{3} segs a x: \ovalnum{150} y: \ovalnum{100}}
+\blockmove{desplazar en \ovalnum{0.2} segs a x: \ovalnum{-150} y: \ovalnum{100}}
+\end{scratch}
+\end{tcolorbox}
+\begin{code}
+speed(1)
+goto(150, 100)
+speed(13)
+goto(-150, 100)
+\end{code}
+\end{tcbraster}
+
+\textbf{Cómo funciona:} La tortuga siempre se desplaza cuando se mueve. Tú eliges qué tan rápido con \py|speed()| («velocidad»). Lleva un número del \textbf{1} (lo más lento, como un caracol) al \textbf{13} (lo más rápido, como un cohete). Python no usa segundos, así que eliges la velocidad que se vea bien. La velocidad no cambia hasta que tú la cambies, así que pon \py|speed(13)| cerca del principio cuando quieras que un dibujo grande termine rápido.
+
+\begin{watchout}[¡Cuidado: no uses la velocidad 0!]
+Podrías pensar que \py|speed(0)| quiere decir «quédate quieta». ¡Pues no! En Colab quiere decir «no muestres nada hasta el final», así que tu escenario se queda vacío. Usa solo del 1 al 13.
+\end{watchout}
+
+% ---------------------------------------------------------------------
+\needspace{13\baselineskip}
+\subsection*{Apuntar en una dirección}
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}
+\blockmove{apuntar en dirección \ovalnum{0}}
+\blockmove{mover \ovalnum{100} pasos}
+\blockmove{apuntar en dirección \ovalnum{180}}
+\blockmove{mover \ovalnum{50} pasos}
+\end{scratch}
+\end{tcolorbox}
+\begin{code}
+setheading(90 - 0)
+forward(100)
+setheading(90 - 180)
+forward(50)
+\end{code}
+\end{tcbraster}
+
+\textbf{Cómo funciona:} \py|setheading| quiere decir «apuntar en dirección». ¡Pero la brújula de Python está girada! En Scratch, el 0 apunta \textbf{arriba} y los números van en el sentido de las agujas del reloj. En Python, el 0 apunta a la \textbf{derecha} y los números van al revés. Python sabe hacer cuentas dentro de los paréntesis, así que dejamos que haga la traducción por nosotros.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.7]
+  \foreach \cx/\title/\up/\right/\down/\left in {0/Scratch/0/90/180/-90, 7/Python/90/0/-90/180}{
+    \begin{scope}[shift={(\cx,0)}]
+      \draw[ink, line width=1pt] (0,0) circle (1.3);
+      \foreach \a in {0,90,180,270} \draw[-{Stealth}, line width=1.2pt, motion] (0,0) -- (\a:1.2);
+      \node[above, font=\bfseries] at (0,1.35) {\up};
+      \node[right, font=\bfseries] at (1.35,0) {\right};
+      \node[below, font=\bfseries] at (0,-1.35) {\down};
+      \node[left, font=\bfseries] at (-1.35,0) {\left};
+      \node[font=\bfseries] at (0,-2.7) {\title};
+    \end{scope}}
+\end{tikzpicture}
+\end{center}
+
+\begin{think}[La regla secreta]
+\begin{center}\textbf{dirección en Python} $=$ \textbf{90} $-$ \textbf{dirección en Scratch}\end{center}
+Así, \chip[motion]{apuntar en dirección 30} se convierte en \py|setheading(90 - 30)|. Escribe el número de Scratch después del \texttt{90 -} y Python calcula el resto. ¡Nunca tienes que hacer la cuenta de cabeza!
+\end{think}
+
+\needspace{12\baselineskip}
+\textbf{Completa la tabla.} Calcula cada dirección en Python. Luego pruébala en Colab con \py|forward(100)| después, y revisa que la tortuga vaya hacia donde esperabas.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{P{2.8cm} P{6.0cm} P{3.0cm} P{2.8cm}}
+\toprule
+\textbf{Dirección en Scratch} & \textbf{Código de Python} & \textbf{Dirección en Python} & \textbf{¿Hacia dónde?} \\
+\midrule
+90 & \py|setheading(90 - 90)| & 0 & derecha \\
+0 & \py|setheading(90 - 0)| & 90 & arriba \\
+-90 & \py|setheading(90 - -90)| & \rule{2cm}{0.5pt} & \rule{2cm}{0.5pt} \\
+45 & \py|setheading(90 - 45)| & \rule{2cm}{0.5pt} & \rule{2cm}{0.5pt} \\
+135 & \py|setheading(90 - 135)| & \rule{2cm}{0.5pt} & \rule{2cm}{0.5pt} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+% ---------------------------------------------------------------------
+\needspace{13\baselineskip}
+\subsection*{Apuntar hacia algo}
+
+\begin{tcbraster}[raster columns=5, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{tcolorbox}[raster multicolumn=2, colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}
+\blockmove{apuntar hacia \selectmenu{Estrella}}
+\blockmove{mover \ovalnum{100} pasos}
+\end{scratch}
+\end{tcolorbox}
+\begin{tcolorbox}[raster multicolumn=3, blank]
+\begin{code}
+setheading(towards(100, 100))
+forward(100)
+\end{code}
+\end{tcolorbox}
+\end{tcbraster}
+
+\textbf{Cómo funciona:} En Scratch apuntas hacia otro objeto, como una Estrella que está en x: 100, y: 100. En Python apuntas hacia un \textbf{lugar}. \py|towards(100, 100)| calcula en qué dirección está ese lugar, y \py|setheading( )| gira a la tortuga para que lo mire. Un comando va dentro del otro, como un bloque redondo que metes en una burbuja blanca.
+
+\begin{think}[Esta vez no hace falta el 90 menos]
+\py|towards| ya da la respuesta en direcciones de Python, así que aquí no necesitas la regla secreta. Solo necesitas el \texttt{90 -} cuando \textbf{tú} escribes un número de dirección de Scratch.
+\end{think}
+
+% ---------------------------------------------------------------------
+\needspace{13\baselineskip}
+\subsection*{Cambiar x y y, fijar x y y}
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}
+\blockmove{cambiar x en \ovalnum{50}}
+\blockmove{cambiar y en \ovalnum{50}}
+\blockmove{fijar x a \ovalnum{-100}}
+\blockmove{fijar y a \ovalnum{0}}
+\end{scratch}
+\end{tcolorbox}
+\begin{code}
+setx(xcor() + 50)
+sety(ycor() + 50)
+setx(-100)
+sety(0)
+\end{code}
+\end{tcbraster}
+
+\textbf{Cómo funciona:} \py|setx(-100)| es \chip[motion]{fijar x a -100}, y \py|sety(0)| es \chip[motion]{fijar y a 0}. Python no tiene un comando «cambiar x», así que lo construimos. \py|xcor()| quiere decir «mi posición en x». Entonces \py|setx(xcor() + 50)| dice: «fija x a (mi posición en x + 50)». Eso mueve a la tortuga 50 pasos a la derecha, ¡que es exactamente lo que hace \chip[motion]{cambiar x en 50}!
+
+\begin{watchout}
+\py|xcor()| necesita sus paréntesis vacíos. Le dicen a Python «ve y trae la respuesta ahora». Sin ellos, Python se confunde.
+\end{watchout}
+
+% ---------------------------------------------------------------------
+\needspace{13\baselineskip}
+\subsection*{¿Dónde estoy? ¿Hacia dónde miro?}
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}[scale=0.85]
+\blockmove{mover \ovalnum{100} pasos}
+\blockmove{girar \turnleft{} \ovalnum{90} grados}
+\blocklook{decir \ovalmove{posición en x} durante \ovalnum{2} segundos}
+\blocklook{decir \ovalmove{posición en y} durante \ovalnum{2} segundos}
+\blocklook{decir \ovalmove{dirección} durante \ovalnum{2} segundos}
+\end{scratch}
+\end{tcolorbox}
+\begin{code}
+forward(100)
+left(90)
+print(xcor())
+print(ycor())
+print(heading())
+\end{code}
+\end{tcbraster}
+
+\textbf{Cómo funciona:} Los bloques redondos \chip[motion]{posición en x}, \chip[motion]{posición en y} y \chip[motion]{dirección} se convierten en \py|xcor()|, \py|ycor()| y \py|heading()|. \py|print( )| muestra una respuesta debajo de la celda, un poco como cuando un objeto la dice.
+
+\begin{outputbox}
+100.0\\
+0.0\\
+90
+\end{outputbox}
+
+\begin{think}[Dos cosas que descubrir]
+\begin{itemize}
+  \item \texttt{100.0} es solo 100 escrito con punto decimal. A Python le gusta mostrar las posiciones así.
+  \item Scratch diría que la dirección es \textbf{0}, porque el objeto apunta hacia arriba. Python dice \textbf{90}, porque \py|heading()| responde en direcciones de \textbf{Python}. Para obtener el número de Scratch, usa otra vez la regla secreta: \py|print(90 - heading())|.
+\end{itemize}
+\end{think}
+
+% ---------------------------------------------------------------------
+\needspace{14\baselineskip}
+\subsection*{Un adelanto: ir a un lugar al azar}
+
+\begin{tcbraster}[raster columns=5, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{tcolorbox}[raster multicolumn=2, colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}
+\blockmove{ir a \selectmenu{posición aleatoria}}
+\end{scratch}
+\end{tcolorbox}
+\begin{tcolorbox}[raster multicolumn=3, blank]
+\begin{code}
+import random
+goto(random.randint(-240, 240),
+     random.randint(-180, 180))
+\end{code}
+\end{tcolorbox}
+\end{tcbraster}
+
+\textbf{Cómo funciona:} \py|import random| trae los dados de Python. \py|random.randint(-240, 240)| elige un número entero de $-240$ a $240$, así que es una x sorpresa. El segundo elige una y sorpresa. La línea era demasiado larga, así que sigue en la línea de abajo. Python lo permite mientras haya un paréntesis abierto. Conocerás \py|random| a fondo en la Parte 4.
+
+% ---------------------------------------------------------------------
+\needspace{10\baselineskip}
+\subsection*{Si toca un borde, rebotar}
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}
+\blockmove{si toca un borde, rebotar}
+\end{scratch}
+\end{tcolorbox}
+\begin{tcolorbox}[colback=warnbg, colframe=warnframe, boxrule=0.6pt, arc=5pt]
+Python no tiene un comando para este.
+\end{tcolorbox}
+\end{tcbraster}
+
+El escenario de la tortuga no tiene paredes. Prueba \py|forward(1000)|: ¡la tortuga se sale por el borde y sigue caminando! En la \textbf{Parte 5} construirás tu propio «si toca un borde, rebotar» con un \py|if|. Entonces conocerás el secreto de lo que hace el bloque de Scratch.
+
+% ---------------------------------------------------------------------
+\needspace{13\baselineskip}
+\subsection*{Subir lápiz, bajar lápiz}
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}
+\blockpen{bajar lápiz}
+\blockmove{mover \ovalnum{50} pasos}
+\blockpen{subir lápiz}
+\blockmove{mover \ovalnum{50} pasos}
+\blockpen{bajar lápiz}
+\blockmove{mover \ovalnum{50} pasos}
+\end{scratch}
+\end{tcolorbox}
+\begin{code}
+forward(50)
+penup()
+forward(50)
+pendown()
+forward(50)
+\end{code}
+\end{tcbraster}
+
+\textbf{Cómo funciona:} \py|penup()| levanta el lápiz del papel, así que la tortuga se mueve sin dibujar. \py|pendown()| lo vuelve a bajar. Los paréntesis están vacíos porque estos comandos no necesitan número, pero Python igual quiere los paréntesis. Quieren decir «¡hazlo ahora!». La tortuga empieza con el lápiz abajo, así que el primer \chip[pen]{bajar lápiz} no necesita ninguna línea de Python.
+
+\begin{think}[Moverse sin dejar línea]
+Para saltar a otro lugar sin dibujar, usa tres líneas: \py|penup()|, luego \py|goto(x, y)| y luego \py|pendown()|. Vas a usar mucho este truco en las misiones.
+\end{think}
+
+% ---------------------------------------------------------------------
+\needspace{14\baselineskip}
+\subsection*{Elegir un color de lápiz}
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}
+\blockpen{fijar color de lápiz a \ovalnum{rojo}}
+\blockmove{mover \ovalnum{100} pasos}
+\blockpen{fijar color de lápiz a \ovalnum{naranja}}
+\blockmove{mover \ovalnum{100} pasos}
+\end{scratch}
+\end{tcolorbox}
+\begin{code}
+pencolor("red")
+forward(100)
+pencolor("#ff8800")
+forward(100)
+\end{code}
+\end{tcbraster}
+
+\textbf{Cómo funciona:} En Scratch haces clic en un color. En Python escribes su nombre entre \textbf{comillas}, todo en minúsculas: \py|"red"|, \py|"gold"|, \py|"skyblue"|, \py|"hotpink"|. Las comillas le dicen a Python «esto es una palabra, no un comando». ¡Hay 140 nombres de colores para probar!
+
+\textbf{Los colores se escriben en inglés}, porque Python solo entiende sus nombres en inglés: \py|"red"| es rojo, \py|"blue"| azul, \py|"gold"| dorado, \py|"skyblue"| azul cielo y \py|"hotpink"| rosa fuerte. Si escribes \py|"rojo"|, Python no lo reconoce.
+
+Para cualquier color que quieras, usa un \textbf{código hexadecimal}, como \py|"#ff8800"| (naranja). Es un \texttt{\#} y seis números o letras. Los dos primeros dicen cuánto rojo, los dos del medio cuánto verde y los dos últimos cuánto azul. \texttt{00} es nada y \texttt{ff} es lo máximo.
+
+\begin{watchout}[¡Cuidado: \texttt{pencolor} va sin «u»!]
+En inglés británico se escribe «colour», pero Python lo escribe a la manera estadounidense: \py|pencolor|, sin \texttt{u}. Por suerte, es igual que en español. Si escribes \py|pencolour|, Python no conoce la palabra.
+\end{watchout}
+
+% ---------------------------------------------------------------------
+\needspace{10\baselineskip}
+\subsection*{Tamaño del lápiz y borrar todo}
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}
+\blockpen{fijar tamaño de lápiz a \ovalnum{10}}
+\blockmove{mover \ovalnum{100} pasos}
+\blockpen{borrar todo}
+\end{scratch}
+\end{tcolorbox}
+\begin{code}
+pensize(10)
+forward(100)
+clear()
+\end{code}
+\end{tcbraster}
+
+\textbf{Cómo funciona:} Un número más grande en \py|pensize| da una línea más gruesa. La tortuga empieza con tamaño 1, igual que en Scratch. El tamaño tiene que ser mayor que 0: \py|pensize(0)| da un error.
+
+\py|clear()| borra todo lo que la tortuga ha dibujado. La tortuga se queda donde está, y conserva su color y su tamaño, igual que con \chip[pen]{borrar todo}. (La línea de inicio \py|clearscreen()| es el borrador más grande: limpia todo el escenario y empieza de nuevo.)
+
+% ---------------------------------------------------------------------
+\needspace{13\baselineskip}
+\subsection*{Sellar}
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}
+\blockpen{sellar}
+\blockmove{mover \ovalnum{100} pasos}
+\blockpen{sellar}
+\end{scratch}
+\end{tcolorbox}
+\begin{code}
+shape("turtle")
+stamp()
+forward(100)
+stamp()
+\end{code}
+\end{tcbraster}
+
+\textbf{Cómo funciona:} \py|stamp()| imprime una copia de la tortuga en el escenario, como un sello de goma. En Scratch el sello se ve como tu disfraz. En Python se ve como la \textbf{forma} de la tortuga. \py|shape("turtle")| hace que se vea como una tortuga de verdad. También puedes probar las formas \texttt{arrow} (flecha), \texttt{circle} (círculo), \texttt{square} (cuadrado), \texttt{triangle} (triángulo) y \texttt{classic} (la flecha con la que empieza). Los nombres de las formas también van en inglés. ¡Recuerda las comillas!
+
+% ---------------------------------------------------------------------
+\needspace{18\baselineskip}
+\subsection*{Superpoderes de Python que Scratch no tiene}
+
+El Lápiz de Scratch solo puede dibujar líneas. ¡La tortuga puede hacer más!
+
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{P{5.4cm} P{10.4cm}}
+\toprule
+\textbf{Python} & \textbf{Qué hace} \\
+\midrule
+\py|circle(50)| & Dibuja un círculo completo con un radio de 50 (es la distancia del centro al borde). El centro del círculo queda a la \textbf{izquierda} de la tortuga. Un número negativo, \py|circle(-50)|, lo pone a la derecha. \\
+\py|dot(30, "gold")| & Dibuja un punto relleno, de 30 de ancho, justo donde está la tortuga. Funciona aunque el lápiz esté arriba. \\
+\py|fillcolor("skyblue")|\newline \py|begin_fill()|\newline \ldots\newline \py|end_fill()| & Rellena una figura de color. Elige el color, di \py|begin_fill()|, dibuja la figura y luego di \py|end_fill()|. El interior se pinta. \\
+\py|write("¡Hola!")| & Escribe palabras en el escenario donde está la tortuga. \\
+\py|shape("turtle")| & Cambia cómo se ve la tortuga. Es un poco como elegir un disfraz. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\needspace{12\baselineskip}
+Pruébalos todos juntos:
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{code}
+shape("turtle")
+circle(50)
+dot(30, "gold")
+fillcolor("skyblue")
+begin_fill()
+circle(-40)
+end_fill()
+write("¡Hola!")
+\end{code}
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+Deberías ver un círculo vacío arriba de la tortuga, un círculo azul relleno debajo, un punto dorado donde se tocan y la palabra \texttt{¡Hola!} encima. ¡Parece un muñeco de nieve!
+\end{tcolorbox}
+\end{tcbraster}
+
+% =====================================================================
+\mission{Un cuadrado por el camino largo}{\texttt{forward}, \texttt{right}, \texttt{pencolor}, \texttt{pensize} y \texttt{shape}, todo en un programa}
+
+Es hora de juntar los bloques. Vas a dibujar un cuadrado azul, un lado a la vez.
+
+\step{Paso 1: Constrúyelo en Scratch}
+Agrega la extensión \textbf{Lápiz} y luego construye:
+
+\begin{center}
+\begin{tabular}{c@{\hspace{1cm}}c}
+\begin{scratch}
+\blockinit{al presionar \greenflag}
+\blockpen{borrar todo}
+\blockpen{bajar lápiz}
+\blockpen{fijar color de lápiz a \ovalnum{azul}}
+\blockpen{fijar tamaño de lápiz a \ovalnum{3}}
+\blockmove{mover \ovalnum{100} pasos}
+\blockmove{girar \turnright{} \ovalnum{90} grados}
+\end{scratch}
+&
+\begin{scratch}
+\blockmove{mover \ovalnum{100} pasos}
+\blockmove{girar \turnright{} \ovalnum{90} grados}
+\blockmove{mover \ovalnum{100} pasos}
+\blockmove{girar \turnright{} \ovalnum{90} grados}
+\blockmove{mover \ovalnum{100} pasos}
+\blockmove{girar \turnright{} \ovalnum{90} grados}
+\end{scratch}
+\end{tabular}
+\end{center}
+Los bloques de la derecha se pegan debajo de los de la izquierda.
+
+\step{Paso 2: Escríbelo en Colab}
+
+\begin{typethis}
+from ColabTurtlePlus.Turtle import *
+clearscreen()
+initializeTurtle((480, 360))
+shape("turtle")
+pencolor("blue")
+pensize(3)
+forward(100)
+right(90)
+forward(100)
+right(90)
+forward(100)
+right(90)
+forward(100)
+right(90)
+\end{typethis}
+
+\step{Paso 3: Léelo línea por línea}
+
+\begin{longtable}{>{\centering\arraybackslash}p{1.1cm} P{5.3cm} P{9.1cm}}
+\toprule
+\textbf{Línea} & \textbf{Bloque de Scratch} & \textbf{Qué significa} \\
+\midrule
+1--3 & \chip[events]{al presionar bandera verde} \chip[pen]{borrar todo} & Las tres líneas de inicio. \py|clearscreen()| limpia el escenario, así que también hace el trabajo de \chip[pen]{borrar todo}. \\
+--- & \chip[pen]{bajar lápiz} & No hace falta ninguna línea. El lápiz de la tortuga empieza abajo. \\
+4 & (elegir un disfraz) & \py|shape("turtle")| hace que la tortuga se vea como una tortuga. \\
+5 & \chip[pen]{fijar color de lápiz a azul} & El nombre del color va entre comillas, y en inglés: \py|"blue"| es azul. \\
+6 & \chip[pen]{fijar tamaño de lápiz a 3} & Una línea un poco más gruesa. \\
+7--8 & \chip[motion]{mover 100 pasos} \chip[motion]{girar $\circlearrowright$ 90 grados} & El primer lado, y luego un giro en la esquina. \\
+9--10 & lo mismo otra vez & El segundo lado. \\
+11--12 & lo mismo otra vez & El tercer lado. \\
+13--14 & lo mismo otra vez & El cuarto lado. El último giro deja a la tortuga mirando hacia donde empezó. \\
+\bottomrule
+\end{longtable}
+
+\step{Paso 4: Ejecútalo}
+Presiona \playbtn. La tortuga camina a la derecha, gira, camina hacia abajo, y así sigue. Deberías ver un cuadrado azul debajo del centro del escenario, con la tortuga otra vez donde empezó, mirando a la derecha.
+
+\begin{think}[¡Uf, qué largo!]
+Las líneas 7 y 8 se escriben \textbf{cuatro veces}. En Scratch usarías \chip[control]{repetir 4} para construirlas solo una vez. Python tiene un atajo igualito, y la \textbf{Parte 2} te enseña cómo. Por ahora, escribirlo por el camino largo te ayuda a ver cada paso.
+\end{think}
+
+\step{Paso 5: Hazlo tuyo}
+
+\begin{challenge}
+\tick Cambia \py|"blue"| por tu color favorito, y el tamaño del lápiz a 8.\par
+\tick Haz un cuadrado más grande: cambia los cuatro \texttt{100} por \texttt{150}.\par
+\tick Haz cada lado de un color diferente. Agrega una línea \py|pencolor(...)| antes de cada \py|forward|.\par
+\tick Cambia cada \py|right| por \py|left|. ¿Hacia dónde va ahora el cuadrado? Primero adivina y luego ejecútalo.
+\end{challenge}
+
+% =====================================================================
+\mission{Dibuja una casa}{a moverte sin dibujar con \texttt{penup} y \texttt{goto}, y a rellenar figuras de color}
+
+Ahora vas a dibujar una casa con techo, puerta y una ventana redonda. Usarás \py|goto| para cada esquina, y \py|penup()| para moverte entre las partes sin dejar una línea.
+
+\step{Paso 1: Constrúyelo en Scratch}
+Scratch no puede rellenar figuras de color, así que la casa de Scratch es solo el contorno. Aquí están las paredes y el techo:
+
+\begin{center}
+\begin{tabular}{c@{\hspace{1cm}}c}
+\begin{scratch}
+\blockinit{al presionar \greenflag}
+\blockpen{borrar todo}
+\blockpen{fijar tamaño de lápiz a \ovalnum{3}}
+\blockpen{subir lápiz}
+\blockmove{ir a x: \ovalnum{-100} y: \ovalnum{-150}}
+\blockpen{bajar lápiz}
+\blockmove{ir a x: \ovalnum{100} y: \ovalnum{-150}}
+\blockmove{ir a x: \ovalnum{100} y: \ovalnum{50}}
+\blockmove{ir a x: \ovalnum{-100} y: \ovalnum{50}}
+\blockmove{ir a x: \ovalnum{-100} y: \ovalnum{-150}}
+\end{scratch}
+&
+\begin{scratch}
+\blockpen{subir lápiz}
+\blockmove{ir a x: \ovalnum{-120} y: \ovalnum{50}}
+\blockpen{bajar lápiz}
+\blockmove{ir a x: \ovalnum{120} y: \ovalnum{50}}
+\blockmove{ir a x: \ovalnum{0} y: \ovalnum{150}}
+\blockmove{ir a x: \ovalnum{-120} y: \ovalnum{50}}
+\end{scratch}
+\end{tabular}
+\end{center}
+
+Los bloques de la derecha se pegan debajo de los de la izquierda. La puerta se hace de la misma manera.
+
+\step{Paso 2: Escríbelo en Colab}
+Las líneas vacías dividen el programa en partes: paredes, techo, puerta y ventana. A Python no le molestan las líneas vacías, y hacen que sea más fácil de leer.
+
+\begin{typethis}
+from ColabTurtlePlus.Turtle import *
+clearscreen()
+initializeTurtle((480, 360))
+speed(8)
+pensize(3)
+\end{typethis}
+\begin{tcbraster}[raster columns=2, raster column skip=10pt, raster valign=top]
+\begin{tcblisting}{listing only, enhanced, colback=codebg, colframe=codeframe, boxrule=0.8pt, arc=6pt, left=22pt, right=8pt, top=4pt, bottom=4pt, title={\textbf{\ldots y sigue en la misma celda}}, coltitle=white, colbacktitle=ink, fonttitle=\small, listing options={style=py, firstnumber=7}}
+penup()
+goto(-100, -150)
+pendown()
+fillcolor("tan")
+begin_fill()
+goto(100, -150)
+goto(100, 50)
+goto(-100, 50)
+goto(-100, -150)
+end_fill()
+
+penup()
+goto(-120, 50)
+pendown()
+fillcolor("firebrick")
+begin_fill()
+goto(120, 50)
+goto(0, 150)
+goto(-120, 50)
+end_fill()
+\end{tcblisting}
+\begin{tcblisting}{listing only, enhanced, colback=codebg, colframe=codeframe, boxrule=0.8pt, arc=6pt, left=22pt, right=8pt, top=4pt, bottom=4pt, title={\textbf{\ldots y sigue en la misma celda}}, coltitle=white, colbacktitle=ink, fonttitle=\small, listing options={style=py, firstnumber=28}}
+penup()
+goto(-25, -150)
+pendown()
+fillcolor("saddlebrown")
+begin_fill()
+goto(-25, -70)
+goto(25, -70)
+goto(25, -150)
+end_fill()
+
+penup()
+goto(55, -10)
+dot(40, "skyblue")
+hideturtle()
+\end{tcblisting}
+\end{tcbraster}
+
+\step{Paso 3: Léelo línea por línea}
+
+\begin{longtable}{>{\centering\arraybackslash}p{1.1cm} P{5.3cm} P{9.1cm}}
+\toprule
+\textbf{Línea} & \textbf{Bloque de Scratch} & \textbf{Qué significa} \\
+\midrule
+1--3 & \chip[events]{al presionar bandera verde} & Las tres líneas de inicio. \\
+4 & (ninguno) & \py|speed(8)| hace que la tortuga sea más rápida, para que no esperes demasiado. \\
+5 & \chip[pen]{fijar tamaño de lápiz a 3} & Líneas más gruesas para el contorno. \\
+7--9 & \chip[pen]{subir lápiz} \chip[motion]{ir a x: -100 y: -150} \chip[pen]{bajar lápiz} & El truco de «moverse sin dejar línea». La tortuga salta a la esquina de abajo a la izquierda de las paredes. \\
+10--16 & \chip[motion]{ir a x: 100 y: -150} y las otras esquinas & Elige el color de pintura y di \py|begin_fill()|: «empieza a recordar esta figura». Recorre las cuatro esquinas y vuelve al inicio. Luego \py|end_fill()| pinta el interior de color \py|"tan"| (café claro). ¡Scratch no puede rellenar! \\
+18--26 & el techo & Otra vez el mismo patrón: salta, elige un color, dibuja tres esquinas, rellena. ¡Un triángulo solo necesita tres esquinas! \\
+28--36 & la puerta & El mismo patrón por tercera vez. La puerta empieza en la parte de abajo de las paredes. \\
+38--41 & \chip[looks]{esconder} & Salta al lugar de la ventana y deja caer un punto azul grande. Luego \py|hideturtle()| esconde a la tortuga para que puedas admirar tu casa. \\
+\bottomrule
+\end{longtable}
+
+\step{Paso 4: Ejecútalo}
+Deberías ver una casa café claro con techo rojo, una puerta café y una ventana azul redonda.
+
+\begin{watchout}[Si una línea cruza tu casa]
+Seguramente se te olvidó un \py|penup()|, y la tortuga dibujó una línea al moverse. Revisa las líneas 7, 18, 28 y 38.
+\end{watchout}
+
+\step{Paso 5: Hazlo tuyo}
+
+\enlargethispage{\baselineskip}
+\begin{challenge}\small
+\tick Pinta tu casa con tus propios colores.\par
+\tick Agrega una segunda ventana a la izquierda. Copia las líneas 38 a 40 al final y cambia el número x.\par
+\tick Agrega un sol en la esquina de arriba: salta a \py|goto(-190, 140)| y usa un \mbox{\texttt{dot(60, "gold")}} grande.\par
+\tick Escribe el número de tu casa en la puerta. Salta a la puerta y luego usa \py|write("12")|.
+\end{challenge}
+
+% =====================================================================
+\mission{Cara de robot}{\texttt{circle}, \texttt{dot}, \texttt{write} y \texttt{stamp}: los superpoderes de Python}
+
+¡Te presento a Robo! Vas a dibujar la cabeza de un robot con una cara redonda, ojos grandes, una boca y una antena. Después Robo tendrá una tortuguita de mascota.
+
+\step{Paso 1: Constrúyelo en Scratch}
+Scratch no tiene un bloque de círculo, así que la cabeza y los ojos son difíciles de hacer en Scratch. Esta es la parte que Scratch \textbf{sí} puede hacer: la boca, la antena y la mascota.
+
+\begin{center}
+\begin{tabular}{c@{\hspace{1cm}}c}
+\begin{scratch}
+\blockinit{al presionar \greenflag}
+\blockpen{borrar todo}
+\blockpen{fijar tamaño de lápiz a \ovalnum{4}}
+\blockpen{subir lápiz}
+\blockmove{ir a x: \ovalnum{-50} y: \ovalnum{-40}}
+\blockpen{bajar lápiz}
+\blockpen{fijar color de lápiz a \ovalnum{rojo}}
+\blockmove{ir a x: \ovalnum{50} y: \ovalnum{-40}}
+\end{scratch}
+&
+\begin{scratch}
+\blockpen{subir lápiz}
+\blockmove{ir a x: \ovalnum{0} y: \ovalnum{100}}
+\blockpen{bajar lápiz}
+\blockpen{fijar color de lápiz a \ovalnum{gris}}
+\blockmove{ir a x: \ovalnum{0} y: \ovalnum{140}}
+\blockpen{subir lápiz}
+\blockmove{ir a x: \ovalnum{-150} y: \ovalnum{-120}}
+\blockpen{sellar}
+\blocklook{esconder}
+\end{scratch}
+\end{tabular}
+\end{center}
+
+\step{Paso 2: Escríbelo en Colab}
+
+\begin{typethis}
+from ColabTurtlePlus.Turtle import *
+clearscreen()
+initializeTurtle((480, 360))
+speed(10)
+pensize(4)
+pencolor("slategray")
+\end{typethis}
+\begin{tcbraster}[raster columns=2, raster column skip=10pt, raster valign=top]
+\begin{tcblisting}{listing only, enhanced, colback=codebg, colframe=codeframe, boxrule=0.8pt, arc=6pt, left=22pt, right=8pt, top=4pt, bottom=4pt, title={\textbf{\ldots y sigue en la misma celda}}, coltitle=white, colbacktitle=ink, fonttitle=\small, listing options={style=py, firstnumber=8}}
+penup()
+goto(0, -100)
+pendown()
+fillcolor("lightgray")
+begin_fill()
+circle(100)
+end_fill()
+
+penup()
+goto(-40, 30)
+dot(40, "white")
+dot(16, "black")
+goto(40, 30)
+dot(40, "white")
+dot(16, "black")
+\end{tcblisting}
+\begin{tcblisting}{listing only, enhanced, colback=codebg, colframe=codeframe, boxrule=0.8pt, arc=6pt, left=22pt, right=8pt, top=4pt, bottom=4pt, title={\textbf{\ldots y sigue en la misma celda}}, coltitle=white, colbacktitle=ink, fonttitle=\small, listing options={style=py, firstnumber=24}}
+goto(-50, -40)
+pendown()
+pencolor("red")
+goto(50, -40)
+
+penup()
+goto(0, 100)
+pendown()
+pencolor("slategray")
+goto(0, 140)
+dot(20, "gold")
+
+penup()
+goto(120, -150)
+write("¡Soy Robo!")
+shape("turtle")
+color("seagreen")
+goto(-150, -120)
+stamp()
+hideturtle()
+\end{tcblisting}
+\end{tcbraster}
+
+\step{Paso 3: Léelo línea por línea}
+
+\begin{longtable}{>{\centering\arraybackslash}p{1.1cm} P{5.3cm} P{9.1cm}}
+\toprule
+\textbf{Línea} & \textbf{Bloque de Scratch} & \textbf{Qué significa} \\
+\midrule
+1--3 & \chip[events]{al presionar bandera verde} & Las tres líneas de inicio. \\
+4--6 & \chip[pen]{fijar tamaño de lápiz a 4} \chip[pen]{fijar color de lápiz a} & Dibujo rápido, una línea gruesa y un color gris azulado que se llama \py|"slategray"|. \\
+8--10 & \chip[pen]{subir lápiz} \chip[motion]{ir a x: 0 y: -100} \chip[pen]{bajar lápiz} & Salta a la parte de abajo de donde va a estar la cara. \\
+11--14 & (Scratch no puede hacer esto) & \py|circle(100)| dibuja la cara. El centro del círculo queda 100 pasos a la izquierda de la tortuga. La tortuga mira a la derecha, así que su izquierda es \textbf{arriba}, y el centro cae en $(0, 0)$. El relleno la pinta de gris claro. \\
+16--22 & \chip[pen]{subir lápiz} \chip[motion]{ir a x: -40 y: 30} & Salta al ojo izquierdo. Un punto blanco grande con un punto negro pequeño encima forma un ojo. Luego lo mismo para el ojo derecho. Los puntos funcionan con el lápiz arriba. \\
+24--27 & \chip[motion]{ir a x: -50 y: -40} \ldots & La boca: lápiz abajo, rojo, y una línea recta de lado a lado. \\
+29--34 & \chip[motion]{ir a x: 0 y: 100} \ldots & La antena: una línea corta hacia arriba desde lo alto de la cabeza, y un punto dorado en la punta. \\
+36--38 & (Scratch no puede hacer esto) & Salta debajo de la cara y escribe un mensaje con \py|write|. Las palabras van entre comillas. \\
+39--40 & (elegir un disfraz) & Se convierte en forma de tortuga. \py|color("seagreen")| fija el color del lápiz \textbf{y} el color de relleno al mismo tiempo, así que la tortuga se vuelve verde. \\
+41--42 & \chip[motion]{ir a x: -150 y: -120} \chip[pen]{sellar} & Camina hasta abajo a la izquierda y sella una copia de la tortuga: ¡la mascota de Robo! \\
+43 & \chip[looks]{esconder} & Esconde a la tortuga de verdad. El sello se queda. \\
+\bottomrule
+\end{longtable}
+
+\step{Paso 4: Ejecútalo}
+Deberías ver una cara de robot redonda y gris con dos ojos grandes, una boca roja recta y una antena con una bolita dorada en la punta. «¡Soy Robo!» está escrito abajo a la derecha, y un sello de tortuga verde está abajo a la izquierda.
+
+
+\step{Paso 5: Hazlo tuyo}
+
+\begin{challenge}
+\tick Dale a Robo ojos de otros colores, como \py|"lime"| (verde lima) o \py|"hotpink"| (rosa fuerte).\par
+\tick Cambia el mensaje por el nombre de tu propio robot.\par
+\tick Haz una sonrisa: cambia la línea 27 por \py|goto(0, -60)| y agrega \py|goto(50, -40)| después. Ahora la boca tiene forma de V.\par
+\tick Sella toda una familia de mascotas. Después de la línea 42, agrega más parejas de \py|goto(...)| y \py|stamp()|. Prueba cambiar \py|color(...)| entre un sello y otro.
+\end{challenge}
+
+% =====================================================================
+\needspace{20\baselineskip}
+\subsection*{Tradúcelo tú}
+
+Aquí hay un programa de Scratch que no has visto. Escribe su Python en las líneas de abajo. Empieza con las tres líneas de inicio. Luego escríbelo en Colab para comprobarlo. Pistas: recuerda la regla secreta para \chip[motion]{apuntar en dirección}, y recuerda que el lápiz de la tortuga empieza abajo. (La respuesta está al final del libro.)
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}
+\blockinit{al presionar \greenflag}
+\blockpen{subir lápiz}
+\blockmove{ir a x: \ovalnum{-100} y: \ovalnum{0}}
+\blockpen{bajar lápiz}
+\blockpen{fijar color de lápiz a \ovalnum{rojo}}
+\blockpen{fijar tamaño de lápiz a \ovalnum{4}}
+\blockmove{apuntar en dirección \ovalnum{0}}
+\blockmove{mover \ovalnum{80} pasos}
+\blockmove{girar \turnright{} \ovalnum{90} grados}
+\blockmove{mover \ovalnum{80} pasos}
+\blockpen{sellar}
+\end{scratch}
+\end{tcolorbox}
+\begin{tcolorbox}[colback=white, colframe=codeframe, arc=5pt, title=\textbf{Mi Python}, coltitle=ink, colbacktitle=codebg]
+\vspace{4pt}
+\foreach \n in {1,...,13}{\rule{\linewidth}{0.4pt}\par\vspace{9pt}}
+\end{tcolorbox}
+\end{tcbraster}
+
+
+% =====================================================================
+\needspace{12\baselineskip}
+\begin{puzzle}
+La tortuga está en el centro, mirando a la derecha, como siempre. Haz que apunte \textbf{directo hacia abajo} y camine \textbf{100 pasos}. Solo puedes usar \textbf{dos líneas} de Python después de las tres líneas de inicio. (Pista: en Scratch, la dirección hacia abajo es 180.)
+
+\vspace{6pt}
+\rule{\linewidth}{0.4pt}\par\vspace{12pt}
+\rule{\linewidth}{0.4pt}
+\end{puzzle}
+
+% =====================================================================
+\needspace{14\baselineskip}
+\subsection*{Lista de la parte 1}
+
+Marca cada una que ya sabes hacer.
+
+\tick Ya sé mover a la tortuga con \py|forward| y \py|backward|, y girarla con \py|right| y \py|left|.\par
+\tick Ya sé mandar a la tortuga a un lugar con \py|goto(x, y)|, y elegir qué tan rápido va con \py|speed|.\par
+\tick Ya sé convertir una dirección de Scratch a Python con \py|setheading(90 - d)|.\par
+\tick Ya sé moverme sin dibujar usando \py|penup()| y \py|pendown()|.\par
+\tick Ya sé elegir el color y el tamaño del lápiz, borrar el dibujo con \py|clear()| y sellar la tortuga con \py|stamp()|.\par
+\tick Puedo usar un superpoder de Python: \py|circle|, \py|dot|, \py|begin_fill| o \py|write|.

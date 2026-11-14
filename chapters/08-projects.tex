@@ -1,0 +1,1015 @@
+% =====================================================================
+% 08-projects.tex : GRANDES PROYECTOS (después de las Partes 1 a 7)
+% Ocho proyectos en orden de dificultad y luego «Tu propio proyecto».
+% Todos los programas probados: juegos de texto con entrada por tubería
+% (python3 -I), juegos de dibujo con la biblioteca real. Los programas
+% de dibujo también están en 08-colab-tests.py.
+% =====================================================================
+
+\partopener{pen}{GRANDES PROYECTOS}{Grandes proyectos}{Ocho proyectos de verdad que usan todo lo que sabes, y luego uno tuyo.}
+
+Terminaste las siete Partes. Sabes dibujar, repetir con bucles, guardar cosas en variables y listas, hacer cuentas, elegir números al azar, hacer preguntas, tomar decisiones con \py|if|, repetir con \py|while|, crear tus propias funciones y hacer objetos extra. ¡Eso es una caja de herramientas completa! Ahora toca construir \textbf{cosas grandes} con ella.
+
+Cada proyecto de aquí es un proyecto clásico de Scratch, reconstruido en Python. Se van poniendo un poco más difíciles, así que hazlos en orden:
+
+\begin{center}
+\begin{tabular}{rll}
+\toprule
+& \textbf{Proyecto} & \textbf{La gran idea} \\
+\midrule
+1 & Anima tu nombre & bucles que recorren letras, \py|write()| y colores \\
+2 & Flor de lápiz & una función dentro de un bucle, cuentas en los giros \\
+3 & Concurso de tablas & una función que devuelve puntos, un cronómetro \\
+4 & Adivina el número de lujo & niveles, intentos y un bucle de «otra vez» \\
+5 & Elige tu propia historia & funciones como escenas \\
+6 & Mascota virtual & variables que cambian en cada turno \\
+7 & Juego de persecución & tres objetos, \py|towards()| y \py|distance()| \\
+8 & Juego de atrapar & un objeto que cae y un bucle de juego de verdad \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection*{Cómo hacer un gran proyecto}
+Cada proyecto tiene cuatro partes. Trabájalas así:
+\begin{enumerate}[label=\textbf{\arabic*.}]
+  \item \textbf{La versión de Scratch.} Mira el programa de Scratch. Seguro que ya conoces un proyecto parecido. Si quieres, constrúyelo primero en Scratch.
+  \item \textbf{La versión de Python.} \textbf{Predice} qué va a hacer. Luego escríbelo y \textbf{ejecútalo}. Es más largo que las misiones, así que tómate tu tiempo y revisa cada dos puntos y cada paréntesis.
+  \item \textbf{Cómo funciona.} Lee la tabla. Señala cada línea de tu código mientras lees sobre ella.
+  \item \textbf{Sube de nivel.} ¡\textbf{Cámbialo}! Elige al menos un reto. Luego agrega una idea tuya. Esta es la parte más importante: el proyecto se vuelve \emph{tuyo}.
+\end{enumerate}
+
+\begin{think}[En Colab los juegos van por turnos]
+Colab no puede sentir tu teclado mientras un programa se ejecuta, así que no hay \chip[events]{al presionar tecla espacio}. En su lugar, los juegos de aquí te preguntan qué hacer con \py|input()|, luego mueven todo y luego vuelven a preguntar. Es como un juego de mesa: tú juegas tu turno y luego la computadora juega el suyo. Las ideas del juego son exactamente las mismas que en Scratch: moverse, revisar si algo se toca, cambiar los puntos.
+\end{think}
+
+\begin{watchout}[Un programa largo se escribe poco a poco]
+No escribas 40 líneas para luego presionar \playbtn{} por primera vez. Escribe la primera parte (hasta una línea en blanco), ejecútala y revisa que funcione. Luego agrega la siguiente parte. Los programadores hacen esto todo el tiempo. Si aparece un error, está en la parte que acabas de agregar, así que es fácil de encontrar.
+\end{watchout}
+
+\needspace{12\baselineskip}
+\subsection*{Mis grandes proyectos}
+Marca cada proyecto cuando funcione, y otra vez cuando lo hayas subido de nivel.
+
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Proyecto} & \textbf{¡Funciona!} & \textbf{Lo subí de nivel} \\
+\midrule
+1 Anima tu nombre & \tick & \tick \\
+2 Flor de lápiz & \tick & \tick \\
+3 Concurso de tablas & \tick & \tick \\
+4 Adivina el número de lujo & \tick & \tick \\
+5 Elige tu propia historia & \tick & \tick \\
+6 Mascota virtual & \tick & \tick \\
+7 Juego de persecución & \tick & \tick \\
+8 Juego de atrapar & \tick & \tick \\
+Mi propio proyecto & \tick & \tick \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+% =====================================================================
+\mission{Anima tu nombre}{a recorrer las letras de una palabra con un bucle, \texttt{write()}, colores al azar y \texttt{clear()}}
+
+Tu nombre baila por el escenario en colores que destellan. ¡Cada letra salta arriba y abajo por su cuenta!
+
+\step{La versión de Scratch}
+En Scratch harías un objeto para cada letra. Cada objeto-letra recibe un programa como este:
+
+\begin{center}
+\begin{scratch}
+\blockinit{al presionar \greenflag}
+\blockrepeat{repetir \ovalnum{8}}{
+  \blocklook{fijar efecto \selectmenu{color} a \ovaloperator{elegir número al azar entre \ovalnum{0} y \ovalnum{200}}}
+  \blockmove{ir a x: \ovalmove{posición en x} y: \ovaloperator{elegir número al azar entre \ovalnum{-20} y \ovalnum{20}}}
+  \blockcontrol{esperar \ovalnum{0.3} segundos}
+}
+\end{scratch}
+\end{center}
+
+En Python no necesitas un objeto para cada letra. Un bucle \py|for| visita las letras una por una, y la tortuga \textbf{escribe} cada letra en su lugar.
+
+\begin{think}[Primero predice]
+Antes de escribir, mira el Python de la página siguiente. Encuentra la línea que pregunta tu nombre. Encuentra los dos bucles \py|for|: uno son los 8 cuadros de la animación y el otro son las letras. ¿Cuál es cuál? ¿Qué crees que pasa si tu nombre es muy largo?
+\end{think}
+
+\needspace{40\baselineskip}
+\step{La versión de Python}
+\begin{typethis}
+from ColabTurtlePlus.Turtle import *
+clearscreen()
+initializeTurtle((480, 360))
+import random
+import time
+
+bgcolor("black")
+hideturtle()
+penup()
+speed(13)
+colores = ["red", "orange", "gold", "lime", "skyblue",
+           "violet", "hotpink"]
+
+nombre = input("¿Cómo te llamas? ")
+espacio = 40
+if len(nombre) > 10:
+    espacio = 400 / len(nombre)
+inicio = 0 - (len(nombre) - 1) * espacio / 2
+
+for cuadro in range(8):
+    clear()
+    x = inicio
+    for letra in nombre:
+        color(random.choice(colores))
+        goto(x, random.randint(-20, 20))
+        write(letra, align="center",
+              font=("Arial", 40, "bold"))
+        x = x + espacio
+    time.sleep(0.3)
+
+goto(0, -120)
+color("white")
+write("¡Hola, " + nombre + "!", align="center",
+      font=("Arial", 24, "italic"))
+\end{typethis}
+
+\begin{think}[Python habla inglés]
+Python habla inglés: sus palabras (\py|for|, \py|print|, \py|write|, \py|goto|...) siempre van en inglés. Lo que \textbf{tú} inventas sí puede ir en español: \py|nombre|, \py|letra|, \py|colores|. Los colores se escriben en inglés: \py|"red"| es rojo, \py|"orange"| naranja, \py|"gold"| dorado, \py|"lime"| verde lima, \py|"skyblue"| azul cielo, \py|"violet"| violeta, \py|"hotpink"| rosa fuerte y \py|"black"| negro.
+\end{think}
+
+\needspace{14\baselineskip}
+\step{Cómo funciona}
+\begin{longtable}{>{\centering\arraybackslash}p{1.1cm} P{5.3cm} P{9.1cm}}
+\toprule
+\textbf{Línea} & \textbf{Bloque de Scratch} & \textbf{Qué significa} \\
+\midrule
+1--5 & \chip[events]{al presionar bandera verde} & Las tres líneas de inicio, y luego \py|random| y \py|time|. \\
+7--10 & \chip[looks]{esconder} & Un escenario negro, y la tortuga se esconde y sube su lápiz. Solo queremos las letras, no la tortuga ni líneas. \\
+11--12 & (una lista) & Los colores para elegir. Una lista larga puede seguir en la línea siguiente, porque Python sabe que el \texttt{[} todavía no se ha cerrado. \\
+15--18 & \chip[operators]{longitud de} & \py|len(nombre)| cuenta las letras. Los nombres largos reciben un espacio más pequeño para que quepan en el escenario. \py|inicio| es donde va la primera letra, para que el nombre quede en el centro. \\
+20--21 & \chip[control]{repetir 8}\newline\chip[pen]{borrar todo} & Ocho cuadros de animación. \py|clear()| borra las letras viejas de la tortuga, lista para escribirlas otra vez. \\
+23 & & \py|for letra in nombre:| visita las letras una a la vez, como cuando lees una palabra con el dedo. \\
+24--25 & \chip[looks]{fijar efecto color a}\newline\chip[motion]{ir a x: y:} & Un color al azar, y luego salta a una altura al azar. \\
+26--27 & \chip[looks]{decir} & \py|write()| escribe la letra en el escenario. \py|align="center"| pone el centro de la letra donde está la tortuga; \py|font| da el nombre del tipo de letra, el tamaño y el estilo. \\
+28 & \chip[motion]{cambiar x en 40} & Avanza para la siguiente letra. \\
+29 & \chip[control]{esperar 0.3 segundos} & Una pausa corta, para que puedas ver cada cuadro. \\
+31--34 & \chip[looks]{decir ¡Hola!} & Un saludo blanco abajo. \\
+\bottomrule
+\end{longtable}
+
+\begin{think}[Otra vez, la ortografía del código]
+La lista se llama \py|colores| (en español, porque el nombre lo inventamos nosotros), pero la orden es \py|color()|. Esa es la palabra de Python en inglés, y Python solo la entiende así.
+\end{think}
+
+\begin{challenge}[Sube de nivel]
+\tick Haz 20 cuadros en vez de 8, y prueba \py|time.sleep(0.1)| para un baile más rápido.\par
+\tick Agrega tus colores favoritos a la lista (solo en minúsculas: \py|"deeppink"|, \py|"aqua"|).\par
+\tick Haz que las letras crezcan: escribe cada cuadro con tamaño \py|20 + cuadro * 5| en vez de 40.\par
+\tick Haz un arcoíris: en vez de un color al azar, usa \py|colores[cuadro % 7]|, así todas las letras de un cuadro tienen el mismo color, y el color cambia en cada cuadro.
+\end{challenge}
+
+% =====================================================================
+\mission{Flor de lápiz}{una función dentro de un bucle, cuentas en un giro, \texttt{\%} para repetir una lista y \texttt{circle()}}
+
+Una flor con tantos pétalos como quieras, en colores de arcoíris, con un dibujo de espirógrafo que gira en el centro.
+
+\step{La versión de Scratch}
+Usa la extensión \textbf{Lápiz} y un bloque de \textbf{Mis Bloques} llamado \textbf{pétalo}:
+
+\begin{center}
+\begin{scratch}
+\blockinit{al presionar \greenflag}
+\blockpen{borrar todo}
+\blockpen{bajar lápiz}
+\blocksensing{preguntar \ovalnum{¿Cuántos pétalos?} y esperar}
+\blockrepeat{repetir \ovalsensing{respuesta}}{
+  \blockpen{cambiar \selectmenu{color} de lápiz en \ovalnum{10}}
+  \blockmoreblocks{pétalo \ovalnum{100}}
+  \blockmove{girar \turnleft{} \ovaloperator{\ovalnum{360} / \ovalsensing{respuesta}} grados}
+}
+\end{scratch}
+\end{center}
+
+\begin{think}[Primero predice]
+Si escribes 6 pétalos, ¿cuánto girará la tortuga después de cada pétalo? (Calcula $360 \div 6$.) ¿Y con 8 pétalos? Busca la línea del Python que hace esta cuenta por ti.
+\end{think}
+
+\needspace{40\baselineskip}
+\step{La versión de Python}
+\begin{typethis}
+from ColabTurtlePlus.Turtle import *
+clearscreen()
+initializeTurtle((480, 360))
+
+bgcolor("black")
+speed(13)
+pensize(2)
+colores = ["red", "orange", "gold", "lime",
+           "skyblue", "violet"]
+
+def petalo(medida):
+    circle(medida, 60)
+    left(120)
+    circle(medida, 60)
+    left(120)
+
+petalos = int(input("¿Cuántos pétalos? (3 a 20) "))
+for p in range(petalos):
+    color(colores[p % 6])
+    petalo(100)
+    left(360 / petalos)
+
+color("white")
+for anillo in range(36):
+    circle(40)
+    left(10)
+
+penup()
+goto(0, 0)
+dot(25, "gold")
+hideturtle()
+\end{typethis}
+
+\needspace{14\baselineskip}
+\step{Cómo funciona}
+\begin{longtable}{>{\centering\arraybackslash}p{1.1cm} P{5.3cm} P{9.1cm}}
+\toprule
+\textbf{Línea} & \textbf{Bloque de Scratch} & \textbf{Qué significa} \\
+\midrule
+1--3 & \chip[events]{al presionar bandera verde} & Las tres líneas de inicio. \\
+5--7 & \chip[pen]{fijar tamaño de lápiz a 2} & Escenario negro, la velocidad más rápida, un lápiz más grueso. \\
+11--15 & \chip[myblocks]{definir pétalo (medida)} & Nuestro propio bloque. \py|circle(medida, 60)| dibuja un sexto de círculo (60 grados del círculo). Dos de esas curvas con giros forman un pétalo puntiagudo. Escribimos \py|petalo| sin acento: en los nombres de Python es más fácil sin acentos. \\
+17 & \chip[sensing]{preguntar y esperar} & Pregunta un número. \py|int()| convierte el texto escrito en un número con el que podemos hacer cuentas. \\
+18 & \chip[control]{repetir (respuesta)} & Una vuelta del bucle por cada pétalo. \py|p| cuenta 0, 1, 2, \ldots \\
+19 & \chip[pen]{cambiar color de lápiz en 10} & \py|p % 6| es el residuo de dividir entre 6. Va 0, 1, 2, 3, 4, 5, 0, 1, \ldots así los colores dan vueltas y vueltas por la lista y nunca se acaban. \\
+20 & \chip[myblocks]{pétalo 100} & Usa nuestro bloque. \\
+21 & \chip[motion]{girar (360 / respuesta)} & Reparte una vuelta completa (360 grados) en partes iguales entre los pétalos. \\
+23--26 & \chip[control]{repetir 36} & 36 círculos, girando 10 grados cada vez: $36 \times 10 = 360$, la vuelta completa. Eso forma el espirógrafo. \\
+28--31 & \chip[pen]{subir lápiz} & Vuelve al centro, pon ahí un punto dorado y esconde la tortuga. \\
+\bottomrule
+\end{longtable}
+
+\begin{challenge}[Sube de nivel]
+\tick Prueba con 3, 7 y 20 pétalos. ¿Cuál se ve mejor?\par
+\tick Cambia \py|petalo(100)| por \py|petalo(150)|. ¿Qué pasa? ¿Puedes hacer una flor pequeña dentro de la grande?\par
+\tick Dale al espirógrafo sus propios colores: dentro del bucle de \py|anillo|, agrega \py|color(colores[anillo % 6])|.\par
+\tick Haz un jardín entero: pon las líneas 18--21 dentro de una función \py|flor(x, y)| que primero vaya a \py|(x, y)|, y dibuja tres flores con pétalos más pequeños.
+\end{challenge}
+
+% =====================================================================
+\mission{Concurso de tablas}{una función que devuelve una respuesta con \texttt{return}, llevar los puntos y un cronómetro}
+
+Cinco preguntas de las tablas de multiplicar. La computadora lleva los puntos y te toma el tiempo. ¿Puedes sacar 5 de 5 en menos de 30 segundos?
+
+\step{La versión de Scratch}
+\begin{center}
+\begin{scratch}
+\blockinit{al presionar \greenflag}
+\blockvariable{fijar \selectmenu{puntos} a \ovalnum{0}}
+\blocksensing{reiniciar cronómetro}
+\blockrepeat{repetir \ovalnum{5}}{
+  \blockvariable{fijar \selectmenu{a} a \ovaloperator{elegir número al azar entre \ovalnum{2} y \ovalnum{12}}}
+  \blockvariable{fijar \selectmenu{b} a \ovaloperator{elegir número al azar entre \ovalnum{2} y \ovalnum{12}}}
+  \blocksensing{preguntar \ovaloperator{unir \ovalvariable{a} \ovaloperator{unir \ovalnum{ x } \ovalvariable{b}}} y esperar}
+  \blockifelse{si \booloperator{\ovalsensing{respuesta} = \ovaloperator{\ovalvariable{a} * \ovalvariable{b}}} entonces}{
+    \blockvariable{cambiar \selectmenu{puntos} en \ovalnum{1}}
+    \blocklook{decir \ovalnum{¡Correcto!} durante \ovalnum{1} segundos}
+  }{
+    \blocklook{decir \ovalnum{¡Uy!} durante \ovalnum{1} segundos}
+  }
+}
+\blocklook{decir \ovaloperator{unir \ovalvariable{puntos} \ovalsensing{cronómetro}}}
+\end{scratch}
+\end{center}
+
+\needspace{44\baselineskip}
+\begin{think}[Primero predice]
+¿Qué crees que pasa si escribes \texttt{gato} en vez de un número? ¿El programa se va a romper? Lee la línea 6 del Python y la tabla para averiguarlo.
+\end{think}
+
+\step{La versión de Python}
+\begin{typethis}
+import random
+import time
+
+def pregunta(a, b):
+    respuesta = input(str(a) + " x " + str(b) + " = ")
+    if respuesta == str(a * b):
+        print("¡Correcto!")
+        return 1
+    else:
+        print("¡Uy! Era", a * b)
+        return 0
+
+print("Tablas de multiplicar: 5 preguntas. ¡Ya!")
+puntos = 0
+inicio = time.time()
+for i in range(5):
+    a = random.randint(2, 12)
+    b = random.randint(2, 12)
+    puntos = puntos + pregunta(a, b)
+
+segundos = round(time.time() - inicio)
+print("Sacaste", puntos, "de 5")
+print("Tardaste", segundos, "segundos")
+if puntos == 5 and segundos < 30:
+    print("¡Eres un rayo con las tablas!")
+elif puntos >= 3:
+    print("¡Buen trabajo!")
+else:
+    print("Sigue practicando. ¡Lo vas a lograr!")
+\end{typethis}
+
+\needspace{14\baselineskip}
+\step{Cómo funciona}
+\begin{longtable}{>{\centering\arraybackslash}p{1.1cm} P{5.3cm} P{9.1cm}}
+\toprule
+\textbf{Línea} & \textbf{Bloque de Scratch} & \textbf{Qué significa} \\
+\midrule
+4 & \chip[myblocks]{definir pregunta (a) (b)} & Nuestro propio bloque, con dos entradas. \\
+5 & \chip[sensing]{preguntar (unir a " x " b)}\newline\chip[sensing]{y esperar} & \py|str()| convierte un número en texto para poder unirlo con \py|+|. \\
+6 & \chip[operators]{respuesta = a * b} & \py|input()| siempre da texto, así que convertimos también la respuesta correcta en texto y comparamos texto con texto. Ahora escribir \texttt{gato} no puede romper el concurso: ¡simplemente está mal! \\
+8, 11 & (¡no hay bloque de Scratch!) & \py|return 1| le devuelve el número 1 a quien usó el bloque. Los bloques de Mis Bloques de Scratch no pueden hacer esto. Es un superpoder de Python. \\
+14--15 & \chip[variables]{fijar puntos a 0}\newline\chip[sensing]{reiniciar cronómetro} & \py|time.time()| lee el reloj (en segundos). Lo guardamos en \py|inicio|, como cuando presionas un cronómetro. \\
+19 & \chip[variables]{cambiar puntos en 1} & Haz una pregunta y suma lo que regresa: 1 si está bien, 0 si está mal. \\
+21 & \chip[sensing]{cronómetro} & El reloj ahora menos el reloj al inicio = cuánto tardaste. \py|round()| lo vuelve un número entero. \\
+24--29 & \chip[control]{si entonces si no} & Tres mensajes diferentes. \py|elif| quiere decir «si no, si». \\
+\bottomrule
+\end{longtable}
+
+\needspace{9\baselineskip}
+\begin{outputbox}[Podrías ver (tus preguntas serán diferentes)]
+Tablas de multiplicar: 5 preguntas. ¡Ya!\\
+12 x 4 = 48\\
+¡Correcto!\\
+9 x 11 = 98\\
+¡Uy! Era 99\\
+\ldots
+\end{outputbox}
+
+\begin{challenge}[Sube de nivel]
+\tick Haz que sean 10 preguntas. ¿Qué dos líneas tienen que cambiar?\par
+\tick Practica solo tu tabla más difícil: haz que \py|a = 7| siempre.\par
+\tick Haz el cronómetro más estricto: rayo de las tablas solo si \py|segundos < 20|.\par
+\tick Si hiciste \py|pitido()| en la Parte 7, ejecuta esa celda primero, y luego toca una nota alta y feliz en la parte del \py|if| de \py|pregunta| y una nota baja en la parte del \py|else|.
+\end{challenge}
+
+% =====================================================================
+\mission{Adivina el número de lujo}{bucles \texttt{while} uno dentro de otro, \texttt{and}/\texttt{not}, niveles de dificultad y «otra vez»}
+
+El juego de adivinar, con tres niveles, un número limitado de intentos y la pregunta «¿jugar otra vez?» al final.
+
+\step{La versión de Scratch}
+Esta es la parte importante: un «repetir hasta que» dentro de otro.
+
+\begin{center}
+\begin{scratch}
+\blockinit{al presionar \greenflag}
+\blockrepeat{repetir hasta que \booloperator{\ovalsensing{respuesta} = \ovalnum{n}}}{
+  \blockvariable{fijar \selectmenu{secreto} a \ovaloperator{elegir número al azar entre \ovalnum{1} y \ovalvariable{maximo}}}
+  \blockrepeat{repetir hasta que \booloperator{\booloperator{\ovalvariable{intentos} = \ovalnum{0}} o \booloperator{\ovalvariable{ganaste} = \ovalnum{sí}}}}{
+    \blocksensing{preguntar \ovalnum{Tu número:} y esperar}
+    \blockvariable{cambiar \selectmenu{intentos} en \ovalnum{-1}}
+  }
+  \blocksensing{preguntar \ovalnum{¿Jugar otra vez?} y esperar}
+}
+\end{scratch}
+\end{center}
+
+\begin{think}[Primero predice]
+El Python tiene dos bucles \py|while|, uno dentro del otro, igual que el programa de Scratch. Encuéntralos. ¿Cuál es un juego completo y cuál es un solo intento? ¿Qué crees que hace \py|intentos = intentos - 1|?
+\end{think}
+
+\needspace{42\baselineskip}
+\step{La versión de Python}
+\begin{typethis}
+import random
+
+otra = "s"
+while otra == "s":
+    print("Niveles: 1 fácil, 2 medio, 3 difícil")
+    nivel = input("Elige un nivel: ")
+    if nivel == "1":
+        maximo = 10
+        intentos = 4
+    elif nivel == "2":
+        maximo = 50
+        intentos = 6
+    else:
+        maximo = 100
+        intentos = 7
+    secreto = random.randint(1, maximo)
+    print("Pensé un número del 1 al", maximo)
+
+    ganaste = False
+    while intentos > 0 and not ganaste:
+        print("Intentos que quedan:", intentos)
+        numero = int(input("Tu número: "))
+        intentos = intentos - 1
+        if numero == secreto:
+            ganaste = True
+        elif numero < secreto:
+            print("¡Muy bajo!")
+        else:
+            print("¡Muy alto!")
+
+    if ganaste:
+        print("¡Lo adivinaste! Era", secreto)
+    else:
+        print("¡Se acabaron los intentos! Era", secreto)
+    otra = input("¿Jugar otra vez? (s/n) ").lower()
+
+print("¡Gracias por jugar!")
+\end{typethis}
+
+\needspace{14\baselineskip}
+\step{Cómo funciona}
+\begin{longtable}{>{\centering\arraybackslash}p{1.1cm} P{5.3cm} P{9.1cm}}
+\toprule
+\textbf{Línea} & \textbf{Bloque de Scratch} & \textbf{Qué significa} \\
+\midrule
+3--4 & \chip[control]{repetir hasta que}\newline\chip[operators]{respuesta = n} & El bucle grande: una vuelta = un juego completo. Sigue mientras \py|otra| sea \py|"s"| (de «sí»). \\
+7--15 & \chip[control]{si entonces si no} & El nivel fija dos variables: el número más grande y cuántos intentos tienes. Cualquier cosa que no sea 1 o 2 da el nivel difícil. \\
+19 & \chip[variables]{fijar ganaste a no} & \py|ganaste| es una variable de verdadero o falso. Empieza en \py|False| (falso). \\
+20 & \chip[control]{repetir hasta que}\newline\chip[operators]{intentos = 0 o ganaste} & El bucle pequeño: una vuelta = un intento. Sigue mientras todavía tengas intentos \textbf{y} todavía \textbf{no} hayas ganado. \\
+22--23 & \chip[sensing]{preguntar y esperar}\newline\chip[variables]{cambiar intentos en -1} & Pide un número, conviértelo en número y gasta un intento. \\
+24--25 & \chip[variables]{fijar ganaste a sí} & ¡Le atinaste! \py|ganaste = True| (verdadero) hace que el bucle pequeño se detenga. \\
+31--34 & \chip[control]{si entonces si no} & Después del bucle pequeño: ¿ganaste o se acabaron los intentos? \py|if ganaste:| es la forma corta de \py|if ganaste == True:|. \\
+35 & \chip[sensing]{preguntar ¿Jugar otra vez?} & \py|.lower()| convierte \texttt{S} en \texttt{s}, así también funcionan las mayúsculas. Escribe solo \texttt{s}, sin acento. \\
+37 & \chip[looks]{decir} & Esta línea está otra vez pegada al margen, así que se ejecuta una vez, cuando el bucle grande ya terminó. \\
+\bottomrule
+\end{longtable}
+
+\begin{think}[¿Es justo?]
+En difícil tienes 7 intentos para 100 números. ¿Alcanza? ¡Sí, \textbf{si} eres listo! Siempre di el número de en medio de los que quedan (50, luego 25 o 75, y así). Cada intento corta los números a la mitad, y 7 mitades te llevan de 100 hasta 1. Por eso fácil tiene 4 intentos y medio tiene 6. ¡Pruébalo!
+\end{think}
+
+\enlargethispage{\baselineskip}
+\begin{challenge}[Sube de nivel]\small
+\tick Agrega un nivel 4, «superdifícil»: números hasta 1000. ¿Cuántos intentos son justos? (Parte 1000 a la mitad hasta llegar a 1.)\par
+\tick Cuenta los juegos que ganaste e imprímelo al final.\par
+\tick Avisa cuando el número esté a 5 o menos del secreto: imprime \texttt{¡Caliente!}\par
+\tick Ignora los números demasiado grandes: si \py|numero > maximo|, imprime un aviso y no gastes un intento.
+\end{challenge}
+
+% =====================================================================
+\mission{Elige tu propia historia}{funciones como escenas, una función que revisa la respuesta y \texttt{return}}
+
+Una aventura en la que \textbf{tú} decides qué pasa. Cada elección lleva a un lugar diferente. Hay cuatro finales. ¿Puedes encontrarlos todos?
+
+\step{La versión de Scratch}
+En Scratch, cada escena podría ser un \textbf{mensaje}. El programa principal \textbf{envía} el mensaje, y otro programa lo \textbf{recibe}:
+
+\begin{center}
+\begin{minipage}[t]{0.52\linewidth}
+\begin{scratch}[scale=0.8]
+\blockinit{al presionar \greenflag}
+\blocksensing{preguntar \ovalnum{¿Nombre del héroe?} y esperar}
+\blocklook{decir \ovalnum{... está en un bosque.} durante \ovalnum{1} segundos}
+\blocksensing{preguntar \ovalnum{¿Izquierda o derecha?} y esperar}
+\blockifelse{si \booloperator{\ovalsensing{respuesta} = \ovalnum{izquierda}} entonces}{
+  \blockevent{enviar \selectmenu{cueva} y esperar}
+}{
+  \blockevent{enviar \selectmenu{río} y esperar}
+}
+\blocklook{decir \ovalnum{FIN}}
+\end{scratch}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.44\linewidth}
+\begin{scratch}[scale=0.73]
+\blockinit{al recibir \selectmenu{cueva}}
+\blocklook{decir \ovalnum{La cueva está oscura...} durante \ovalnum{1} segundos}
+\blocksensing{preguntar \ovalnum{¿Agarrar o escapar?} y esperar}
+\blockif{si \booloperator{\ovalsensing{respuesta} = \ovalnum{agarrar}} entonces}{
+  \blocklook{decir \ovalnum{¡Un dragón amigable!}}
+}
+\end{scratch}
+\end{minipage}
+\end{center}
+
+En Python, cada escena es una \textbf{función}. Llamar a la función, como \py|cueva()|, es lo mismo que \chip[events]{enviar cueva y esperar}.
+
+\begin{think}[Primero predice]
+Cuenta las escenas. ¿Cuántos finales diferentes puede tener la historia? Dibuja un pequeño mapa: una caja para cada escena y una flecha para cada elección.
+\end{think}
+
+\needspace{50\baselineskip}
+\step{La versión de Python}
+\begin{typethis}
+import time
+def elegir(pregunta, a, b):
+    mensaje = pregunta + " (" + a + " o " + b + ") "
+    respuesta = ""
+    while respuesta != a and respuesta != b:
+        respuesta = input(mensaje).lower()
+    return respuesta
+
+def decir(palabras):
+    print(palabras)
+    time.sleep(1)
+
+def cueva():
+    decir("La cueva está oscura. Algo brilla...")
+    decir("...¡y algo gruñe!")
+    opcion = elegir("¿Qué haces?", "agarrar", "escapar")
+    if opcion == "agarrar":
+        decir("¡Un dragón amigable te comparte su oro!")
+    else:
+        decir("Sales de puntitas, sano y salvo.")
+
+def rio():
+    decir("Un río ancho. Hay un bote que se tambalea.")
+    opcion = elegir("¿Qué haces?", "remar", "nadar")
+    if opcion == "remar":
+        decir("¡Llegas a una isla de loros que hablan!")
+    else:
+        decir("¡Brrr! Muy fría. ¡Hora del chocolate!")
+
+heroe = input("¿Cómo se llama tu héroe? ")
+decir(heroe + " está a la orilla de un bosque oscuro.")
+lado = elegir("¿Hacia dónde?", "izquierda", "derecha")
+if lado == "izquierda":
+    cueva()
+else:
+    rio()
+decir("FIN")
+\end{typethis}
+
+\needspace{14\baselineskip}
+\step{Cómo funciona}
+\begin{longtable}{>{\centering\arraybackslash}p{1.1cm} P{5.3cm} P{9.1cm}}
+\toprule
+\textbf{Línea} & \textbf{Bloque de Scratch} & \textbf{Qué significa} \\
+\midrule
+2--7 & \chip[myblocks]{definir elegir} & Un bloque ayudante. Hace la pregunta y \textbf{sigue preguntando} hasta que escribas una de las dos opciones. Luego \py|return| te devuelve tu elección. \\
+5 & \chip[control]{repetir hasta que} & Sigue mientras la respuesta no sea \py|a| \textbf{y} no sea \py|b|. \py|!=| quiere decir «no es igual a». \\
+9--11 & \chip[looks]{decir durante 1 segundos} & Nuestro propio bloque de «decir durante 1 segundo»: imprime y luego espera. \\
+13--20 & \chip[events]{al recibir cueva} & La escena de la cueva. Definirla todavía no la ejecuta. Espera hasta que la llamen, igual que un programa «al recibir» espera su mensaje. \\
+16 & \chip[sensing]{preguntar y esperar} & \py|elegir()| devuelve \py|"agarrar"| o \py|"escapar"|, y lo guardamos en \py|opcion|. Escribe las opciones tal cual, sin acentos. \\
+22--28 & \chip[events]{al recibir río} & La escena del río. \\
+30--37 & \chip[events]{al presionar bandera verde} & La historia empieza aquí, pegada al margen. \\
+34, 36 & \chip[events]{enviar cueva y esperar} & Llamar a una escena. La historia salta dentro de la función, la ejecuta, luego regresa y sigue en la línea 37. \\
+\bottomrule
+\end{longtable}
+
+\begin{challenge}[Sube de nivel]
+\tick Cambia las palabras para que la historia trate de algo que te encante: el espacio, el futbol, los dinosaurios.\par
+\tick Agrega una escena nueva \py|def puente():| y dale al río una tercera opción que lleve a ella. (Pista: puedes llamar a \py|elegir()| desde dentro de una escena, y puedes llamar a una escena desde dentro de otra.)\par
+\tick Cuenta el tesoro: dale a cada final un número diferente de monedas de oro e imprímelo.\par
+\tick Primero haz un mapa de la historia en papel: cajas para las escenas, flechas para las elecciones. Luego escribe una función para cada caja.
+\end{challenge}
+
+% =====================================================================
+\mission{Mascota virtual}{varias variables que cambian en cada turno, un bucle por siempre con \texttt{break} y mantener números dentro de un rango}
+
+Cuida a tu propia mascota. Dale de comer y juega con ella. Si tiene demasiada hambre o está demasiado triste, ¡se escapa!
+
+\step{La versión de Scratch}
+\begin{center}
+\begin{scratch}[scale=0.8]
+\blockinit{al presionar \greenflag}
+\blockvariable{fijar \selectmenu{hambre} a \ovalnum{3}}
+\blockvariable{fijar \selectmenu{alegría} a \ovalnum{7}}
+\blockinfloop{por siempre}{
+  \blocksensing{preguntar \ovalnum{¿comer, jugar o salir?} y esperar}
+  \blockif{si \booloperator{\ovalsensing{respuesta} = \ovalnum{comer}} entonces}{
+    \blockvariable{cambiar \selectmenu{hambre} en \ovalnum{-3}}
+  }
+  \blockif{si \booloperator{\ovalsensing{respuesta} = \ovalnum{jugar}} entonces}{
+    \blockvariable{cambiar \selectmenu{alegría} en \ovalnum{2}}
+  }
+  \blockvariable{cambiar \selectmenu{hambre} en \ovalnum{1}}
+  \blockif{si \booloperator{\ovalvariable{hambre} > \ovalnum{9}} entonces}{
+    \blocklook{decir \ovalnum{¡Me escapé!}}
+    \blockstop{detener \selectmenu{todos}}
+  }
+}
+\end{scratch}
+\end{center}
+
+\begin{think}[Primero predice]
+¿Qué crees que pasa si solo escribes \texttt{jugar} y nunca \texttt{comer}? ¿Cuántos días va a aguantar tu mascota? Ejecútalo y mira si tenías razón.
+\end{think}
+
+\needspace{42\baselineskip}
+\step{La versión de Python}
+\begin{typethis}
+import random
+
+nombre = input("Ponle nombre a tu mascota: ")
+hambre = 3
+alegria = 7
+dia = 0
+
+while True:
+    dia = dia + 1
+    print("Día", dia, "|", nombre, "| hambre", hambre,
+          "| alegría", alegria)
+    accion = input("¿comer, jugar o salir? ").lower()
+    if accion == "comer":
+        hambre = hambre - 3
+        print(nombre, "come feliz. ¡Ñam!")
+    elif accion == "jugar":
+        alegria = alegria + 2
+        print(nombre, "¡persigue la pelota!")
+    elif accion == "salir":
+        print("¡Adiós!", nombre, "te va a extrañar.")
+        break
+    else:
+        print("Prueba comer, jugar o salir.")
+
+    hambre = hambre + 1
+    alegria = alegria - random.randint(0, 1)
+    if hambre < 0:
+        hambre = 0
+    if alegria > 10:
+        alegria = 10
+    if hambre >= 10 or alegria <= 0:
+        print("¡Oh, no!", nombre, "¡se escapó!")
+        print("Cuida mejor a tu próxima mascota.")
+        break
+\end{typethis}
+
+\needspace{14\baselineskip}
+\step{Cómo funciona}
+\begin{longtable}{>{\centering\arraybackslash}p{1.1cm} P{5.3cm} P{9.1cm}}
+\toprule
+\textbf{Línea} & \textbf{Bloque de Scratch} & \textbf{Qué significa} \\
+\midrule
+3--6 & \chip[variables]{fijar hambre a 3} & Las «estadísticas» de la mascota. El hambre va de 0 (llena) a 10 (muerta de hambre); la alegría va de 0 (triste) a 10 (muy feliz). En el código escribimos \py|alegria| sin acento. \\
+8 & \chip[control]{por siempre} & \py|while True:| repite por siempre. Aquí no hay peligro, porque \py|input()| te espera en cada turno, y \py|break| nos saca. \\
+10--11 & \chip[looks]{decir} & Muestra las estadísticas. Los signos \texttt{|} son solo una cerca entre los números. \\
+13--23 & \chip[control]{si entonces si no} & Una respuesta, cuatro acciones posibles. \py|elif| revisa la siguiente opción solo si las anteriores no coincidieron. Escribe las palabras sin acentos. \\
+21 & \chip[control]{detener este programa} & \py|break| salta fuera del bucle en ese mismo momento. \\
+25--26 & \chip[variables]{cambiar hambre en 1} & Cada día, la mascota tiene más hambre y quizá se pone un poco más triste (pierde 0 o 1 punto de alegría al azar). \\
+27--30 & \chip[control]{si entonces} & Mantén los números dentro del rango: el hambre no puede bajar de 0, y la alegría no puede pasar de 10. \\
+31--34 & \chip[control]{detener todos} & \py|or| quiere decir que basta con una de las dos: demasiada hambre \textbf{o} demasiada tristeza, y la mascota se escapa. \\
+\bottomrule
+\end{longtable}
+
+\needspace{8\baselineskip}
+\begin{outputbox}[Podrías ver]
+Ponle nombre a tu mascota: Galleta\\
+Día 1 | Galleta | hambre 3 | alegría 7\\
+¿comer, jugar o salir? comer\\
+Galleta come feliz. ¡Ñam!\\
+Día 2 | Galleta | hambre 1 | alegría 7
+\end{outputbox}
+
+\begin{challenge}[Sube de nivel]
+\tick Agrega una tercera estadística, \py|energia|, y una opción nueva \texttt{dormir} que la llene. Jugar debería gastar algo de energía.\par
+\tick Dale a la mascota un mensaje de humor: si \py|alegria| es 8 o más, imprime \texttt{(ronronea)}.\par
+\tick Haz que la mascota gane: si la cuidas durante 15 días, imprime un diploma y usa \py|break|.\par
+\tick ¡Dibuja a tu mascota! Después de las tres líneas de inicio, dibuja una cara cuyo color dependa de \py|alegria| (por ejemplo \py|"gold"| cuando está feliz, \py|"gray"| cuando está triste), y vuelve a dibujarla en cada turno.
+\end{challenge}
+
+% =====================================================================
+\mission{Juego de persecución}{tres objetos, \texttt{towards()} para apuntar a un objeto y \texttt{distance()} para «tocar»}
+
+Eres una tortuga. Junta las estrellas doradas, pero ¡cuidado!: un gato naranja te persigue. En cada turno escribes \texttt{w}, \texttt{a}, \texttt{s} o \texttt{d} y presionas Enter, y luego el gato da un paso hacia ti.
+
+\step{La versión de Scratch}
+En Scratch el jugador, el gato y la estrella tienen cada uno sus propios programas:
+
+\begin{center}
+\begin{minipage}[t]{0.32\linewidth}
+\textbf{Jugador}\par
+\begin{scratch}[scale=0.72]
+\blockinit{al presionar tecla \selectmenu{w}}
+\blockmove{apuntar en dirección \ovalnum{0}}
+\blockmove{mover \ovalnum{40} pasos}
+\end{scratch}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.32\linewidth}
+\textbf{Gato}\par
+\begin{scratch}[scale=0.66]
+\blockinit{al presionar \greenflag}
+\blockinfloop{por siempre}{
+  \blockmove{apuntar hacia \selectmenu{Jugador}}
+  \blockmove{mover \ovalnum{2} pasos}
+  \blockif{si \boolsensing{¿tocando \selectmenu{Jugador}?} entonces}{
+    \blockstop{detener \selectmenu{todos}}
+  }
+}
+\end{scratch}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.32\linewidth}
+\textbf{Estrella}\par
+\begin{scratch}[scale=0.66]
+\blockinit{al presionar \greenflag}
+\blockinfloop{por siempre}{
+  \blockif{si \boolsensing{¿tocando \selectmenu{Jugador}?} entonces}{
+    \blockvariable{cambiar \selectmenu{puntos} en \ovalnum{1}}
+    \blockmove{ir a \selectmenu{posición aleatoria}}
+  }
+}
+\end{scratch}
+\end{minipage}
+\end{center}
+
+En Python hay \textbf{un solo} bucle de juego. Cada vuelta del bucle es un turno: el jugador se mueve, revisamos la estrella, el gato se mueve, revisamos al gato.
+
+\begin{think}[Primero predice]
+Encuentra los tres objetos en el Python. Dos de ellos tienen nombre (\py|gato| y \py|estrella|). ¿Qué objeto se mueve con las órdenes sencillas como \py|forward(40)|, sin ningún nombre delante?
+\end{think}
+
+\needspace{30\baselineskip}
+\step{La versión de Python}
+La primera parte crea los tres objetos. Las órdenes sencillas son \textbf{tú}; \py|gato| y \py|estrella| son objetos nuevos.
+
+\begin{typethis}[Escribe esto en una celda de código (parte 1)]
+from ColabTurtlePlus.Turtle import *
+clearscreen()
+initializeTurtle((480, 360))
+import random
+
+speed(13)
+shape("turtle")
+color("green")
+penup()
+
+gato = Turtle()
+gato.speed(13)
+gato.shape("circle")
+gato.color("orange")
+gato.penup()
+gato.goto(200, 140)
+
+estrella = Turtle()
+estrella.speed(13)
+estrella.shape("triangle")
+estrella.color("gold")
+estrella.penup()
+estrella.goto(120, -80)
+\end{typethis}
+
+Ejecútalo ya: deberías ver una tortuga verde en el centro, un círculo naranja (el gato) arriba a la derecha y un triángulo dorado (la estrella). Luego escribe la parte 2 \textbf{en la misma celda}, debajo, y ejecuta otra vez toda la celda.
+
+\lstset{firstnumber=25}
+\begin{typethis}[Escribe esto en una celda de código (parte 2)]
+puntos = 0
+for turno in range(20):
+    jugada = input("Muévete con w, a, s o d: ").lower()
+    if jugada == "w":
+        setheading(90)
+    elif jugada == "s":
+        setheading(270)
+    elif jugada == "a":
+        setheading(180)
+    elif jugada == "d":
+        setheading(0)
+    forward(40)
+    if xcor() > 220 or xcor() < -220:
+        back(40)
+    if ycor() > 160 or ycor() < -160:
+        back(40)
+
+    if estrella.distance(pos()) < 20:
+        puntos = puntos + 1
+        print("¡Atrapaste la estrella! Puntos:", puntos)
+        x = random.randint(-5, 5) * 40
+        y = random.randint(-4, 4) * 40
+        estrella.goto(x, y)
+
+    gato.setheading(gato.towards(pos()))
+    gato.forward(25)
+    if gato.distance(pos()) < 30:
+        print("¡El gato te atrapó!")
+        break
+
+print("¡Fin del juego! Estrellas:", puntos)
+\end{typethis}
+\lstset{firstnumber=1}
+
+\needspace{14\baselineskip}
+\step{Cómo funciona}
+\begin{longtable}{>{\centering\arraybackslash}p{1.1cm} P{5.3cm} P{9.1cm}}
+\toprule
+\textbf{Línea} & \textbf{Bloque de Scratch} & \textbf{Qué significa} \\
+\midrule
+6--9 & \chip[looks]{cambiar disfraz a} & Eres una tortuga verde con el lápiz arriba. \\
+11--16 & (un objeto nuevo) & \py|gato = Turtle()| crea un objeto nuevo llamado \py|gato|. Cada orden para él empieza con \py|gato.| \\
+18--23 & (un objeto nuevo) & La estrella, de la misma manera. \\
+26 & \chip[control]{por siempre} & 20 turnos. Cada vuelta del bucle es un turno. \\
+27 & \chip[events]{al presionar tecla} & Pide una tecla. Colab no puede sentir cuando presionas teclas, así que escribes la tecla y presionas Enter. Las teclas \texttt{w}, \texttt{a}, \texttt{s}, \texttt{d} están juntas en el teclado, como flechas. \\
+28--35 & \chip[motion]{apuntar en dirección} & Mira hacia donde elegiste. Direcciones de Python: 90 es arriba, 0 es derecha (recuerda: Python = 90 $-$ Scratch). Cualquier otra tecla: sigue en la misma dirección. \\
+36--40 & \chip[motion]{mover 40 pasos}\newline\chip[motion]{si toca un borde, rebotar} & Muévete. Si eso te sacó del borde del escenario, da un paso atrás. \\
+42 & \chip[sensing]{¿tocando Estrella?} & \py|pos()| da tu posición como una pareja \py|(x, y)|. \py|estrella.distance(pos())| es qué tan lejos está la estrella de ti. Menos de 20 cuenta como tocarla. \\
+45--47 & \chip[motion]{ir a posición aleatoria} & Elige un lugar nuevo al azar. El \py|* 40| pone la estrella en lugares a los que puedes llegar, porque te mueves de 40 en 40 pasos. \\
+49 & \chip[motion]{apuntar hacia Jugador} & \py|gato.towards(pos())| calcula qué dirección apunta del gato hacia ti, y el gato gira hacia allá. \\
+50--53 & \chip[sensing]{¿tocando Jugador?}\newline\chip[control]{detener todos} & El gato da 25 pasos hacia ti. Si está a menos de 30, te atrapó y \py|break| termina el juego. \\
+\bottomrule
+\end{longtable}
+
+\begin{think}[¿Por qué el gato es más lento que tú?]
+Tú te mueves 40 pasos por turno y el gato 25, así que siempre puedes escapar, ¡pero solo hasta que llegues al borde! Las esquinas son peligrosas. Cambia el 25 del gato por 35 y mira cuánto más difícil se vuelve.
+\end{think}
+
+\enlargethispage{\baselineskip}
+\begin{challenge}[Sube de nivel]\small
+\tick Haz el juego más largo (más turnos) o más difícil (un gato más rápido).\par
+\tick Acelera al gato: cada estrella que atrapes suma 5 a su paso (usa \py|paso_gato|).\par
+\tick Agrega un segundo gato que empiece abajo a la izquierda.\par
+\tick Deja un rastro: usa \py|pendown()| en vez de \py|penup()| y un \py|pencolor| bonito.
+\end{challenge}
+
+% =====================================================================
+\mission{Juego de atrapar}{un objeto que cae, un bucle de juego dentro de otro, \texttt{jumpto()} y \texttt{distance()}}
+
+Caen manzanas del cielo, y el viento las empuja de lado. Mira la primera mitad de la caída, luego calcula dónde va a caer la manzana y mueve tu canasta ahí. ¿Puedes atrapar las cinco?
+
+\step{La versión de Scratch}
+\begin{center}
+\begin{minipage}[t]{0.6\linewidth}
+\textbf{Manzana}\par
+\begin{scratch}[scale=0.9]
+\blockinit{al presionar \greenflag}
+\blockrepeat{repetir \ovalnum{5}}{
+  \blockmove{ir a x: \ovaloperator{elegir número al azar entre \ovalnum{-80} y \ovalnum{80}} y: \ovalnum{160}}
+  \blockrepeat{repetir hasta que \booloperator{\ovalmove{posición en y} < \ovalnum{-150}}}{
+    \blockmove{cambiar y en \ovalnum{-5}}
+  }
+  \blockif{si \boolsensing{¿tocando \selectmenu{Canasta}?} entonces}{
+    \blockvariable{cambiar \selectmenu{puntos} en \ovalnum{1}}
+  }
+}
+\end{scratch}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.37\linewidth}
+\textbf{Canasta}\par
+\begin{scratch}[scale=0.82]
+\blockinit{al presionar tecla \selectmenu{flecha izquierda}}
+\blockmove{cambiar x en \ovalnum{-10}}
+\end{scratch}
+\end{minipage}
+\end{center}
+
+\begin{think}[Primero predice]
+La canasta espera a que escribas un número. ¿Qué crees que pasa si escribes una palabra, como \texttt{izquierda}, en vez de un número? (¡Pruébalo! Luego lee la última línea del mensaje de error como un detective. Python siempre escribe sus errores en inglés; la palabra importante es el nombre del error, aquí \texttt{ValueError}: un valor que no sirve.)
+\end{think}
+
+\needspace{26\baselineskip}
+\step{La versión de Python}
+\begin{typethis}[Escribe esto en una celda de código (parte 1)]
+from ColabTurtlePlus.Turtle import *
+clearscreen()
+initializeTurtle((480, 360))
+import random
+
+bgcolor("skyblue")
+hideturtle()
+
+canasta = Turtle()
+canasta.shape("square")
+canasta.color("brown")
+canasta.penup()
+canasta.goto(0, -150)
+
+manzana = Turtle()
+manzana.shape("circle")
+manzana.color("red")
+manzana.penup()
+manzana.speed(13)
+\end{typethis}
+
+Ejecútalo: un cuadrado café (la canasta) abajo y un círculo rojo (la manzana). Ahora agrega la parte 2 debajo, en la misma celda.
+
+\lstset{firstnumber=21}
+\begin{typethis}[Escribe esto en una celda de código (parte 2)]
+puntos = 0
+for ronda in range(5):
+    x = random.choice([-80, 0, 80])
+    viento = random.choice([-20, 0, 20])
+    manzana.jumpto(x, 160)
+    for paso in range(4):
+        manzana.goto(manzana.xcor() + viento,
+                     manzana.ycor() - 40)
+
+    lugar = int(input("Canasta x (-240 a 240): "))
+    canasta.goto(lugar, -150)
+
+    for paso in range(4):
+        manzana.goto(manzana.xcor() + viento,
+                     manzana.ycor() - 40)
+    if canasta.distance(manzana.pos()) < 50:
+        puntos = puntos + 1
+        print("¡Atrapada!")
+    else:
+        print("¡Plaf! Cayó en x =",
+              round(manzana.xcor()))
+
+print("Atrapaste", puntos, "de 5 manzanas")
+\end{typethis}
+\lstset{firstnumber=1}
+
+\needspace{14\baselineskip}
+\step{Cómo funciona}
+\begin{longtable}{>{\centering\arraybackslash}p{1.1cm} P{5.3cm} P{9.1cm}}
+\toprule
+\textbf{Línea} & \textbf{Bloque de Scratch} & \textbf{Qué significa} \\
+\midrule
+6--7 & \chip[looks]{cambiar fondo a} & Un escenario azul cielo (\py|"skyblue"|). Escondemos la tortuga sencilla porque este juego solo necesita la canasta y la manzana. Los colores van en inglés: \py|"brown"| es café y \py|"red"| es rojo. \\
+9--19 & (dos objetos nuevos) & La canasta y la manzana, cada una con su propio nombre. \\
+22 & \chip[control]{repetir 5} & El bucle grande: una vuelta = una manzana. \\
+23--24 & \chip[operators]{elegir número al azar} & \py|random.choice()| elige un elemento de una lista. La manzana empieza en $-80$, 0 u 80, y el viento la empuja $-20$, 0 o 20 pasos de lado en cada paso hacia abajo. \\
+25 & \chip[motion]{ir a x: y:} & \py|jumpto()| mueve al instante, sin deslizarse, así la manzana aparece de golpe arriba. \\
+26--28 & \chip[control]{repetir hasta que}\newline\chip[motion]{cambiar y en -40} & El bucle pequeño: cuatro pasos hacia abajo (y de lado). Esta es la primera mitad de la caída. \\
+30--31 & \chip[events]{al presionar tecla}\newline\chip[motion]{fijar x a} & Escribes una posición x y la canasta se desliza hasta ahí. \\
+33--35 & \chip[motion]{cambiar y en -40} & Cuatro pasos más: la segunda mitad de la caída. \\
+36 & \chip[sensing]{¿tocando Canasta?} & \py|manzana.pos()| es la posición de la manzana. Si la canasta está a menos de 50 pasos de ella, cuenta como atrapada. \\
+\bottomrule
+\end{longtable}
+
+\begin{think}[El secreto para atrapar]
+La manzana cae 8 pasos y se mueve de lado lo mismo en cada paso. Cuando se detiene a la mitad, ya dio 4 pasos. Así que en la segunda mitad se moverá de lado \textbf{exactamente lo mismo otra vez}. Si empezó en 0 y ahora está en 80, ¿dónde va a caer?
+\end{think}
+
+\begin{challenge}[Sube de nivel]
+\tick Deja que la manzana empiece en cualquier lugar de $-160$ a 160 (pero cuidado: un viento fuerte podría sacarla del escenario).\par
+\tick Hazlo más difícil: solo cuenta si la canasta está a menos de 30.\par
+\tick ¡Haz un jugador computadora! Borra la línea del \py|input| y deja que la canasta calcule sola dónde va a caer la manzana.\par
+\tick Deja una marca: después de que caiga cada manzana, agrega \py|manzana.stamp()| para que veas dónde cayeron las cinco manzanas. Si tienes \py|pitido()| de la Parte 7, ¡haz un bip cuando atrapes una!
+\end{challenge}
+
+% =====================================================================
+\banner{pen}{TE TOCA}{Tu propio proyecto}
+
+Ya construiste ocho grandes proyectos. Ahora viene el mejor: \textbf{el tuyo}. La mejor manera de empezar es \textbf{hacer un remix de uno de tus propios proyectos de Scratch}. Ábrelo en Scratch, mira sus programas y planea cómo convertirlo en Python.
+
+\subsection*{¿Es bueno para Colab?}
+Casi todos los proyectos de Scratch se pueden convertir en Python. Así se cambian los bloques difíciles:
+
+\begin{center}
+\begin{tabular}{P{5.6cm} P{10.6cm}}
+\toprule
+\textbf{En Scratch} & \textbf{En Python (Colab)} \\
+\midrule
+\chip[events]{al presionar tecla} & un turno: \py|jugada = input("¿w, a, s o d? ")| \\
+\chip[sensing]{¿tocando Objeto2?} & \py|gato.distance(pos()) < 20| \\
+\chip[motion]{apuntar hacia Objeto2} & \py|gato.setheading(gato.towards(pos()))| \\
+\chip[control]{por siempre} & \py|for turno in range(20):| o \py|while True:| con \py|input()| y \py|break| \\
+\chip[events]{enviar y esperar} & llamar a tu propia función: \py|cueva()| \\
+\chip[looks]{decir ¡Hola!} & \py|print("¡Hola!")| o \py|write("¡Hola!")| \\
+\chip[sound]{iniciar sonido} & \py|pitido(262)| (de la Parte 7) \\
+un segundo objeto & \py|gato = Turtle()| \\
+disfraces & formas (\py|"turtle"|, \py|"circle"|, \ldots) y colores \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\needspace{12\baselineskip}
+\subsection*{Mi plan}
+\begin{tcolorbox}[colback=white, colframe=codeframe, arc=5pt, title=\textbf{Mi proyecto}, coltitle=ink, colbacktitle=codebg]
+\textbf{Nombre de mi proyecto:}\par\vspace{9pt}\rule{\linewidth}{0.4pt}\par\vspace{6pt}
+\textbf{Es un remix de mi proyecto de Scratch:}\par\vspace{9pt}\rule{\linewidth}{0.4pt}\par\vspace{6pt}
+\textbf{Qué pasa (en tres oraciones):}\par\vspace{4pt}
+\foreach \n in {1,...,3}{\rule{\linewidth}{0.4pt}\par\vspace{9pt}}
+\end{tcolorbox}
+
+\needspace{14\baselineskip}
+\begin{tcolorbox}[colback=white, colframe=codeframe, arc=5pt, title=\textbf{Mis objetos}, coltitle=ink, colbacktitle=codebg]
+\renewcommand{\arraystretch}{2.1}
+\begin{tabular}{@{}p{3.6cm}p{3.4cm}p{8.2cm}@{}}
+\textbf{Objeto en Scratch} & \textbf{Nombre en Python} & \textbf{Qué hace} \\ \hline
+& & \\ \hline
+& & \\ \hline
+& & \\ \hline
+\end{tabular}
+\end{tcolorbox}
+
+\needspace{10\baselineskip}
+\subsection*{Constrúyelo paso a paso}
+\begin{enumerate}[label=\tick]
+  \item Empieza un cuaderno nuevo de Colab. Pon el nombre de tu proyecto en una celda de texto arriba de todo.
+  \item Escribe las tres líneas de inicio (si dibuja) y crea tus objetos. Ejecútalo.
+  \item Agrega \textbf{una} cosa a la vez: el movimiento, luego los toques, luego los puntos. Ejecuta después de cada una.
+  \item Cuando algo salga mal, lee el mensaje de error como un detective: primero la última línea, luego el número de línea.
+  \item Muéstrale tu proyecto a alguien en casa. Pídele que lo juegue, y fíjate en lo que hace.
+  \item Agrega una idea más que te haya dado. ¡Eso también es un remix!
+\end{enumerate}
+
+
+\needspace{20\baselineskip}
+\begin{tcolorbox}[colback=white, colframe=codeframe, arc=5pt, title=\textbf{Bloques que voy a necesitar, y su Python}, coltitle=ink, colbacktitle=codebg]
+\renewcommand{\arraystretch}{2.1}
+\begin{tabular}{@{}p{7.4cm}p{7.9cm}@{}}
+\textbf{Bloque de Scratch} & \textbf{Línea de Python} \\ \hline
+& \\ \hline
+& \\ \hline
+& \\ \hline
+& \\ \hline
+& \\ \hline
+& \\ \hline
+\end{tabular}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=white, colframe=codeframe, arc=5pt, title=\textbf{Cosas que arreglar o agregar la próxima vez}, coltitle=ink, colbacktitle=codebg]
+\vspace{4pt}
+\foreach \n in {1,...,4}{\rule{\linewidth}{0.4pt}\par\vspace{9pt}}
+\end{tcolorbox}
+
+\begin{center}
+\begin{tcolorbox}[colback=ink, colframe=ink, arc=10pt, width=13cm, halign=center]
+{\color{white}\Large\bfseries ¡Ya eres un verdadero programador de Python!}\par\vspace{4pt}
+{\color{white}Puedes convertir tus propias ideas en programas, con bloques y con Python. ¡Sigue creando cosas!}
+\end{tcolorbox}
+\end{center}

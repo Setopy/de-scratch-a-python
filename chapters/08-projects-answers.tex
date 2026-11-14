@@ -1,0 +1,42 @@
+% =====================================================================
+% 08-projects-answers.tex : pistas para los retos «Sube de nivel» de Grandes proyectos
+% =====================================================================
+
+\subsection*{Grandes proyectos: pistas para «Sube de nivel»}
+Para subir de nivel no hay una sola respuesta correcta. Si tu programa hace lo que tú querías, ¡está bien! Estas pistas te ayudan si te atoras.
+
+\textbf{Anima tu nombre.} Cambia \py|range(8)| por \py|range(20)| en la línea 20 y el número de \py|time.sleep()| en la línea 29. Para las letras que crecen, cambia el tipo de letra de la línea 27 por \py|font=("Arial", 20 + cuadro * 5, "bold")|. Para el arcoíris, reemplaza \py|random.choice(colores)| en la línea 24 por \py|colores[cuadro % 7]| (hay 7 colores en la lista).
+
+\textbf{Flor de lápiz.} \py|petalo(150)| hace pétalos más grandes que pueden salirse del escenario. Para una flor dentro de otra flor, copia las líneas 18--21 y usa \py|petalo(50)| en la copia. Para el jardín, esto funciona (reemplaza las líneas 17--31):
+\begin{codenonum}
+def flor(x, y):
+    penup()
+    goto(x, y)
+    pendown()
+    for p in range(petalos):
+        color(colores[p % 6])
+        petalo(50)
+        left(360 / petalos)
+
+petalos = int(input("¿Cuántos pétalos? (3 a 20) "))
+flor(-150, 0)
+flor(0, 0)
+flor(150, 0)
+hideturtle()
+\end{codenonum}
+
+\textbf{Concurso de tablas.} Para 10 preguntas cambia \py|range(5)| en la línea 16 y el \py|5| de los mensajes (líneas 22 y 24). Para un concurso de la tabla del siete, la línea 17 se vuelve \py|a = 7|. Para los sonidos: \py|pitido(523)| va después de \py|print("¡Correcto!")| y \py|pitido(196)| después de la línea del \texttt{¡Uy!}
+
+\textbf{Adivina el número de lujo.} Partiendo 1000 a la mitad: 500, 250, 125, 63, 32, 16, 8, 4, 2, 1. Son 10 intentos. Agrega \py|elif nivel == "4":| con \py|maximo = 1000| e \py|intentos = 10| antes del \py|else:|. Para contar los juegos ganados, pon \py|ganados = 0| antes del bucle grande, agrega \py|ganados = ganados + 1| dentro de \py|if ganaste:| e imprímelo después del bucle. Para «¡Caliente!»: \py|if numero != secreto and numero - secreto < 6 and secreto - numero < 6:|. Para «demasiado grande»: revisa \py|if numero > maximo:| justo después de la línea del \py|input|, imprime un mensaje y súmale 1 otra vez a \py|intentos|.
+
+\textbf{Elige tu propia historia.} Una tercera opción necesita otro ayudante, o puedes hacer dos preguntas seguidas: primero \py|elegir("¿Qué haces?", "remar", "nadar")|, y dentro de la parte de \texttt{nadar}, \py|elegir("¿Nadar o cruzar el puente?", "nadar", "puente")|, que llama a \py|puente()|. Pon \py|def puente():| cerca del principio con las otras escenas, para que Python ya lo haya leído antes de que empiece la historia.
+
+\textbf{Mascota virtual.} Agrega \py|energia = 7| al principio, un \py|elif accion == "dormir":| nuevo que haga \py|energia = 10|, y \py|energia = energia - 2| en la parte de \texttt{jugar}. Un mensaje de humor: \py|if alegria >= 8:| y luego \py|print("(ronronea)")|. Para ganar: \py|if dia == 15:| imprime tu diploma y luego \py|break|.
+
+\textbf{Juego de persecución.} Pon \py|paso_gato = 25| junto a \py|puntos = 0|, usa \py|gato.forward(paso_gato)| y agrega \py|paso_gato = paso_gato + 5| dentro del \py|if| de la estrella. Un gato rápido puede saltar por encima de ti, así que cambia también la prueba de atrapar por \py|gato.distance(pos()) < paso_gato + 5|. Un segundo gato: copia las líneas 11--16 con el nombre \py|gato2| y \py|gato2.goto(-200, -140)|, y luego copia las líneas 49--53 para \py|gato2|.
+
+\textbf{Juego de atrapar.} Para empezar más a lo ancho, la línea 23 se vuelve \py|x = random.randint(-160, 160)|; para que la manzana no se salga del escenario, usa \py|viento = random.choice([-10, 0, 10])|. Para el jugador computadora, reemplaza la línea 30 por
+\begin{codenonum}
+    lugar = manzana.xcor() + 4 * viento
+\end{codenonum}
+A la manzana le faltan 4 pasos por caer, y se mueve \py|viento| de lado en cada paso. ¡La computadora atrapa todas las manzanas! Para las marcas, pon \py|manzana.stamp()| después de la línea 35.

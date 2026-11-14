@@ -1,0 +1,778 @@
+% =====================================================================
+% PARTE 4: Operadores
+% =====================================================================
+\partopener{operators}{PARTE 4}{Operadores}{Haz cuentas, tira dados, compara cosas y desarma palabras.}
+\setscratch{scale=0.8}
+
+Los bloques verdes de \textbf{Operadores} son los bloques que piensan en Scratch. Hacen cuentas, eligen números al azar, revisan si algo es verdadero y juegan con las palabras. En esta parte vas a conocer la versión en Python de cada uno de ellos:
+
+\begin{itemize}
+  \item \chip[operators]{7 + 2} se convierte en \py|7 + 2|
+  \item \chip[operators]{elegir número al azar entre 1 y 6} se convierte en \py|random.randint(1, 6)|
+  \item \chip[operators]{unir Hola Ana} se convierte en \py|"Hola " + "Ana"|
+  \item \chip[operators]{letra 1 de banana} se convierte en \py|"banana"[0]|
+\end{itemize}
+
+Casi todos los programas de esta parte \textbf{no dibujan}, así que no necesitas las tres líneas de inicio. Solo crea una celda nueva con \textbf{+ Código} (\emph{+ Code}), escribe y presiona \playbtn.
+
+\begin{think}[Un mesero amable y un chef robot estricto]
+Scratch es como un mesero amable. Si le pides algo un poco revuelto, adivina lo que querías decir. Python es como un chef robot estricto. Hace \textbf{exactamente} lo que le dices, y si tu pedido no tiene sentido, se detiene y te dice por qué. Suena molesto, pero significa que Python nunca adivina mal sin avisarte. Busca los recuadros \textbf{¡Cuidado!} de esta parte: muestran los lugares donde el chef robot es más exigente que el mesero.
+\end{think}
+
+% ---------------------------------------------------------------------
+\needspace{15\baselineskip}
+\subsection*{Hacer cuentas: + -- * /}
+
+En Scratch puedes meter un bloque verde de suma dentro de un bloque \chip[looks]{decir}. En Python pones la cuenta dentro de \py|print( )|.
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center, raster force size=false, raster odd column/.style={add to width=-1.2cm}, raster even column/.style={add to width=1.2cm}]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}
+\blockinit{al presionar \greenflag}
+\blocklook{decir \ovaloperator{\ovalnum{7} + \ovalnum{2}} durante \ovalnum{1} segundos}
+\blocklook{decir \ovaloperator{\ovalnum{7} - \ovalnum{2}} durante \ovalnum{1} segundos}
+\blocklook{decir \ovaloperator{\ovalnum{7} * \ovalnum{2}} durante \ovalnum{1} segundos}
+\blocklook{decir \ovaloperator{\ovalnum{7} / \ovalnum{2}} durante \ovalnum{1} segundos}
+\end{scratch}
+\end{tcolorbox}
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, left=0pt, right=0pt, top=0pt, bottom=0pt, valign=center]
+\begin{code}
+print(7 + 2)
+print(7 - 2)
+print(7 * 2)
+print(7 / 2)
+\end{code}
+\begin{outputbox}
+9\\
+5\\
+14\\
+3.5
+\end{outputbox}
+\end{tcolorbox}
+\end{tcbraster}
+
+\textbf{Cómo funciona.} Los signos son los mismos que en Scratch: \texttt{*} (una estrellita) significa por, y \texttt{/} (una diagonal) significa entre. No necesitas el óvalo verde: los números y el signo simplemente van uno junto al otro. Pon espacios alrededor del signo para que se lea fácil.
+
+\needspace{10\baselineskip}
+\begin{watchout}[¡Cuidado! Dividir siempre da un decimal]
+En Python, \texttt{/} siempre da un número con punto decimal, aunque la división sea exacta. \py|print(6 / 2)| muestra \texttt{3.0}, no \texttt{3}. ¡Y sigue siendo la respuesta correcta!
+
+\textbf{Extra:} dos diagonales, \texttt{//}, dividen y tiran a la basura lo que sobra. \py|print(7 // 2)| muestra \texttt{3}. Scratch no tiene un bloque para esto.
+\end{watchout}
+
+\needspace{14\baselineskip}
+\begin{think}[Los paréntesis son los óvalos verdes]
+En Scratch eliges qué cuenta se hace primero metiendo un bloque \textbf{dentro} de otro. En Python usas paréntesis. Sin paréntesis, Python hace las multiplicaciones y divisiones antes que las sumas y restas, igual que en la clase de matemáticas:
+\begin{center}
+\begin{tabular}{l@{\hspace{1.5cm}}l}
+\ovaloperator{\ovalnum{2} + \ovaloperator{\ovalnum{3} * \ovalnum{4}}} & \py|2 + 3 * 4| da \texttt{14} \\[8pt]
+\ovaloperator{\ovaloperator{\ovalnum{2} + \ovalnum{3}} * \ovalnum{4}} & \py|(2 + 3) * 4| da \texttt{20}
+\end{tabular}
+\end{center}
+\end{think}
+
+% ---------------------------------------------------------------------
+\needspace{15\baselineskip}
+\subsection*{Elegir número al azar}
+
+\begin{tcbraster}[raster columns=1, raster valign=center, raster row skip=6pt]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}
+\blockinit{al presionar \greenflag}
+\blockvariable{fijar \selectmenu{tirada} a \ovaloperator{elegir número al azar entre \ovalnum{1} y \ovalnum{6}}}
+\blocklook{decir \ovalvariable{tirada}}
+\end{scratch}
+\end{tcolorbox}
+\begin{code}
+import random
+tirada = random.randint(1, 6)
+print(tirada)
+\end{code}
+\end{tcbraster}
+
+\textbf{Cómo funciona.} \py|import random| es como hacer clic en el botón \textbf{Agregar Extensión}: trae las herramientas de números al azar de Python. Solo lo necesitas una vez, al principio de la celda. \py|random.randint(1, 6)| significa «de las herramientas de azar, elige un número entero (en inglés, un \textbf{int}eger) del 1 al 6». El punto significa «de adentro de». Igual que en Scratch, \textbf{los dos extremos cuentan}, así que puede salir 1 y puede salir 6. Ejecuta la celda varias veces: cada vez sale un número diferente.
+
+Python habla inglés: sus palabras (\texttt{import}, \texttt{print}, \texttt{random}...) siempre van en inglés. Lo que tú inventas, como el nombre \py|tirada|, sí puede ir en español.
+
+\begin{watchout}[¡Cuidado! El número más chico primero]
+A Scratch no le importa \chip[operators]{elegir número al azar entre 6 y 1}: voltea los números por ti. Python se detiene con \texttt{ValueError: empty range} («rango vacío»). Pon siempre el número más chico primero.
+
+Python siempre escribe sus errores en inglés (no los traduce). La palabra importante es el nombre del error, al principio: \texttt{ValueError}, \texttt{TypeError}, \texttt{IndexError}...
+\end{watchout}
+
+% ---------------------------------------------------------------------
+\needspace{15\baselineskip}
+\subsection*{Más grande, más chico, igual: > < ==}
+
+Los bloques verdes puntiagudos responden una pregunta con \textbf{verdadero} o \textbf{falso}. Puedes meter uno en un bloque \chip[looks]{decir} para ver la respuesta. En Python, la respuesta es \py|True| (verdadero) o \py|False| (falso).
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center, raster force size=false, raster odd column/.style={add to width=-1.2cm}, raster even column/.style={add to width=1.2cm}]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}[scale=0.77]
+\blockinit{al presionar \greenflag}
+\blockvariable{fijar \selectmenu{puntos} a \ovalnum{10}}
+\blocklook{decir \booloperator{\ovalnum{5} > \ovalnum{3}} durante \ovalnum{1} segundos}
+\blocklook{decir \booloperator{\ovalnum{5} < \ovalnum{3}} durante \ovalnum{1} segundos}
+\blocklook{decir \booloperator{\ovalvariable{puntos} = \ovalnum{10}}}
+\end{scratch}
+\end{tcolorbox}
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, left=0pt, right=0pt, top=0pt, bottom=0pt, valign=center]
+\begin{code}
+puntos = 10
+print(5 > 3)
+print(5 < 3)
+print(puntos == 10)
+\end{code}
+\begin{outputbox}
+True\\
+False\\
+True
+\end{outputbox}
+\end{tcolorbox}
+\end{tcbraster}
+
+\textbf{Cómo funciona.} \texttt{>} y \texttt{<} son iguales que en Scratch. Para revisar si dos cosas son iguales, Python usa \textbf{dos} signos de igual, \texttt{==}. Acuérdate de la Parte 3: \textbf{un} signo de igual guarda un valor en una caja (\py|puntos = 10|). Dos signos de igual hacen una pregunta: «¿\texttt{puntos} es igual a 10?». \py|True| y \py|False| siempre empiezan con mayúscula.
+
+En la Parte 5 vas a meter estas preguntas dentro de \py|if|, para que el programa decida qué hacer. Por ahora, solo imprimimos las respuestas.
+
+\begin{think}[Dos bloques que Scratch no tiene]
+Python también puede preguntar «más grande \textbf{o igual}» con \texttt{>=}, y «más chico o igual» con \texttt{<=}. \py|print(10 >= 10)| muestra \texttt{True}. Y \texttt{!=} significa «\textbf{no} es igual a».
+\end{think}
+
+\needspace{12\baselineskip}
+\begin{watchout}[¡Cuidado! ¡Las mayúsculas cuentan!]
+En Scratch, \chip[operators]{Gato = gato} es \textbf{verdadero}. A Scratch no le importan las mayúsculas. A Python sí: \py|print("Gato" == "gato")| muestra \texttt{False}.
+
+La solución es \py|.lower()|, que convierte el texto a minúsculas antes de comparar:\par
+\py|print("Gato".lower() == "gato".lower())| muestra \texttt{True}.
+\end{watchout}
+
+% ---------------------------------------------------------------------
+\needspace{15\baselineskip}
+\subsection*{y, o, no: and, or, not}
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center, raster force size=false, raster odd column/.style={add to width=-1.2cm}, raster even column/.style={add to width=1.2cm}]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}[scale=0.74]
+\blockinit{al presionar \greenflag}
+\blockvariable{fijar \selectmenu{edad} a \ovalnum{9}}
+\blocklook{decir \booloperator{\booloperator{\ovalvariable{edad} > \ovalnum{8}} y \booloperator{\ovalvariable{edad} < \ovalnum{12}}}}
+\blocklook{decir \booloperator{\booloperator{\ovalvariable{edad} < \ovalnum{5}} o \booloperator{\ovalvariable{edad} > \ovalnum{10}}}}
+\blocklook{decir \booloperator{no \booloperator{\ovalvariable{edad} > \ovalnum{8}}}}
+\end{scratch}
+\end{tcolorbox}
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, left=0pt, right=0pt, top=0pt, bottom=0pt, valign=center]
+\begin{code}
+edad = 9
+print(edad > 8 and edad < 12)
+print(edad < 5 or edad > 10)
+print(not edad > 8)
+\end{code}
+\begin{outputbox}
+True\\
+False\\
+False
+\end{outputbox}
+\end{tcolorbox}
+\end{tcbraster}
+
+\textbf{Cómo funciona.} Python usa las mismas palabras que Scratch, pero en inglés y en minúsculas: \py|and| es «y», \py|or| es «o» y \py|not| es «no». \py|and| es \py|True| solo cuando \textbf{los dos} lados son verdaderos. \py|or| es \py|True| cuando \textbf{al menos uno} de los lados es verdadero. \py|not| voltea la respuesta: verdadero se vuelve falso y falso se vuelve verdadero. No necesitas los hexágonos extra: Python resuelve primero las preguntas con \texttt{>} y \texttt{<}, y después el \py|and|.
+
+% ---------------------------------------------------------------------
+\needspace{15\baselineskip}
+\subsection*{Unir: pegar palabras}
+
+\begin{tcbraster}[raster columns=1, raster valign=center, raster row skip=6pt]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}
+\blockinit{al presionar \greenflag}
+\blockvariable{fijar \selectmenu{nombre} a \ovalnum{Ana}}
+\blockvariable{fijar \selectmenu{puntos} a \ovalnum{7}}
+\blocklook{decir \ovaloperator{unir \ovalnum{Hola } \ovalvariable{nombre}} durante \ovalnum{1} segundos}
+\blocklook{decir \ovaloperator{unir \ovalnum{Puntos: } \ovalvariable{puntos}}}
+\end{scratch}
+\end{tcolorbox}
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, left=0pt, right=0pt, top=0pt, bottom=0pt, valign=center]
+\begin{code}
+nombre = "Ana"
+puntos = 7
+print("Hola " + nombre)
+print("Puntos: " + str(puntos))
+\end{code}
+\begin{outputbox}
+Hola Ana\\
+Puntos: 7
+\end{outputbox}
+\end{tcolorbox}
+\end{tcbraster}
+
+\textbf{Cómo funciona.} Cuando \texttt{+} tiene texto en los dos lados, los une, igual que \chip[operators]{unir}. Python llama a un texto \textbf{string}, que en inglés quiere decir «hilo» (imagina letras ensartadas en un hilo, como las cuentas de un collar). Fíjate en el espacio dentro de \py|"Hola "|: sin él saldría \texttt{HolaAna}.
+
+\needspace{12\baselineskip}
+\begin{watchout}[¡Cuidado! No puedes unir texto con un número]
+\py|print("Puntos: " + puntos)| se detiene con esta pista:
+\begin{errorbox}
+TypeError: can only concatenate str (not "int") to str
+\end{errorbox}
+\emph{Concatenate} es «concatenar», una palabra larga para unir. Python está diciendo: «Solo puedo unir un string con otro string (\texttt{str}), y tú me diste un número (\texttt{int})». Scratch simplemente adivinaría. En Python, primero convierte el número en string con \py|str(puntos)|, como en la línea 4 de arriba.
+\end{watchout}
+
+\needspace{10\baselineskip}
+\begin{think}[Extra: los f-strings, la forma fácil de unir]
+Pon una \texttt{f} antes de las comillas, y todo lo que esté dentro de llaves \texttt{\{ \}} se rellena solito, también los números:\par
+\py|print(f"Puntos: {puntos}")| muestra \texttt{Puntos: 7}. ¡Sin \py|str( )| y sin \texttt{+}!
+
+Y un truco más: \py|print("ja" * 3)| muestra \texttt{jajaja}.
+\end{think}
+
+% ---------------------------------------------------------------------
+\needspace{15\baselineskip}
+\subsection*{Letra de, y longitud de}
+
+\begin{tcbraster}[raster columns=1, raster valign=center, raster row skip=6pt]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}
+\blockinit{al presionar \greenflag}
+\blockvariable{fijar \selectmenu{palabra} a \ovalnum{banana}}
+\blocklook{decir \ovaloperator{letra \ovalnum{1} de \ovalvariable{palabra}} durante \ovalnum{1} segundos}
+\blocklook{decir \ovaloperator{longitud de \ovalvariable{palabra}}}
+\end{scratch}
+\end{tcolorbox}
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, left=0pt, right=0pt, top=0pt, bottom=0pt, valign=center]
+\begin{code}
+palabra = "banana"
+print(palabra[0])
+print(len(palabra))
+\end{code}
+\begin{outputbox}
+b\\
+6
+\end{outputbox}
+\end{tcolorbox}
+\end{tcbraster}
+
+\textbf{Cómo funciona.} Los corchetes después de un texto sacan una letra, igual que sacar un elemento de una lista en la Parte 3. Y, igual que con las listas, Python \textbf{cuenta desde 0}. Así que la \chip[operators]{letra 1 de banana} de Scratch es \py|palabra[0]| en Python, la letra 2 es \py|palabra[1]|, y así. La regla es: \textbf{réstale 1} al número de Scratch. \py|len( )| es la forma corta de \emph{length}, «longitud» en inglés: cuenta las letras. También funciona con listas.
+
+\begin{center}
+\begin{tikzpicture}[x=1.15cm]
+  \foreach \l [count=\i from 0] in {b,a,n,a,n,a}{
+    \draw[codeframe, fill=codebg, rounded corners=3pt] (\i,0) rectangle ++(0.95,0.95);
+    \node[font=\ttfamily\Large] at (\i+0.475,0.475) {\l};
+    \node[font=\small\bfseries, text=operators!60!black] at (\i+0.475,-0.35) {\i};
+    \pgfmathtruncatemacro{\s}{\i+1}
+    \node[font=\small, text=muted] at (\i+0.475,1.3) {\s};
+  }
+  \node[anchor=east, font=\small, text=muted] at (-0.2,1.3) {Scratch};
+  \node[anchor=east, font=\small\bfseries, text=operators!60!black] at (-0.2,-0.35) {Python};
+\end{tikzpicture}
+\end{center}
+
+\begin{watchout}[¡Cuidado! Te pasaste del final]
+\texttt{"banana"} tiene 6 letras, así que la última es \py|palabra[5]|. Pedir \py|palabra[6]| se detiene con \texttt{IndexError: string index out of range} («posición fuera del texto»). (Scratch solo da una respuesta vacía.) \textbf{Extra:} \py|palabra[-1]| es un atajo para la última letra.
+\end{watchout}
+
+% ---------------------------------------------------------------------
+\needspace{15\baselineskip}
+\subsection*{Contiene}
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center, raster force size=false, raster odd column/.style={add to width=-1.2cm}, raster even column/.style={add to width=1.2cm}]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}
+\blockinit{al presionar \greenflag}
+\blocklook{decir \booloperator{¿\ovalnum{banana} contiene \ovalnum{nan}?}}
+\end{scratch}
+\end{tcolorbox}
+\begin{code}
+print("nan" in "banana")
+\end{code}
+\end{tcbraster}
+
+\textbf{Cómo funciona.} Muestra \texttt{True}. Léelo en voz alta: «¿\texttt{nan} está \textbf{en} (\py|in|) \texttt{banana}?». El orden está al revés que en Scratch: primero va el pedacito, luego \py|in| y luego la palabra grande. Igual que \texttt{==}, a \py|in| le importan las mayúsculas: \py|"B" in "banana"| es \py|False|. Usa \py|.lower()| otra vez si lo necesitas.
+
+% ---------------------------------------------------------------------
+\needspace{15\baselineskip}
+\subsection*{Módulo: lo que sobra}
+
+\begin{tcbraster}[raster columns=1, raster valign=center, raster row skip=6pt]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}
+\blockinit{al presionar \greenflag}
+\blocklook{decir \ovaloperator{\ovalnum{7} módulo \ovalnum{3}} durante \ovalnum{1} segundos}
+\blocklook{decir \booloperator{\ovaloperator{\ovalnum{10} módulo \ovalnum{2}} = \ovalnum{0}}}
+\end{scratch}
+\end{tcolorbox}
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, left=0pt, right=0pt, top=0pt, bottom=0pt, valign=center]
+\begin{code}
+print(7 % 3)
+print(10 % 2 == 0)
+\end{code}
+\begin{outputbox}
+1\\
+True
+\end{outputbox}
+\end{tcolorbox}
+\end{tcbraster}
+
+\textbf{Cómo funciona.} En Python, el bloque \chip[operators]{módulo} es el signo de porcentaje, \texttt{\%}. Da lo que \textbf{sobra} después de dividir. Reparte 7 dulces entre 3 amigos: a cada uno le tocan 2, y sobra 1. Así que \py|7 % 3| es 1.
+
+\begin{think}[¿Par o impar?]
+Un número par dividido entre 2 no deja nada de sobra. Así que \py|n % 2 == 0| es \py|True| para los números pares y \py|False| para los impares. Los programadores usan este truco todo el tiempo.
+\end{think}
+
+% ---------------------------------------------------------------------
+\needspace{15\baselineskip}
+\subsection*{Valor absoluto, raíz cuadrada y sus amigos}
+
+\begin{tcbraster}[raster columns=1, raster valign=center, raster row skip=6pt]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}
+\blockinit{al presionar \greenflag}
+\blocklook{decir \ovaloperator{\selectmenu{valor absoluto} de \ovalnum{-5}} durante \ovalnum{1} segundos}
+\blocklook{decir \ovaloperator{\selectmenu{raíz cuadrada} de \ovalnum{16}}}
+\end{scratch}
+\end{tcolorbox}
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, left=0pt, right=0pt, top=0pt, bottom=0pt, valign=center]
+\begin{code}
+import math
+print(abs(-5))
+print(math.sqrt(16))
+\end{code}
+\begin{outputbox}
+5\\
+4.0
+\end{outputbox}
+\end{tcolorbox}
+\end{tcbraster}
+
+\textbf{Cómo funciona.} \py|abs( )| (de \emph{absolute}, «absoluto») quita el signo de menos. Ya viene incluido en Python, así que puedes usarlo enseguida. La raíz cuadrada vive en las herramientas de matemáticas de Python, así que primero escribe \py|import math| y luego usa \py|math.sqrt( )| (de \emph{square root}, «raíz cuadrada»). La raíz cuadrada de 16 es 4, porque $4 \times 4 = 16$. Igual que dividir, da un decimal: \texttt{4.0}.
+
+Las otras opciones de ese menú de Scratch también están en \texttt{math}: \chip[operators]{piso de} es \py|math.floor( )| (redondear hacia abajo) y \chip[operators]{techo de} es \py|math.ceil( )| (redondear hacia arriba). Las de ángulos, como \texttt{sen}, funcionan un poco diferente en Python, así que déjalas para después.
+
+% ---------------------------------------------------------------------
+\needspace{15\baselineskip}
+\subsection*{Redondear}
+
+\begin{tcbraster}[raster columns=1, raster valign=center, raster row skip=6pt]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}
+\blockinit{al presionar \greenflag}
+\blocklook{decir \ovaloperator{redondear \ovalnum{2.7}} durante \ovalnum{1} segundos}
+\blocklook{decir \ovaloperator{redondear \ovalnum{2.5}}}
+\end{scratch}
+\end{tcolorbox}
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, left=0pt, right=0pt, top=0pt, bottom=0pt, valign=center]
+\begin{code}
+print(round(2.7))
+print(round(2.5))
+\end{code}
+\begin{outputbox}
+3\\
+2
+\end{outputbox}
+\end{tcolorbox}
+\end{tcbraster}
+
+\textbf{Cómo funciona.} \py|round( )| («redondear») va al número entero más cercano, así que 2.7 se vuelve 3. ¡Pero mira la segunda respuesta!
+
+\begin{watchout}[¡Cuidado! Python redondea 2.5 a 2]
+Scratch redondea 2.5 \textbf{hacia arriba}, a 3. Python redondea un número que termina en .5 al número \textbf{par} más cercano. Así que \py|round(2.5)| es 2, pero \py|round(3.5)| es 4. Los programadores adultos lo hacen así para que, con muchísimos números, redondear no empuje el total hacia arriba.
+
+¿Quieres la forma de Scratch? Usa \py|math.floor(2.5 + 0.5)|, que da \texttt{3}.
+
+\textbf{Extra:} \py|round(3.14159, 2)| deja 2 decimales y da \texttt{3.14}.
+\end{watchout}
+
+% ---------------------------------------------------------------------
+\needspace{15\baselineskip}
+\subsection*{Python es más exigente que Scratch}
+
+Aquí están todos los momentos del chef robot de esta parte en una sola tabla. Regresa a ella cuando Python te muestre un error en rojo.
+
+\begin{center}\small
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{P{3.6cm} P{2.3cm} P{3.7cm} P{5.2cm}}
+\toprule
+\textbf{Tú escribes} & \textbf{Scratch dice} & \textbf{Python dice} & \textbf{Mejor haz esto} \\
+\midrule
+\texttt{"Puntos: " + 10} & Puntos: 10 & \texttt{TypeError} & \py|"Puntos: " + str(10)| \\
+\texttt{"Gato" == "gato"} & verdadero & \texttt{False} & \py|.lower()| en los dos \\
+letra 1 de \texttt{"gato"} & g & \py|"gato"[1]| es \texttt{a} & \py|"gato"[0]| \\
+redondear 2.5 & 3 & \texttt{2} & \py|math.floor(2.5 + 0.5)| \\
+\texttt{10 / 0} & Infinito & \texttt{ZeroDivisionError} & Nunca dividas entre 0 \\
+elegir número al azar entre 6 y 1 & un número & \texttt{ValueError} & El número más chico primero \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\needspace{16\baselineskip}
+\subsection*{¡Adivina qué sale!}
+Antes de ejecutar cada línea, escribe lo que crees que va a mostrar Python. Luego escribe las seis líneas en una celda y ejecútala. ¿Cuántas le atinaste? (Las respuestas están al final del libro.)
+
+\begin{center}
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{l P{5cm}}
+\toprule
+\textbf{Código} & \textbf{Creo que muestra} \\
+\midrule
+\py|print(9 / 3)| & \rule{4cm}{0.4pt} \\
+\py|print("4" + "4")| & \rule{4cm}{0.4pt} \\
+\py|print("Perro" == "perro")| & \rule{4cm}{0.4pt} \\
+\py|print("pizza"[1])| & \rule{4cm}{0.4pt} \\
+\py|print(round(4.5))| & \rule{4cm}{0.4pt} \\
+\py|print(17 % 5)| & \rule{4cm}{0.4pt} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+% =====================================================================
+\setscratch{scale=0.7}
+\mission{Lanzador de dados}{\texttt{random.randint}, ir sumando dentro de un bucle y unir números con \texttt{str( )}}
+
+Tira un dado 10 veces, suma todas las tiradas y calcula el promedio. ¿El promedio se parece a lo que esperabas?
+
+\step{Paso 1: Constrúyelo en Scratch}
+Crea dos variables, \textbf{tirada} y \textbf{total}, y luego arma esto:
+
+\begin{center}
+\begin{scratch}
+\blockinit{al presionar \greenflag}
+\blockvariable{fijar \selectmenu{total} a \ovalnum{0}}
+\blockrepeat{repetir \ovalnum{10}}{
+  \blockvariable{fijar \selectmenu{tirada} a \ovaloperator{elegir número al azar entre \ovalnum{1} y \ovalnum{6}}}
+  \blockvariable{cambiar \selectmenu{total} en \ovalvariable{tirada}}
+  \blocklook{decir \ovaloperator{unir \ovalnum{Sacaste } \ovalvariable{tirada}} durante \ovalnum{1} segundos}
+}
+\blocklook{decir \ovaloperator{unir \ovalnum{Total: } \ovalvariable{total}} durante \ovalnum{2} segundos}
+\blocklook{decir \ovaloperator{unir \ovalnum{Promedio: } \ovaloperator{\ovalvariable{total} / \ovalnum{10}}}}
+\end{scratch}
+\end{center}
+
+\step{Paso 2: Escríbelo en Colab}
+
+\begin{typethis}
+import random
+total = 0
+for i in range(10):
+    tirada = random.randint(1, 6)
+    total = total + tirada
+    print("Sacaste " + str(tirada))
+print("Total: " + str(total))
+print("Promedio: " + str(total / 10))
+\end{typethis}
+
+\step{Paso 3: Léelo línea por línea}
+
+\begin{longtable}{>{\centering\arraybackslash}p{1.1cm} P{5.3cm} P{9.1cm}}
+\toprule
+\textbf{Línea} & \textbf{Bloque de Scratch} & \textbf{Qué significa} \\
+\midrule
+--- & \chip[events]{al presionar bandera verde} & No hace falta código: el botón de reproducir \playbtn{} lo arranca. \\
+1 & (Agregar Extensión) & Trae las herramientas de azar. \\
+2 & \chip[variables]{fijar total a 0} & Crea una caja llamada \py|total| con 0 adentro. \\
+3 & \chip[control]{repetir 10} & Haz 10 veces las líneas con sangría. \\
+4 & \chip[variables]{fijar tirada a}\newline\chip[operators]{elegir número al azar} & Tira el dado: un número entero del 1 al 6, con los dos extremos incluidos. \\
+5 & \chip[variables]{cambiar total en tirada} & Toma lo que hay en \py|total|, súmale la tirada y guarda el resultado otra vez en \py|total|. \\
+6 & \chip[looks]{decir unir Sacaste tirada} & \py|tirada| es un número, así que \py|str(tirada)| lo convierte en string antes de unirlo. \\
+7 & \chip[looks]{decir unir Total: total} & No tiene espacios adelante, así que se ejecuta una sola vez, después del bucle. \\
+8 & \chip[looks]{decir unir Promedio: \ldots} & Primero se calcula \py|total / 10| y luego se convierte en string. \\
+\bottomrule
+\end{longtable}
+
+\step{Paso 4: Ejecútalo}
+Presiona \playbtn. Tus tiradas van a ser diferentes, ¡porque son al azar! Esta es una ejecución real:
+
+\begin{outputbox}[Podrías ver]
+Sacaste 6\\
+Sacaste 2\\
+{\sffamily\itshape\color{muted} \ldots\ 8 tiradas más: 6, 2, 1, 3, 3, 1, 4, 6 \ldots}\\
+Total: 34\\
+Promedio: 3.4
+\end{outputbox}
+
+El promedio es un decimal porque \texttt{/} siempre da un decimal. Si tiras un dado justo muchísimas veces, el promedio se acerca a 3.5, exactamente a la mitad entre 1 y 6.
+
+\begin{challenge}
+\tick Tira 100 veces en vez de 10. Cambia la línea 3 \textbf{y} la línea 8. ¿Ahora el promedio está más cerca de 3.5? (Consejo: primero quita la línea 6, ¡o te van a salir 100 líneas!)\par
+\tick Haz un dado de 20 caras para un juego de mesa.\par
+\tick Tira \textbf{dos} dados cada vez: \py|tirada = random.randint(1, 6) + random.randint(1, 6)|. ¿Cuál es el total más grande que podrías sacar?\par
+\tick Agrega \py|print(tirada == 6)| dentro del bucle. Muestra \texttt{True} cada vez que sale un seis.
+\end{challenge}
+
+% =====================================================================
+\mission{Impresora de tablas}{multiplicar dentro de un bucle, y los f-strings}
+
+Deja que Python imprima una tabla de multiplicar completa en un instante. Luego cambia un número para tener la tabla que quieras.
+
+\step{Paso 1: Constrúyelo en Scratch}
+Crea dos variables, \textbf{tabla} y \textbf{n}, y luego arma esto:
+
+\begin{center}
+\begin{scratch}
+\blockinit{al presionar \greenflag}
+\blockvariable{fijar \selectmenu{tabla} a \ovalnum{7}}
+\blockvariable{fijar \selectmenu{n} a \ovalnum{1}}
+\blockrepeat{repetir \ovalnum{12}}{
+  \blocklook{decir \ovaloperator{unir \ovalvariable{n} \ovaloperator{unir \ovalnum{ x 7 = } \ovaloperator{\ovalvariable{n} * \ovalvariable{tabla}}}} durante \ovalnum{1} segundos}
+  \blockvariable{cambiar \selectmenu{n} en \ovalnum{1}}
+}
+\end{scratch}
+\end{center}
+
+¡Son muchos bloques de unir! Python lo hace mucho más fácil.
+
+\step{Paso 2: Escríbelo en Colab}
+
+\begin{typethis}
+tabla = 7
+n = 1
+for i in range(12):
+    print(f"{n} x {tabla} = {n * tabla}")
+    n = n + 1
+\end{typethis}
+
+\step{Paso 3: Léelo línea por línea}
+
+\begin{longtable}{>{\centering\arraybackslash}p{1.1cm} P{5.3cm} P{9.1cm}}
+\toprule
+\textbf{Línea} & \textbf{Bloque de Scratch} & \textbf{Qué significa} \\
+\midrule
+1 & \chip[variables]{fijar tabla a 7} & Qué tabla de multiplicar vamos a imprimir. \\
+2 & \chip[variables]{fijar n a 1} & \py|n| cuenta 1, 2, 3 \ldots\ hasta 12. \\
+3 & \chip[control]{repetir 12} & Haz 12 veces las líneas con sangría. \\
+4 & \chip[looks]{decir unir \ldots} & Un \textbf{f-string}. Cada par de llaves es un hueco que Python rellena. ¡\texttt{\{n * tabla\}} hasta hace la cuenta primero! La \texttt{x} es solo una letra x dentro del texto. \\
+5 & \chip[variables]{cambiar n en 1} & Súmale 1 a \py|n|, listo para la siguiente línea. \\
+\bottomrule
+\end{longtable}
+
+\step{Paso 4: Ejecútalo}
+
+\begin{outputbox}
+1 x 7 = 7\\
+2 x 7 = 14\\
+3 x 7 = 21\\
+4 x 7 = 28\\
+{\sffamily\itshape\color{muted} \ldots\ y así sigue, hasta \ldots}\\
+12 x 7 = 84
+\end{outputbox}
+
+\begin{think}[La misma línea sin f-string]
+También podrías unir con \texttt{+} y \py|str( )|, como en la Misión 1. Funciona, pero queda larguísimo, así que es más fácil en tres líneas:
+\begin{codenonum}
+a = str(n) + " x "
+b = str(tabla) + " = "
+print(a + b + str(n * tabla))
+\end{codenonum}
+Las dos formas están bien. Casi todos los programadores de Python eligen el f-string.
+\end{think}
+
+\begin{challenge}
+\tick Imprime la tabla del 9. ¿Qué línea cambias?\par
+\tick Llega hasta 20 x 7.\par
+\tick Imprime los números al cuadrado: cambia la línea 4 para que muestre \texttt{5 x 5 = 25}, y así. (Pista: solo necesitas \py|n|.)\par
+\tick Agrega \texttt{\{n * tabla \% 2 == 0\}} al final del f-string. ¿Qué te dice el \texttt{True} o el \texttt{False}?
+\end{challenge}
+
+% =====================================================================
+\mission{Arte de puntos al azar}{posiciones al azar con \texttt{goto}, \texttt{dot( )}, y elegir un color al azar de una lista}
+
+La tortuga salta a 50 lugares al azar del escenario y deja un punto de color en cada uno. ¡Cada vez que lo ejecutas, sale un dibujo nuevo!
+
+\step{Paso 1: Constrúyelo en Scratch}
+Agrega la extensión \textbf{Lápiz} y luego arma esto:
+
+\begin{center}
+\begin{scratch}
+\blockinit{al presionar \greenflag}
+\blockpen{borrar todo}
+\blockpen{subir lápiz}
+\blocklook{esconder}
+\blockrepeat{repetir \ovalnum{50}}{
+  \blockmove{ir a x: \ovaloperator{elegir número al azar entre \ovalnum{-240} y \ovalnum{240}} y: \ovaloperator{elegir número al azar entre \ovalnum{-180} y \ovalnum{180}}}
+  \blockpen{fijar tamaño de lápiz a \ovaloperator{elegir número al azar entre \ovalnum{10} y \ovalnum{40}}}
+  \blockpen{fijar \selectmenu{color} de lápiz a \ovaloperator{elegir número al azar entre \ovalnum{0} y \ovalnum{100}}}
+  \blockpen{bajar lápiz}
+  \blockpen{subir lápiz}
+}
+\end{scratch}
+\end{center}
+
+\step{Paso 2: Escríbelo en Colab}
+
+\begin{typethis}
+from ColabTurtlePlus.Turtle import *
+clearscreen()
+initializeTurtle((480, 360))
+import random
+
+colores = ["red", "gold", "skyblue", "pink", "lime"]
+speed(13)
+penup()
+hideturtle()
+for i in range(50):
+    x = random.randint(-240, 240)
+    y = random.randint(-180, 180)
+    goto(x, y)
+    medida = random.randint(10, 40)
+    tono = colores[random.randint(0, 4)]
+    dot(medida, tono)
+\end{typethis}
+
+Los colores se escriben en inglés: \py|"red"| es rojo, \py|"gold"| dorado, \py|"skyblue"| azul cielo, \py|"pink"| rosa y \py|"lime"| verde limón.
+
+\step{Paso 3: Léelo línea por línea}
+
+\begin{longtable}{>{\centering\arraybackslash}p{1.1cm} P{5.3cm} P{9.1cm}}
+\toprule
+\textbf{Línea} & \textbf{Bloque de Scratch} & \textbf{Qué significa} \\
+\midrule
+1--3 & \chip[events]{al presionar bandera verde}\newline\chip[pen]{borrar todo} & Las tres líneas de inicio. También dejan el escenario limpio. \\
+4 & (Agregar Extensión) & Trae las herramientas de azar. \\
+6 & (una lista) & Una lista de 5 nombres de colores. En Scratch, los colores del lápiz son números del 0 al 100, pero a Python le gustan los \textbf{nombres} de los colores, así que guardamos nuestros favoritos en una lista. \\
+7 & & Dibuja tan rápido como pueda ir la tortuga. \\
+8--9 & \chip[pen]{subir lápiz}\newline\chip[looks]{esconder} & No dibujes líneas entre los puntos, y esconde la tortuga. \\
+10 & \chip[control]{repetir 50} & Haz 50 puntos. \\
+11--13 & \chip[motion]{ir a x: \ldots{} y: \ldots} & Elige una \py|x| al azar de un lado del escenario al otro, y una \py|y| al azar de abajo hacia arriba. Luego ve ahí. \\
+14 & \chip[pen]{fijar tamaño de lápiz a}\newline\chip[operators]{elegir número al azar} & Una medida al azar para el punto, del 10 al 40. \\
+15 & \chip[pen]{fijar color de lápiz a}\newline\chip[operators]{elegir número al azar} & Elige un lugar al azar de la lista. La lista tiene 5 colores, pero Python cuenta desde 0, así que los lugares son 0, 1, 2, 3 y 4. Por eso es \py|randint(0, 4)| y no \py|randint(1, 5)|. Llamamos \py|tono| al color elegido, porque Python ya usa la palabra \py|color| para la tortuga. \\
+16 & \chip[pen]{bajar lápiz}\newline\chip[pen]{subir lápiz} & En Scratch, bajar lápiz y luego subir lápiz hace un punto. \py|dot(medida, tono)| dibuja un punto redondo justo donde está la tortuga. \\
+\bottomrule
+\end{longtable}
+
+\step{Paso 4: Ejecútalo}
+Deberías ver 50 puntos de diferentes tamaños en rojo, dorado, azul cielo, rosa y verde limón, regados por todo el escenario. Ejecútalo otra vez: el dibujo es diferente cada vez.
+
+\begin{challenge}
+\tick Agrega \py|bgcolor("black")| después de la línea 3 para tener un cielo de noche. Haz 200 puntos.\par
+\tick Agrega más colores a la lista, como \py|"orange"| (naranja) y \py|"purple"| (morado). La línea 15 solo elige los lugares del 0 al 4, así que nunca los va a elegir hasta que la arregles. (Forma astuta: \py|random.randint(0, len(colores) - 1)| siempre le queda a la lista.)\par
+\tick Haz que todos los puntos caigan en la mitad de arriba del escenario. ¿Qué números de la línea 12 cambias?\par
+\tick \textbf{Extra:} \py|random.choice(colores)| elige un elemento al azar de una lista de una sola vez. Pruébalo en la línea 15.
+\end{challenge}
+
+% =====================================================================
+\mission{Máquina de nombres}{desarmar palabras con letras y \texttt{len( )}, y armar una palabra al revés}
+
+Python toma un nombre, cuenta sus letras, lo deletrea con una letra por línea y luego lo escribe al revés.
+
+\step{Paso 1: Constrúyelo en Scratch}
+Crea tres variables, \textbf{nombre}, \textbf{n} y \textbf{alreves}, y luego arma esto:
+
+\begin{center}
+\begin{scratch}
+\blockinit{al presionar \greenflag}
+\blockvariable{fijar \selectmenu{nombre} a \ovalnum{Matilda}}
+\blocklook{decir \ovaloperator{unir \ovalnum{Tu nombre tiene } \ovaloperator{unir \ovaloperator{longitud de \ovalvariable{nombre}} \ovalnum{ letras}}} durante \ovalnum{2} segundos}
+\blockvariable{fijar \selectmenu{n} a \ovalnum{1}}
+\blockrepeat{repetir \ovaloperator{longitud de \ovalvariable{nombre}}}{
+  \blocklook{decir \ovaloperator{letra \ovalvariable{n} de \ovalvariable{nombre}} durante \ovalnum{1} segundos}
+  \blockvariable{cambiar \selectmenu{n} en \ovalnum{1}}
+}
+\blockvariable{fijar \selectmenu{alreves} a \ovalnum{}}
+\blockvariable{fijar \selectmenu{n} a \ovalnum{1}}
+\blockrepeat{repetir \ovaloperator{longitud de \ovalvariable{nombre}}}{
+  \blockvariable{fijar \selectmenu{alreves} a \ovaloperator{unir \ovaloperator{letra \ovalvariable{n} de \ovalvariable{nombre}} \ovalvariable{alreves}}}
+  \blockvariable{cambiar \selectmenu{n} en \ovalnum{1}}
+}
+\blocklook{decir \ovalvariable{alreves}}
+\end{scratch}
+\end{center}
+
+\step{Paso 2: Escríbelo en Colab}
+¡Pon tu propio nombre en la línea 1!
+
+\begin{typethis}
+nombre = "Matilda"
+print("Tu nombre tiene " + str(len(nombre)) + " letras")
+for i in range(len(nombre)):
+    print(nombre[i])
+
+alreves = ""
+for i in range(len(nombre)):
+    alreves = nombre[i] + alreves
+print(alreves)
+\end{typethis}
+
+\step{Paso 3: Léelo línea por línea}
+
+\begin{longtable}{>{\centering\arraybackslash}p{1.1cm} P{5.3cm} P{9.1cm}}
+\toprule
+\textbf{Línea} & \textbf{Bloque de Scratch} & \textbf{Qué significa} \\
+\midrule
+1 & \chip[variables]{fijar nombre a Matilda} & El nombre va entre comillas, porque es un string. \\
+2 & \chip[looks]{decir unir Tu nombre tiene \ldots} & \py|len(nombre)| cuenta las letras. \py|str( )| convierte ese número en string, para poder unirlo. \\
+3 & \chip[control]{repetir longitud de nombre} & Da una vuelta por cada letra. \\
+4 & \chip[looks]{decir letra n de nombre} & Aquí está la parte astuta. La \py|i| del bucle cuenta 0, 1, 2, 3 \ldots\ ¡y esos son justo los números que Python usa para las letras! Así que Python no necesita \texttt{n} ni \chip[variables]{cambiar n en 1}. \\
+6 & \chip[variables]{fijar alreves a (vacío)} & Dos comillas sin nada en medio forman un string vacío, como una caja vacía. \\
+7 & \chip[control]{repetir longitud de nombre} & Recorre las letras otra vez. \\
+8 & \chip[variables]{fijar alreves a unir \ldots} & Pega cada letra nueva \textbf{adelante}. M, luego aM, luego taM \ldots\ hasta que todo el nombre queda al revés. \\
+9 & \chip[looks]{decir alreves} & Muestra el nombre al revés, una vez, después del bucle. \\
+\bottomrule
+\end{longtable}
+
+\step{Paso 4: Ejecútalo}
+
+\begin{outputbox}
+Tu nombre tiene 7 letras\\
+M\\
+a\\
+t\\
+i\\
+l\\
+d\\
+a\\
+adlitaM
+\end{outputbox}
+
+\begin{think}[Los espacios también son letras]
+Prueba \py|nombre = "Ada Lovelace"|. Python dice que tiene 12 letras, porque también cuenta el espacio. La \chip[operators]{longitud de} de Scratch hace lo mismo.
+\end{think}
+
+\begin{challenge}
+\tick Imprime el nombre en mayúsculas con \py|print(nombre.upper())|.\par
+\tick Imprime la primera y la última letra: \py|nombre[0]| y \py|nombre[-1]|.\par
+\tick Numera las letras: cambia la línea 4 por \py|print(str(i + 1) + ": " + nombre[i])|. ¿Por qué dice \py|i + 1|?\par
+\tick ¿Tu nombre tiene una \texttt{a}? Agrega \py|print("a" in nombre.lower())|.
+\end{challenge}
+
+% =====================================================================
+\needspace{22\baselineskip}
+\subsection*{Parte 4: Tradúcelo tú}
+
+Aquí hay un programa de Scratch que no has visto. Escríbelo en Python en las líneas, luego escríbelo en Colab y ejecútalo. ¿Hace lo mismo que el programa de Scratch? (La respuesta está al final del libro.)
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=top]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt]
+\begin{scratch}[scale=0.66]
+\blockinit{al presionar \greenflag}
+\blockrepeat{repetir \ovalnum{3}}{
+  \blockvariable{fijar \selectmenu{a} a \ovaloperator{elegir número al azar entre \ovalnum{1} y \ovalnum{10}}}
+  \blockvariable{fijar \selectmenu{b} a \ovaloperator{elegir número al azar entre \ovalnum{1} y \ovalnum{10}}}
+  \blocklook{decir \ovaloperator{unir \ovalnum{Total: } \ovaloperator{\ovalvariable{a} + \ovalvariable{b}}} durante \ovalnum{1} segundos}
+}
+\end{scratch}
+\end{tcolorbox}
+\begin{tcolorbox}[colback=white, colframe=codeframe, arc=5pt, title=\textbf{Mi Python}, coltitle=ink, colbacktitle=codebg]
+\vspace{4pt}
+\foreach \n in {1,...,7}{\rule{\linewidth}{0.4pt}\par\vspace{9pt}}
+\end{tcolorbox}
+\end{tcbraster}
+
+\textbf{Dos pistas:} ¿qué necesitas hasta arriba antes de poder elegir números al azar? ¿Y puedes unir \texttt{"Total: "} directamente con un número?
+
+\begin{puzzle}
+La contraseña secreta de la tortuga es la \textbf{primera letra} de \texttt{Tortuga} unida al \textbf{número de letras} de \texttt{Tortuga}. Escribe \textbf{dos líneas} de Python que calculen la contraseña y la impriman. No escribas tú la respuesta: ¡haz que Python la calcule!
+
+Cuando funcione, deberías ver:
+\begin{outputbox}
+T7
+\end{outputbox}
+\end{puzzle}
+
+\setscratch{scale=1}
+\needspace{8\baselineskip}
+\subsection*{Lista de la Parte 4}
+\tick Ya sé hacer cuentas con \texttt{+ - * /}, y sé que \texttt{/} siempre da un decimal.\par
+\tick Puedo elegir un número al azar con \py|random.randint( )|, después de \py|import random|.\par
+\tick Puedo comparar con \texttt{> < ==} y con \py|and|, \py|or|, \py|not|, e imprimir \py|True| o \py|False|.\par
+\tick Puedo unir strings con \texttt{+}, y usar \py|str( )| o un f-string para los números.\par
+\tick Puedo sacar una letra con \py|palabra[0]|, contar letras con \py|len( )| y revisar con \py|in|.\par
+\tick Ya sé dónde Python es más exigente que Scratch: \py|round(2.5)|, las mayúsculas y contar desde 0.

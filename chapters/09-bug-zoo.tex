@@ -1,0 +1,591 @@
+% =====================================================================
+% Capítulo 09: El Zoológico de Bichos (errores y depuración)
+% Cada mensaje de error de abajo salió de ejecutar el fragmento con
+% python3.13 -I (Python 3.13.5), la misma versión de Python que usa Colab.
+% Los mensajes de error se dejan en inglés, tal como los escribe Python.
+% =====================================================================
+
+% ---------- Cajas que solo se usan en este capítulo ----------
+\newtcblisting{bzerror}{listing only, enhanced, colback=errbg, colframe=errframe,
+  boxrule=0.6pt, arc=4pt, left=6pt, right=4pt, top=0pt, bottom=0pt, before skip=2pt, after skip=3pt,
+  listing options={basicstyle=\ttfamily\footnotesize, columns=fixed, keepspaces=true,
+    upquote=true, showstringspaces=false, numbers=none, breaklines=false}}
+\newtcblisting{bzerrorsmall}{listing only, enhanced, colback=errbg, colframe=errframe,
+  boxrule=0.6pt, arc=4pt, left=6pt, right=4pt, top=0pt, bottom=0pt, before skip=2pt, after skip=3pt,
+  listing options={basicstyle=\ttfamily\scriptsize, columns=fixed, keepspaces=true,
+    upquote=true, showstringspaces=false, numbers=none, breaklines=false}}
+\newtcblisting{bzcolab}{listing only, enhanced, colback=errbg, colframe=errframe,
+  boxrule=0.8pt, arc=5pt, left=6pt, right=4pt, top=2pt, bottom=2pt,
+  title={\textbf{Lo que Colab muestra debajo de la celda}}, coltitle=white, colbacktitle=errframe,
+  fonttitle=\small,
+  listing options={basicstyle=\ttfamily\scriptsize, columns=fixed, keepspaces=true,
+    upquote=true, showstringspaces=false, numbers=none, breaklines=false}}
+\newtcolorbox{bzcard}[3]{enhanced, colback=white, colframe=errframe, boxrule=1pt, arc=8pt,
+  left=8pt, right=8pt, top=3pt, bottom=4pt, before skip=6pt, after skip=8pt,
+  title={\textbf{Bicho #1: #2}\hfill{\itshape #3}}, coltitle=ink, colbacktitle=errhead,
+  fonttitle=\normalsize, fontupper=\small, before upper={\setlength{\parskip}{3pt}}}
+\newtcblisting{bzsnip}{listing only, enhanced, colback=codebg, colframe=codeframe,
+  boxrule=0.6pt, arc=4pt, left=6pt, right=4pt, top=1pt, bottom=1pt, before skip=0pt, after skip=0pt,
+  listing options={style=py, numbers=none, basicstyle=\ttfamily\footnotesize}}
+\newcommand{\bzlabel}[1]{{\bfseries\color{errframe}#1}\ }
+\newcommand{\bzruled}{\vspace{4pt}\rule{\linewidth}{0.4pt}\par\vspace{6pt}\rule{\linewidth}{0.4pt}\par}
+
+\partopener{errhead}{CUANDO ALGO SALE MAL}{El Zoológico de Bichos}{Conoce los doce bichos que todo programador atrapa y aprende a domarlos como un detective.}
+
+A un error en el código se le llama \textbf{bicho} (en inglés, \textit{bug}), y encontrarlo y arreglarlo se llama \textbf{depurar} (o cazar bichos). Todos los programadores del mundo hacen bichos todos los días, incluso las personas que inventaron Python. En este zoológico vas a conocer cada tipo de bicho y vas a aprender a atraparlo.
+
+\subsection*{¿Por qué Python se queja si Scratch nunca lo hacía?}
+
+Scratch fue \textbf{diseñado} para no tener mensajes de error. Sus bloques son como LEGO: solo encajan de maneras que tienen sentido, así que nunca puedes poner un bloque en el lugar equivocado. Y cuando pasa algo raro, Scratch hace en silencio algo que no hace daño y sigue adelante. Prueba esto en Scratch:
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}
+\blockinit{al presionar \greenflag}
+\blocklook{decir \ovaloperator{\ovalnum{10} / \ovalnum{0}}}
+\end{scratch}
+\par\smallskip\small El gato solo dice \textbf{Infinity} y sigue como si nada.
+\end{tcolorbox}
+\begin{code}
+print(10 / 0)
+\end{code}
+\end{tcbraster}
+
+Python no esconde los problemas debajo de la alfombra. Cuando llega a algo que no puede hacer, se \textbf{detiene} y te deja una nota:
+
+\begin{bzerror}
+ZeroDivisionError: division by zero
+\end{bzerror}
+
+Piensa en Python como el ayudante de un detective. Cuando algo sale mal, congela la escena y te escribe una \textbf{nota con pistas}. La nota te dice \textbf{dónde} pasó (el número de línea, como un cuarto de una casa), \textbf{qué tipo} de problema fue (el nombre del error, como el nombre de un sospechoso) y te da una \textbf{pista}. Las letras rojas no quieren decir «fallaste». Quieren decir «¡llegó una pista!».
+
+\begin{think}[Dos familias de bichos]
+\textbf{Bichos de gramática} (\texttt{SyntaxError} e \texttt{IndentationError}): Python lee primero toda la celda, encuentra una línea que no entiende y no ejecuta \textbf{nada}, ni siquiera la línea 1.
+
+\textbf{Bichos de ejecución} (todos los demás): Python ejecuta las líneas una por una y se detiene en la mala. Todo lo que se imprimió \textbf{antes} de esa línea sí aparece, y eso también es una pista: «llegó hasta aquí».
+\end{think}
+
+% ---------------------------------------------------------------------
+\needspace{14\baselineskip}
+\subsection*{Cómo leer un error en Colab}
+
+Aquí hay una celda con un bicho. ¿Puedes encontrarlo antes de seguir leyendo?
+
+\begin{code}
+puntos = 10
+print(puntso)
+\end{code}
+
+Cuando la ejecutas, Colab muestra algo así debajo de la celda (las primeras líneas pueden verse un poco distintas en tu pantalla, pero la última línea será la misma):
+
+\begin{bzcolab}
+---------------------------------------------------------------------
+NameError                         Traceback (most recent call last)
+/tmp/ipykernel_1604/434711600.py in <cell line: 0>()
+      1 puntos = 10
+----> 2 print(puntso)
+
+NameError: name 'puntso' is not defined
+\end{bzcolab}
+
+\begin{watchout}[Python siempre escribe sus errores en inglés]
+Python habla inglés: sus palabras (\texttt{for}, \texttt{print}, \texttt{forward}...) siempre van en inglés, y sus mensajes de error también. Aunque tu Colab esté en español, la nota roja saldrá en inglés. ¡No te preocupes! La palabra más importante es el \textbf{nombre del error} (\texttt{NameError}, \texttt{SyntaxError}...), y en este capítulo te explicamos en español qué quiere decir cada uno. Por ejemplo, \texttt{name 'puntso' is not defined} quiere decir «el nombre \texttt{puntso} no está definido»: Python no conoce esa palabra.
+\end{watchout}
+
+\needspace{10\baselineskip}
+Los bichos de gramática se ven un poco distintos. Aquí Python muestra la línea y señala el lugar exacto con unas flechitas, \texttt{\textasciicircum}:
+
+\begin{bzcolab}
+  File "/tmp/ipython-input-2961531340.py", line 1
+    if 5 > 3
+            ^
+SyntaxError: expected ':'
+\end{bzcolab}
+
+\needspace{12\baselineskip}
+\begin{tcolorbox}[enhanced, colback=errbg, colframe=errframe, boxrule=0.8pt, arc=6pt,
+  title={\textbf{La rutina del detective}}, coltitle=white, colbacktitle=errframe]
+\begin{enumerate}[leftmargin=*]
+  \item \textbf{Lee primero la ÚLTIMA línea.} La palabra antes de los dos puntos es el \textbf{tipo} de bicho (qué animal del zoológico es). Las palabras de después son la pista.
+  \item \textbf{Busca el número de línea.} \texttt{line 2} (línea 2), o la flecha \texttt{---->} junto a una línea, te dice en qué cuarto pasó el crimen. Activa los números de línea en Colab: \textbf{Herramientas} (\textit{Tools}), luego \textbf{Configuración} (\textit{Settings}), luego \textbf{Editor}, luego \textbf{Mostrar números de línea} (\textit{Show line numbers}).
+  \item \textbf{Mira las marcas.} En los bichos de gramática, Python pone marcas \texttt{\textasciicircum} debajo de la parte exacta de la línea que no le gustó. En los bichos de ejecución, Colab señala la línea con una flecha \texttt{---->}.
+  \item \textbf{Lee la pista.} Algunas notas traen una pista, como \texttt{expected ':'} («esperaba \texttt{:}»). Si la nota dice que un nombre \textbf{is not defined} (no está definido), revisa con mucho cuidado cómo está escrito y las mayúsculas: Colab no va a adivinar la palabra correcta por ti.
+\end{enumerate}
+\end{tcolorbox}
+
+\begin{watchout}[Una pista a la vez]
+Python se detiene en el \textbf{primer} problema que encuentra. Si tu código tiene tres bichos, los vas a conocer uno por uno: arreglas uno, ejecutas otra vez, lees la siguiente pista. Eso es completamente normal.
+\end{watchout}
+
+Debajo del error, Colab también muestra un botón \textbf{Explicar error} (\textit{Explain error}). Primero sé tú el detective: lee la última línea, haz tu suposición y solo después presiónalo para comprobar.
+
+\needspace{16\baselineskip}
+\subsection*{El decodificador de pistas}
+
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{longtable}{P{4.4cm} P{5cm} P{6.1cm}}
+\toprule
+\textbf{La última línea dice} & \textbf{Quiere decir} & \textbf{Prueba esto} \\
+\midrule
+\texttt{SyntaxError} & Python no puede leer la línea. & Busca si faltan dos puntos \texttt{:}, un paréntesis \texttt{)} o unas comillas \texttt{"}. \\
+\texttt{IndentationError} & Una línea no está bien alineada. & Las líneas dentro de un bucle, un \texttt{if} o un \texttt{def} necesitan cuatro espacios delante. \\
+\texttt{NameError} & Python no conoce esa palabra. & Revisa cómo está escrita y las mayúsculas. ¿Creaste primero la variable? ¿Ejecutaste las celdas de arriba? \\
+\texttt{TypeError} & Revolviste texto y números. & Usa \py|int( )| para hacer un número, o \py|str( )| para hacer texto. \\
+\texttt{ValueError} & Ese valor no tiene sentido aquí. & ¿Escribiste una palabra donde hacía falta un número? \\
+\texttt{IndexError} & Ese número de elemento no existe. & Python cuenta desde 0. Compruébalo con \py|len( )|. \\
+\texttt{ZeroDivisionError} & Dividiste entre cero. & Revisa que el número no sea 0 antes de dividir. \\
+\texttt{AttributeError} & Ese objeto no tiene ese comando. & Revisa cómo está escrito lo que va después del punto, como en \py|gato.forward|. \\
+\texttt{ModuleNotFoundError} & Las herramientas de la tortuga no están cargadas. & Vuelve a ejecutar la celda «En el principio». \\
+\texttt{KeyboardInterrupt} & Presionaste detener. & ¡No hay nada roto! Python solo dice «me detuviste». \\
+\bottomrule
+\end{longtable}
+\normalsize
+
+% ---------------------------------------------------------------------
+\needspace{20\baselineskip}
+\subsection*{¡Bienvenido al Zoológico de Bichos!}
+
+Aquí están los doce bichos que vas a encontrar más seguido. Cada tarjeta muestra la costumbre de Scratch que deja entrar al bicho, un programita roto, la pista \textbf{real} que da Python (copiada de Python 3.13, la versión que usa Colab) y cómo arreglarlo. ¡Intenta escribir cada programa roto en Colab para ver al bicho en libertad!
+
+\begin{bzcard}{1}{Faltan los dos puntos}{la Cobra de los Dos Puntos}
+\noindent\begin{minipage}[c]{0.43\linewidth}
+\bzlabel{Costumbre de Scratch:} el bloque en forma de C \chip[control]{si} abre su propia boca. En Python, los dos puntos \texttt{:} son la boca que se abre, y tienes que escribirlos.
+\end{minipage}\hfill
+\begin{minipage}[c]{0.54\linewidth}
+\begin{bzsnip}
+if 5 > 3
+    print("sí")
+\end{bzsnip}
+\end{minipage}\par
+\begin{bzerror}
+    if 5 > 3
+            ^
+SyntaxError: expected ':'
+\end{bzerror}
+\bzlabel{Arréglalo:} pon \texttt{:} al final de cada línea con \texttt{if}, \texttt{for}, \texttt{while} y \texttt{def}: \py|if 5 > 3:|. La pista \texttt{expected ':'} quiere decir «esperaba dos puntos».
+\end{bzcard}
+
+\begin{bzcard}{2}{Faltan espacios}{la Torre Tambaleante}
+\noindent\begin{minipage}[c]{0.43\linewidth}
+\bzlabel{Costumbre de Scratch:} los bloques se meten solitos \textbf{dentro} del bloque en C. En Python, cuatro espacios al principio de una línea la ponen adentro.
+\end{minipage}\hfill
+\begin{minipage}[c]{0.54\linewidth}
+\begin{bzsnip}
+for i in range(3):
+print(i)
+\end{bzsnip}
+\end{minipage}\par
+\begin{bzerrorsmall}
+    print(i)
+    ^^^^^
+IndentationError: expected an indented block after 'for' statement on line 1
+\end{bzerrorsmall}
+\bzlabel{Arréglalo:} pon cuatro espacios (o presiona Tab) antes de \py|print(i)|. La pista dice «esperaba un bloque con sangría después del \texttt{for} de la línea 1»: Python hasta te dice qué línea abrió la boca.
+\end{bzcard}
+
+\begin{bzcard}{3}{Espacios que sobran}{el Vagabundo Despistado}
+\noindent\begin{minipage}[c]{0.43\linewidth}
+\bzlabel{Costumbre de Scratch:} puedes arrastrar un bloque a cualquier parte de la pantalla de Scratch. En Python, una línea con espacios delante tiene que estar dentro de un bloque en C.
+\end{minipage}\hfill
+\begin{minipage}[c]{0.54\linewidth}
+\begin{bzsnip}
+print("Hola")
+    print("amigo")
+\end{bzsnip}
+\end{minipage}\par
+\begin{bzerror}
+    print("amigo")
+IndentationError: unexpected indent
+\end{bzerror}
+\bzlabel{Arréglalo:} la línea 2 no está dentro de nada, así que bórrale los espacios. Esta vez no hay flechitas: la pista es la palabra \textbf{unexpected} («inesperada»): una sangría que nadie esperaba.
+\end{bzcard}
+
+\begin{bzcard}{4}{Letras cambiadas}{el Mono Mal Escrito}
+\noindent\begin{minipage}[c]{0.43\linewidth}
+\bzlabel{Costumbre de Scratch:} eliges las variables de la paleta, así que nunca puedes escribir mal una. En Python escribes cada nombre.
+\end{minipage}\hfill
+\begin{minipage}[c]{0.54\linewidth}
+\begin{bzsnip}
+puntos = 10
+print(puntso)
+\end{bzsnip}
+\end{minipage}\par
+\begin{bzerror}
+    print(puntso)
+          ^^^^^^
+NameError: name 'puntso' is not defined
+\end{bzerror}
+\bzlabel{Arréglalo:} escríbelo exactamente igual. Los comandos de la tortuga también son nombres: \py|forwad(100)| da \texttt{NameError: name 'forwad' is not defined}
+\end{bzcard}
+
+\begin{bzcard}{5}{Mayúsculas}{el Copión Mayúsculo}
+\noindent\begin{minipage}[c]{0.43\linewidth}
+\bzlabel{Costumbre de Scratch:} las palabras de los bloques ya vienen escritas. Para Python, \texttt{Print} y \texttt{print} son tan distintos como \texttt{gato} y \texttt{perro}.
+\end{minipage}\hfill
+\begin{minipage}[c]{0.54\linewidth}
+\begin{bzsnip}
+Print("hola")
+\end{bzsnip}
+\end{minipage}\par
+\begin{bzerror}
+    Print("hola")
+    ^^^^^
+NameError: name 'Print' is not defined
+\end{bzerror}
+\bzlabel{Arréglalo:} las palabras de Python van en minúsculas: \py|print|, \py|if|, \py|for|. Un \texttt{If} con mayúscula da solo \texttt{SyntaxError: invalid syntax} («gramática no válida»). ¡Y \texttt{Nombre} y \texttt{nombre} son dos cajas distintas!
+\end{bzcard}
+
+\begin{bzcard}{6}{Faltan las comillas}{el Ladrón de Comillas}
+\noindent\begin{minipage}[c]{0.43\linewidth}
+\bzlabel{Costumbre de Scratch:} escribes el texto en una burbuja blanca, sin comillas. En Python, las comillas dicen «esto es solo texto».
+\end{minipage}\hfill
+\begin{minipage}[c]{0.54\linewidth}
+\begin{bzsnip}
+print(hola)
+\end{bzsnip}
+\end{minipage}\par
+\begin{bzerror}
+    print(hola)
+          ^^^^
+NameError: name 'hola' is not defined
+\end{bzerror}
+\bzlabel{Arréglalo:} \py|print("hola")|. Sin comillas, Python cree que \texttt{hola} es el nombre de una variable. Si olvidas solo las comillas \textbf{de cierre}, \py|print("hola)|, te sale \texttt{SyntaxError: unterminated string literal}: «empezaste un texto y nunca lo terminaste».
+\end{bzcard}
+
+\begin{bzcard}{7}{Falta un paréntesis}{el Murciélago sin Paréntesis}
+\noindent\begin{minipage}[c]{0.43\linewidth}
+\bzlabel{Costumbre de Scratch:} los huecos de un bloque ya vienen dibujados. En Python, los huecos son paréntesis \texttt{( )}, y cada \texttt{(} necesita su \texttt{)}.
+\end{minipage}\hfill
+\begin{minipage}[c]{0.54\linewidth}
+\begin{bzsnip}
+print("hola"
+\end{bzsnip}
+\end{minipage}\par
+\begin{bzerror}
+    print("hola"
+         ^
+SyntaxError: '(' was never closed
+\end{bzerror}
+\bzlabel{Arréglalo:} la pista dice «el \texttt{(} nunca se cerró». Pon el paréntesis de cierre: \py|print("hola")|. Su primo, \py|print "hola"|, da \texttt{SyntaxError: Missing parentheses in call to 'print'. Did you mean print(...)?} («faltan los paréntesis al llamar a \texttt{print}»).
+\end{bzcard}
+
+\begin{bzcard}{8}{Un igual en vez de dos}{la Anguila del Igual}
+\noindent\begin{minipage}[c]{0.43\linewidth}
+\bzlabel{Costumbre de Scratch:} el bloque verde \chip[operators]{( ) = ( )} hace una pregunta, y \chip[variables]{fijar} es otro bloque. Python usa \texttt{=} para fijar y \texttt{==} para preguntar.
+\end{minipage}\hfill
+\begin{minipage}[c]{0.54\linewidth}
+\begin{bzsnip}
+x = 5
+if x = 5:
+    print("cinco")
+\end{bzsnip}
+\end{minipage}\par
+\begin{bzerror}
+    if x = 5:
+       ^^^^^
+SyntaxError: invalid syntax. Maybe you meant '==' or ':=' instead of '='?
+\end{bzerror}
+\bzlabel{Arréglalo:} \py|if x == 5:|. La pista pregunta «¿quizás querías \texttt{==}?». No hagas caso de la parte de \texttt{:=}; es una herramienta para mucho más adelante.
+\end{bzcard}
+
+\begin{bzcard}{9}{Texto más un número}{el Duende del Pegamento}
+\noindent\begin{minipage}[c]{0.43\linewidth}
+\bzlabel{Costumbre de Scratch:} \chip[operators]{unir} pega cualquier cosa con cualquier cosa. Python no pega texto con un número usando \texttt{+}.
+\end{minipage}\hfill
+\begin{minipage}[c]{0.54\linewidth}
+\begin{bzsnip}
+puntos = 10
+print("Puntos: " + puntos)
+\end{bzsnip}
+\end{minipage}\par
+\begin{bzerror}
+    print("Puntos: " + puntos)
+          ~~~~~~~~~~~^~~~~~~~
+TypeError: can only concatenate str (not "int") to str
+\end{bzerror}
+\bzlabel{Arréglalo:} «concatenate» quiere decir pegar, \texttt{str} quiere decir texto e \texttt{int} quiere decir número entero. Usa una coma, \py|print("Puntos:", puntos)|, o convierte el número en texto: \py|"Puntos: " + str(puntos)|. El mismo duende muerde en \py|input() + 1|, porque \py|input()| siempre da texto.
+\end{bzcard}
+
+\begin{bzcard}{10}{Una palabra que no es número}{el Número Falso}
+\noindent\begin{minipage}[c]{0.43\linewidth}
+\bzlabel{Costumbre de Scratch:} Scratch trata una palabra como 0 y sigue adelante. El \py|int()| de Python sabe leer \texttt{"5"} pero no \texttt{"cinco"}.
+\end{minipage}\hfill
+\begin{minipage}[c]{0.54\linewidth}
+\begin{bzsnip}
+edad = int("cinco")
+\end{bzsnip}
+\end{minipage}\par
+\begin{bzerror}
+    edad = int("cinco")
+ValueError: invalid literal for int() with base 10: 'cinco'
+\end{bzerror}
+\bzlabel{Arréglalo:} no hagas caso de «literal» ni de «base 10»; la pista es \texttt{'cinco'}. Te sale la misma pista si alguien escribe \texttt{cinco} en \py|int(input("¿Cuántos años tienes? "))|. Escribe cifras: \texttt{5}.
+\end{bzcard}
+
+\begin{bzcard}{11}{Un elemento que no existe}{el Búho del Uno de Más}
+\noindent\begin{minipage}[c]{0.43\linewidth}
+\bzlabel{Costumbre de Scratch:} las listas empiezan en el elemento 1, y \chip[lists]{elemento 99 de lista} solo da un espacio vacío. Python cuenta desde \textbf{0}.
+\end{minipage}\hfill
+\begin{minipage}[c]{0.54\linewidth}
+\begin{bzsnip}
+frutas = ["manzana", "plátano", "cereza"]
+print(frutas[3])
+\end{bzsnip}
+\end{minipage}\par
+\begin{bzerror}
+    print(frutas[3])
+          ~~~~~~^^^
+IndexError: list index out of range
+\end{bzerror}
+\bzlabel{Arréglalo:} «index» quiere decir número de elemento, y la pista dice «ese número se sale de la lista». Las tres frutas son \py|frutas[0]|, \py|frutas[1]| y \py|frutas[2]|. La última también es \py|frutas[-1]|. Comprueba cuántas hay con \py|len(frutas)|.
+\end{bzcard}
+
+\begin{bzcard}{12}{Dividir entre cero}{el Zombi del Cero}
+\noindent\begin{minipage}[c]{0.43\linewidth}
+\bzlabel{Costumbre de Scratch:} Scratch dice \textbf{Infinity} y sigue adelante. Repartir 12 dulces entre 0 amigos no tiene sentido, así que Python se detiene.
+\end{minipage}\hfill
+\begin{minipage}[c]{0.54\linewidth}
+\begin{bzsnip}
+dulces = 12
+amigos = 0
+print(dulces / amigos)
+\end{bzsnip}
+\end{minipage}\par
+\begin{bzerror}
+    print(dulces / amigos)
+          ~~~~~~~^~~~~~~~
+ZeroDivisionError: division by zero
+\end{bzerror}
+\bzlabel{Arréglalo:} comprueba primero con \py|if amigos != 0:| (\texttt{!=} quiere decir «no es igual a»), y divide solo dentro del \texttt{if}.
+\end{bzcard}
+
+% ---------------------------------------------------------------------
+\clearpage
+\subsection*{Bichos sigilosos: ¡sin letras rojas!}
+
+Los animales más sigilosos del zoológico no hacen ningún ruido. El programa se ejecuta, no hay ningún error, pero hace \textbf{lo que no debe}. Son igualitos a los bichos de Scratch, así que ya sabes cómo cazarlos: ejecuta el programa y revisa lo que \textbf{de verdad} hizo.
+
+\newcommand{\bzsneaky}[2]{\needspace{8\baselineskip}\par\medskip{\bfseries\color{errframe}#1}\quad{\itshape #2}\par}
+
+\bzsneaky{El Hurra Perdido}{sangría en el nivel equivocado}
+\noindent\begin{minipage}[c]{0.55\linewidth}
+\begin{code}
+for i in range(3):
+    print("Hip, hip")
+    print("¡Hurra!")
+\end{code}
+\end{minipage}\hfill
+\begin{minipage}[c]{0.42\linewidth}\small\raggedright
+Esto imprime «¡Hurra!» tres veces. Si solo querías uno al final, quítale los espacios a la línea 3. Los espacios deciden qué está dentro del bucle, y Python nunca te avisa si eliges el nivel equivocado.
+\end{minipage}
+
+\bzsneaky{El Loro Quisquilloso}{«Si» no es «si»}
+\noindent\begin{minipage}[c]{0.55\linewidth}
+\begin{code}
+respuesta = input("¿Te gusta la pizza? ")
+if respuesta == "si":
+    print("¡A mí también!")
+\end{code}
+\end{minipage}\hfill
+\begin{minipage}[c]{0.42\linewidth}\small\raggedright
+Escribe \texttt{Si} con S mayúscula y no se imprime nada. Scratch piensa que \texttt{Si} y \texttt{si} son iguales; Python no. (Escribimos \texttt{si} sin acento para que sea fácil de teclear.) Arreglo: \py|if respuesta.lower() == "si":| (\py|.lower()| primero convierte la respuesta en minúsculas).
+\end{minipage}
+
+\bzsneaky{El Héroe Cero}{contar desde 0}
+\noindent\begin{minipage}[c]{0.55\linewidth}
+\begin{code}
+frutas = ["manzana", "plátano"]
+print(frutas[1])
+\end{code}
+\end{minipage}\hfill
+\begin{minipage}[c]{0.42\linewidth}\small\raggedright
+Querías la primera fruta, pero imprime \texttt{plátano}. El \chip[lists]{elemento 1} de Scratch es el \py|[0]| de Python.
+\end{minipage}
+
+\bzsneaky{El Fantasma Infinito}{un bucle que nunca termina}
+\noindent\begin{minipage}[c]{0.55\linewidth}
+\begin{code}
+contador = 0
+while contador < 3:
+    print("hola")
+\end{code}
+\end{minipage}\hfill
+\begin{minipage}[c]{0.42\linewidth}\small\raggedright
+Imprime \texttt{hola} una y otra vez y nunca se detiene, porque \texttt{contador} se queda en 0. Presiona el botón de detener \stopbtn\ de la celda (aparece en lugar del botón de reproducir mientras la celda se ejecuta). Luego agrega \py|contador = contador + 1| dentro del bucle: el \chip[variables]{cambiar contador en 1} de Scratch.
+\end{minipage}
+
+\bzsneaky{La Receta Silenciosa}{olvidar los paréntesis}
+\noindent\begin{minipage}[c]{0.55\linewidth}
+\begin{code}
+def festejar():
+    print("¡Hurra!")
+
+festejar
+\end{code}
+\end{minipage}\hfill
+\begin{minipage}[c]{0.42\linewidth}\small\raggedright
+No sale ningún «¡Hurra!». Sin \texttt{()}, solo \textbf{nombraste} la receta; no la cocinaste. Colab puede mostrar una línea rara que empieza con \texttt{<function}. Arreglo: \py|festejar()|.
+\end{minipage}
+
+\bzsneaky{El Acertijo del Redondeo}{round(2.5) da 2}
+\noindent\begin{minipage}[c]{0.55\linewidth}
+\begin{code}
+print(round(2.5))
+print(round(3.5))
+\end{code}
+\end{minipage}\hfill
+\begin{minipage}[c]{0.42\linewidth}\small\raggedright
+¡Esto imprime \texttt{2} y luego \texttt{4}! Scratch redondea 2.5 hacia arriba, a 3. Python redondea una mitad exacta al número \textbf{par} más cercano. En realidad no es un bicho de Python, pero puede causar un bicho en tu programa, así que ahora ya lo sabes.
+\end{minipage}
+
+% ---------------------------------------------------------------------
+\needspace{18\baselineskip}
+\subsection*{Trucos de detective}
+
+Los programadores de Scratch que son buenos arreglando bichos usan los mismos trucos una y otra vez. Los investigadores Karen Brennan y Mitchel Resnick les preguntaron a jóvenes de Scratch cómo cazan bichos, y estos son los trucos que nombraron. Funcionan igual de bien en Python.
+
+\needspace{10\baselineskip}
+\textbf{1. Haz que diga lo que sabe.} En Scratch puedes agregar un bloque \chip[looks]{decir} para ver qué hay dentro de una variable. En Python, agrega un \py|print|:
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}
+\blocklook{decir \ovalvariable{puntos} durante \ovalnum{2} segundos}
+\end{scratch}
+\end{tcolorbox}
+\begin{code}
+print("puntos vale", puntos)
+\end{code}
+\end{tcbraster}
+
+Pon uno antes y otro después de la línea sospechosa. Cuando el número no es el que esperabas, encontraste la escena del crimen. Borra los \py|print| de más cuando termines.
+
+\textbf{2. Encuentra dónde está el problema.} Lee el número de línea, o ejecuta el programa en pedacitos. Divide una celda grande en celdas más pequeñas y ejecútalas una por una, como cuando haces clic en un solo bloque de Scratch para probarlo.
+
+\textbf{3. Léelo en voz alta.} Explica tu código, línea por línea, a un adulto, a un amigo o a un patito de hule. ¡Hay programadores que de verdad tienen un patito de juguete en su escritorio para esto! Muchas veces tú mismo oyes el bicho a la mitad de la explicación.
+
+\textbf{4. Cambia una sola cosa a la vez.} Haz un cambio, ejecuta, mira. Si cambias cinco cosas al mismo tiempo, no vas a saber cuál ayudó (ni cuál hizo un bicho nuevo).
+
+\textbf{5. Compara con un ejemplo que funcione.} Busca en este libro un programa que funcione y que haga algo parecido. Ponlos lado a lado y encuentra la diferencia, como en un juego de encontrar las diferencias.
+
+\textbf{6. Toma un descanso.} Toma agua, estírate, mira por la ventana. El cerebro sigue trabajando en los acertijos sin que te des cuenta, y muchas veces el bicho es obvio cuando regresas.
+
+\textbf{7. Cuéntaselo a alguien.} Pedir ayuda es una habilidad de programador de verdad. Di qué querías, qué pasó en su lugar y qué dice la última línea del error.
+
+
+% ---------------------------------------------------------------------
+\clearpage
+\subsection*{¡Caza de bichos! Atrápalos a todos}
+
+Cada programa de abajo tiene un bicho: algunos son ruidosos (letras rojas), otros son sigilosos (sin error, pero con un resultado equivocado). Escribe cada uno en Colab, ejecútalo y lee la pista. Luego arréglalo y escribe en las líneas qué estaba mal. Antes de ejecutarlo, ¿puedes \textbf{adivinar} qué animal del zoológico va a aparecer? (Las respuestas están al final del libro, ¡pero inténtalo primero!)
+
+\newcommand{\bzhunt}[2]{\par\needspace{7\baselineskip}\smallskip\textbf{Caza de bichos #1}\quad #2\par\nopagebreak}
+
+\bzhunt{1}{Debería decir Miau 5 veces.}
+\begin{code}
+contador = 1
+while contador <= 5:
+print("Miau número", contador)
+    contador = contador + 1
+\end{code}
+\bzruled
+
+\bzhunt{2}{Debería mostrar tus puntos.}
+\begin{code}
+puntos = 0
+puntos = puntos + 10
+Print("Tus puntos son", puntos)
+\end{code}
+\bzruled
+
+\bzhunt{3}{Escribe \texttt{9} cuando te pregunte.}
+\begin{code}
+edad = input("¿Cuántos años tienes? ")
+print("El año que viene tendrás", edad + 1)
+\end{code}
+\bzruled
+
+\bzhunt{4}{Escribe \texttt{gato123} cuando te pregunte.}
+\begin{code}
+clave = input("¿Contraseña? ")
+if clave = "gato123":
+    print("¡Adelante!")
+\end{code}
+\bzruled
+
+\bzhunt{5}{Debería imprimir la primera y la última fruta. (¡Dos bichos!)}
+\begin{code}
+frutas = ["manzana", "plátano", "cereza"]
+print("Primera:", frutas[1])
+print("Última:", frutas[3])
+\end{code}
+\bzruled
+
+\bzhunt{6}{Debería repartir los dulces en partes iguales, o decir que no hay con quién repartirlos.}
+\begin{code}
+dulces = 20
+amigos = 0
+print("Cada amigo recibe", dulces / amigos)
+\end{code}
+\bzruled
+
+\bzhunt{7}{Debería festejar.}
+\begin{code}
+def festejar():
+    print("¡Hip, hip, hurra!")
+
+festejar
+\end{code}
+\bzruled
+
+\bzhunt{8}{Debería contar 5, 4, 3, 2, 1 y despegar. (¡Ten listo el botón de detener!)}
+\begin{code}
+n = 5
+while n > 0:
+    print(n)
+print("¡Despegue!")
+\end{code}
+\bzruled
+
+\bzhunt{9}{Debería dibujar un cuadrado. (Pon las tres líneas de inicio arriba.)}
+\begin{code}
+for i in range(4):
+    forward(50)
+right(90)
+\end{code}
+\bzruled
+
+\bzhunt{10}{Escribe tu nombre cuando te pregunte.}
+\begin{code}
+nombre = input("¿Cómo te llamas? ")
+print("Hola, " + nombre)
+print("¡Mucho gusto!)
+\end{code}
+\bzruled
+
+% ---------------------------------------------------------------------
+\needspace{10\baselineskip}
+\subsection*{Lista del Zoológico de Bichos}
+
+Marca cada animal cuando lo hayas atrapado en tu propio código. ¡Cada bicho que atrapas te hace mejor detective!
+
+\begin{tcbraster}[raster columns=3, raster column skip=8pt, raster equal height]
+\begin{tcolorbox}[colback=errbg, colframe=errframe, boxrule=0.5pt, arc=4pt, fontupper=\small]
+\tick Cobra de los Dos Puntos\par \tick Torre Tambaleante\par \tick Vagabundo Despistado\par \tick Mono Mal Escrito\par \tick Copión Mayúsculo\par \tick Ladrón de Comillas
+\end{tcolorbox}
+\begin{tcolorbox}[colback=errbg, colframe=errframe, boxrule=0.5pt, arc=4pt, fontupper=\small]
+\tick Murciélago sin Paréntesis\par \tick Anguila del Igual\par \tick Duende del Pegamento\par \tick Número Falso\par \tick Búho del Uno de Más\par \tick Zombi del Cero
+\end{tcolorbox}
+\begin{tcolorbox}[colback=errbg, colframe=errframe, boxrule=0.5pt, arc=4pt, fontupper=\small]
+\tick Hurra Perdido\par \tick Loro Quisquilloso\par \tick Héroe Cero\par \tick Fantasma Infinito\par \tick Receta Silenciosa\par \tick Acertijo del Redondeo
+\end{tcolorbox}
+\end{tcbraster}
+
+\begin{itemize}[label={}, leftmargin=0pt]
+  \item \tick Ya sé leer primero la \textbf{última línea} de un error.
+  \item \tick Puedo encontrar el número de línea y las marcas \texttt{\textasciicircum\textasciicircum\textasciicircum}.
+  \item \tick Puedo detener un bucle infinito con el botón de detener.
+  \item \tick Ya sé usar \py|print| para que mi programa diga lo que sabe.
+  \item \tick Cambio una sola cosa a la vez, y tomo un descanso cuando me atoro.
+\end{itemize}

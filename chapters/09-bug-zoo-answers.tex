@@ -1,0 +1,22 @@
+\subsection*{El Zoológico de Bichos: caza de bichos}
+Cada error de abajo es la última línea real de Python 3.13 (Python siempre escribe sus errores en inglés). Tu arreglo puede verse un poco distinto y aun así estar bien: si ahora el programa hace lo que debe, ¡atrapaste al bicho!
+
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{longtable}{P{1.1cm} P{6.4cm} P{8.1cm}}
+\toprule
+\textbf{Bicho} & \textbf{La pista} & \textbf{El arreglo} \\
+\midrule
+1 & \texttt{IndentationError: expected an indented block after 'while' statement on line 2} (la Torre Tambaleante) & La línea 3 necesita cuatro espacios delante, para que las líneas 3 y 4 queden las dos dentro del bucle. \\
+2 & \texttt{NameError: name 'Print' is not defined} (el Copión Mayúsculo) & Usa una p minúscula: \py|print("Tus puntos son", puntos)| \\
+3 & \texttt{TypeError: can only concatenate str (not "int") to str} (el Duende del Pegamento) & \py|input()| siempre da texto. Conviértelo en número: \py|edad = int(input("¿Cuántos años tienes? "))| \\
+4 & \texttt{SyntaxError: invalid syntax. Maybe you meant '==' or ':=' instead of '='?} (la Anguila del Igual) & Para hacer una pregunta, usa dos iguales: \py|if clave == "gato123":| \\
+5 & No hay error en la línea 2, pero imprime \texttt{Primera: plátano} (el Héroe Cero). Luego \texttt{IndexError: list index out of range} (el Búho del Uno de Más). & Python cuenta desde 0: usa \py|frutas[0]| para la primera y \py|frutas[2]| (o \py|frutas[-1]|) para la última. \\
+6 & \texttt{ZeroDivisionError: division by zero} (el Zombi del Cero) & Comprueba primero:\newline \py|if amigos == 0:|\newline \py|    print("¡No hay con quién repartir!")|\newline \py|else:|\newline \py|    print("Cada uno recibe", dulces / amigos)| \\
+7 & No hay error, pero no se imprime nada (la Receta Silenciosa). & Pon los paréntesis para cocinar la receta: \py|festejar()| \\
+8 & No hay error, pero imprime \texttt{5} para siempre (el Fantasma Infinito). Presiona el botón de detener; entonces ves \texttt{KeyboardInterrupt}. & \texttt{n} nunca cambia. Agrega \py|n = n - 1| dentro del bucle, después de \py|print(n)|. \\
+9 & No hay error, pero la tortuga dibuja una sola línea larga de 200 pasos en vez de un cuadrado (el primo del Hurra Perdido). & \py|right(90)| no tiene espacios, así que está fuera del bucle y pasa una sola vez. Ponle cuatro espacios delante. \\
+10 & \texttt{SyntaxError: unterminated string literal (detected at line 3)} (el Ladrón de Comillas) & Pon las comillas de cierre: \py|print("¡Mucho gusto!")|. Como es un bicho de gramática, no se ejecuta nada, ni siquiera la pregunta de la línea 1. \\
+\bottomrule
+\end{longtable}
+\normalsize

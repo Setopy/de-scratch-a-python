@@ -1,0 +1,14 @@
+# Build output
+*.log
+*.aux
+*.out
+*.toc
+_build/
+chapters/_build-*/
+chapters/_colab/cell_*.txt
+chapters/_colab/runner_*.py
+__pycache__/
+.DS_Store
+
+# Scratch's own translation files, kept only as a local reference
+_ref/

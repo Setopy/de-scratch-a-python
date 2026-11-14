@@ -1,0 +1,833 @@
+% =====================================================================
+% PARTE 3: Variables y listas
+% =====================================================================
+\partopener{variables}{PARTE 3}{Variables y listas}{Dale memoria a tus programas: cajas que recuerdan una cosa y mochilas que cargan muchas.}
+
+En Scratch, los bloques naranjas de \textbf{Variables} y los bloques rojo-naranja de \textbf{Listas} le dan memoria a tu proyecto. Una variable recuerda \textbf{una} cosa, como los puntos de un juego. Una lista recuerda \textbf{muchas} cosas en orden, como todo lo que llevas en la mochila.
+
+En esta parte vas a conocer el Python de bloques como estos:
+
+\chip[variables]{fijar puntos a 0} \quad \chip[variables]{cambiar puntos en 1} \quad \chip[variables]{mostrar variable puntos}
+
+\chip[lists]{añadir manzana a mochila} \quad \chip[lists]{elemento 1 de mochila}
+
+\chip[lists]{longitud de mochila} \quad \chip[lists]{¿espada está en mochila?}
+
+Buenas noticias: en Python, las variables y las listas \textbf{no} necesitan líneas de inicio. Los programas que no dibujan pueden empezar enseguida.
+
+% ---------------------------------------------------------------------
+\needspace{12\baselineskip}
+\subsection*{Una variable es una caja con etiqueta}
+
+En Scratch, haces clic en \textbf{Crear una variable}, escribes un nombre y Scratch te hace una caja. En Python no hay botón. Haces una caja con solo meter algo en ella.
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}
+\blockinit{al presionar \greenflag}
+\blockvariable{fijar \selectmenu{puntos} a \ovalnum{0}}
+\blockvariable{fijar \selectmenu{nombre} a \ovalnum{Ana}}
+\end{scratch}
+\end{tcolorbox}
+\begin{code}
+puntos = 0
+nombre = "Ana"
+\end{code}
+\end{tcbraster}
+
+\begin{center}
+\begin{tikzpicture}[font=\sffamily]
+  \foreach \x/\lab/\val in {0/puntos/0, 5/nombre/"Ana"}{
+    \fill[variables!25] (\x,0) -- (\x+3,0) -- (\x+3,1.6) -- (\x,1.6) -- cycle;
+    \draw[variables!80!black, line width=1pt] (\x,0) rectangle (\x+3,1.6);
+    \draw[variables!80!black, line width=1pt, fill=variables!45] (\x-0.15,1.6) -- (\x+3.15,1.6) -- (\x+3.15,1.95) -- (\x-0.15,1.95) -- cycle;
+    \node[fill=white, draw=variables!80!black, rounded corners=2pt, font=\sffamily\bfseries] at (\x+1.5,0.55) {\lab};
+    \node[font=\ttfamily\Large] at (\x+1.5,2.45) {\val};
+    \draw[-{Stealth[length=7pt]}, line width=1pt, ink] (\x+1.5,2.2) -- (\x+1.5,1.35);
+  }
+\end{tikzpicture}
+\end{center}
+
+\textbf{Cómo funciona:} \py|puntos = 0| quiere decir «mete 0 en la caja con la etiqueta \texttt{puntos}». En Python, un \texttt{=} \textbf{no} significa «es igual a». Significa \textbf{mete en la caja}. Léelo de derecha a izquierda: el valor de la derecha entra en la caja de la izquierda. Una caja guarda una sola cosa a la vez, así que si metes algo nuevo, lo viejo sale volando.
+
+\begin{think}[¿Por qué \texttt{"Ana"} lleva comillas?]
+Las comillas le dicen a Python «esto es texto». Sin ellas, \py|nombre = Ana| hace que Python busque una caja llamada \texttt{Ana}, y no la encuentra. Los números como \texttt{0} no necesitan comillas.
+\end{think}
+
+\begin{think}[Python habla inglés]
+Las palabras de Python (\texttt{print}, \texttt{for}, \texttt{append}...) siempre van en inglés. Pero los nombres que inventas tú, como \texttt{puntos} o \texttt{nombre}, pueden ir en español. En este libro los escribimos sin acentos y sin ñ, porque así son más fáciles de teclear.
+\end{think}
+
+% ---------------------------------------------------------------------
+\needspace{12\baselineskip}
+\subsection*{Cambia los puntos}
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}
+\blockvariable{fijar \selectmenu{puntos} a \ovalnum{0}}
+\blockvariable{cambiar \selectmenu{puntos} en \ovalnum{1}}
+\blockvariable{cambiar \selectmenu{puntos} en \ovalnum{1}}
+\end{scratch}
+\end{tcolorbox}
+\begin{code}
+puntos = 0
+puntos = puntos + 1
+puntos += 1
+\end{code}
+\end{tcbraster}
+
+\textbf{Cómo funciona:} La línea 2 se ve rara si piensas que \texttt{=} significa «es igual a». Pero recuerda: significa \textbf{mete en la caja}. Python calcula primero el lado derecho: «lo que hay en \texttt{puntos}, más 1». Eso da 1. Luego vuelve a meter el 1 en la caja. La línea 3 es un atajo que hace exactamente lo mismo: \py|puntos += 1| quiere decir «cambiar puntos en 1». Después de las dos líneas, \texttt{puntos} guarda 2.
+
+\begin{think}[Hacia abajo]
+\chip[variables]{cambiar puntos en -1} es \py|puntos -= 1| (o \py|puntos = puntos - 1|). Puedes usar \texttt{+=}, \texttt{-=}, \texttt{*=} y \texttt{/=}.
+\end{think}
+
+% ---------------------------------------------------------------------
+\needspace{12\baselineskip}
+\subsection*{Muestra la variable}
+
+En Scratch, si marcas la casilla junto a una variable, aparece un \textbf{monitor} en el escenario que se actualiza solito. Python no tiene monitor. En su lugar, haces \texttt{print} de la caja cada vez que quieras ver lo que tiene dentro.
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}
+\blockvariable{fijar \selectmenu{puntos} a \ovalnum{7}}
+\blockvariable{mostrar variable \selectmenu{puntos}}
+\blocklook{decir \ovaloperator{unir \ovalnum{Puntos: } \ovalvariable{puntos}}}
+\end{scratch}
+\end{tcolorbox}
+\begin{code}
+puntos = 7
+print(puntos)
+print("Puntos:", puntos)
+\end{code}
+\end{tcbraster}
+
+\begin{outputbox}
+7\\
+Puntos: 7
+\end{outputbox}
+
+\textbf{Cómo funciona:} \py|print(puntos)| no lleva comillas alrededor de \texttt{puntos}, así que Python muestra lo que hay \textbf{dentro} de la caja, no la palabra «puntos». En la línea 3, la coma te deja imprimir dos cosas seguidas, y Python pone un espacio entre ellas por ti. ¡Es más fácil que el bloque \chip[operators]{unir} de Scratch!
+
+% ---------------------------------------------------------------------
+\needspace{12\baselineskip}
+\subsection*{Ponles nombre a tus cajas}
+
+Scratch te deja llamar a una variable casi como quieras, incluso \texttt{mis puntos} con un espacio. Python es más exigente. Un nombre de Python tiene que seguir estas reglas:
+
+\begin{itemize}
+  \item \textbf{Sin espacios.} Usa un guion bajo \texttt{\_} en su lugar: \texttt{mis\_puntos}.
+  \item \textbf{No empieces con un dígito.} \texttt{puntos2} está bien, \texttt{2puntos} no.
+  \item \textbf{Las mayúsculas importan.} \texttt{Puntos} y \texttt{puntos} son dos cajas distintas.
+  \item \textbf{Que no sea una palabra de Python.} No puedes llamar a una caja \texttt{for} o \texttt{import}, porque Python ya usa esas palabras.
+\end{itemize}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{P{3.6cm} P{1.8cm} P{8.2cm}}
+\toprule
+\textbf{Nombre} & \textbf{¿Sirve?} & \textbf{Por qué} \\
+\midrule
+\texttt{puntos} & \textcolor{chalframe}{\textbf{Sí}} & Las minúsculas son perfectas. \\
+\texttt{mis\_puntos} & \textcolor{chalframe}{\textbf{Sí}} & El guion bajo une las palabras. \\
+\texttt{puntos2} & \textcolor{chalframe}{\textbf{Sí}} & Los dígitos están bien después de la primera letra. \\
+\texttt{mis puntos} & \textcolor{errframe}{\textbf{No}} & Un espacio. Python cree que son dos nombres. \\
+\texttt{2puntos} & \textcolor{errframe}{\textbf{No}} & Empieza con un dígito. \\
+\texttt{for} & \textcolor{errframe}{\textbf{No}} & Python ya usa esta palabra para los bucles. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\needspace{12\baselineskip}
+\begin{watchout}[¡Cuidado! Las mayúsculas hacen otra caja]
+\begin{codenonum}
+Puntos = 10
+print(puntos)
+\end{codenonum}
+\begin{errorbox}
+NameError: name 'puntos' is not defined
+\end{errorbox}
+Python solo conoce las cajas que tú has hecho. Lee la última línea del error rojo: nombra la caja que Python no encuentra. Mira con atención: la caja que hiciste es \texttt{Puntos}, con P mayúscula. Usa minúsculas en tus nombres y casi nunca te toparás con este bicho.
+
+Python siempre escribe sus errores en inglés (no los traduce). No te preocupes: la palabra importante es el nombre del error, aquí \texttt{NameError} (error de nombre), y después viene la pista. \texttt{name 'puntos' is not defined} quiere decir «el nombre \texttt{puntos} no está definido».
+\end{watchout}
+
+\needspace{10\baselineskip}
+\begin{challenge}[Examen rápido: ¿caja o fracaso?]
+Marca los nombres que Python va a aceptar. (Las respuestas están al final.)\par
+\begin{tabular}{@{}p{4.6cm}p{4.6cm}p{4.6cm}@{}}
+\tick \texttt{vidas} & \tick \texttt{mejor marca} & \tick \texttt{jugador\_1} \\
+\tick \texttt{1er\_lugar} & \tick \texttt{mejorTiempo} & \tick \texttt{import} \\
+\end{tabular}
+\end{challenge}
+
+% ---------------------------------------------------------------------
+\needspace{12\baselineskip}
+\subsection*{¿Texto o número? ¡Las comillas importan!}
+
+Scratch adivina en silencio si algo es un número o un texto. Python nunca adivina. \texttt{5} es un número. \texttt{"5"} entre comillas es texto (Python llama al texto \textbf{string}, que en inglés quiere decir «cadena», como una cadena de letras).
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{code}
+print(5 + 5)
+print("5" + "5")
+\end{code}
+\begin{outputbox}
+10\\
+55
+\end{outputbox}
+\end{tcbraster}
+
+\textbf{Cómo funciona:} Sumar dos números hace matemáticas: 10. Sumar dos textos los pega, como el bloque \chip[operators]{unir}: \texttt{55}. En Scratch, los dos darían 10. Y si intentas sumar un texto y un número, Python se detiene y se queja:
+
+\begin{codenonum}
+puntos = 5
+print("Puntos: " + puntos)
+\end{codenonum}
+\begin{errorbox}
+TypeError: can only concatenate str (not "int") to str
+\end{errorbox}
+
+Esto quiere decir «solo puedo unir texto con texto, y tú me diste un número». (\texttt{str} es texto e \texttt{int} es un número entero.) El arreglo fácil es la coma que ya conoces: \py|print("Puntos:", puntos)|.
+
+% ---------------------------------------------------------------------
+\needspace{8\baselineskip}
+\begin{think}[¿Solo para este objeto o para todos los objetos?]
+Cuando creas una variable en Scratch, Scratch pregunta: ¿\textbf{Para todos los objetos} o \textbf{Sólo para este objeto}? En esta parte, todas tus cajas de Python son como «para todos los objetos»: cualquier línea de tu programa puede usarlas. En una parte posterior aprenderás a darle a cada objeto sus propias cajas, como un gato con su propia \texttt{salud} y un perro con su propia \texttt{salud}.
+\end{think}
+
+% ---------------------------------------------------------------------
+\needspace{12\baselineskip}
+\subsection*{Las variables también dibujan}
+
+Una caja puede guardar la medida de una figura. Cambia la caja, y cambia también cada línea que la usa.
+
+\noindent\begin{minipage}[t]{0.37\linewidth}\vspace{0pt}
+\setscratch{scale=0.85}
+\begin{scratch}
+\blockinit{al presionar \greenflag}
+\blockpen{bajar lápiz}
+\blockvariable{fijar \selectmenu{medida} a \ovalnum{50}}
+\blockrepeat{repetir \ovalnum{4}}{
+  \blockmove{mover \ovalvariable{medida} pasos}
+  \blockmove{girar \turnright{} \ovalnum{90} grados}
+}
+\blockvariable{cambiar \selectmenu{medida} en \ovalnum{50}}
+\blockrepeat{repetir \ovalnum{4}}{
+  \blockmove{mover \ovalvariable{medida} pasos}
+  \blockmove{girar \turnright{} \ovalnum{90} grados}
+}
+\end{scratch}
+\end{minipage}\hfill\begin{minipage}[t]{0.61\linewidth}\vspace{0pt}
+\begin{code}
+from ColabTurtlePlus.Turtle import *
+clearscreen()
+initializeTurtle((480, 360))
+medida = 50
+for i in range(4):
+    forward(medida)
+    right(90)
+medida = medida + 50
+for i in range(4):
+    forward(medida)
+    right(90)
+\end{code}
+\end{minipage}
+
+\textbf{Cómo funciona:} \py|forward(medida)| no lleva comillas, así que la tortuga camina tantos pasos como haya en la caja \texttt{medida}. El primer cuadrado usa 50. La línea 8 hace que la caja guarde 100, así que el segundo cuadrado es el doble de grande. Los dos cuadrados empiezan en la misma esquina.
+
+¿Y si pones \py|medida = medida + 50| \textbf{dentro} del bucle, para que la medida crezca después de cada línea? Lo descubrirás en la misión \textbf{Espiral que crece}\ldots
+
+% ---------------------------------------------------------------------
+\needspace{8\baselineskip}
+\subsection*{Una lista es una mochila}
+
+Una variable guarda una cosa. Una \textbf{lista} guarda muchas cosas, en orden, bajo un solo nombre. En Scratch haces clic en \textbf{Crear una lista}. En Python escribes corchetes.
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center, halign=center]
+\tcbox[on line, colback=white, colframe=muted, arc=4pt, boxrule=0.8pt]{\sffamily\small Crear una lista}
+\par\medskip
+Nombre para nueva lista: \textbf{mochila}
+\end{tcolorbox}
+\begin{code}
+mochila = []
+print(mochila)
+\end{code}
+\end{tcbraster}
+
+\textbf{Cómo funciona:} Los corchetes \texttt{[ ]} son la mochila. Sin nada entre ellos, la mochila está vacía, y \py|print(mochila)| muestra \texttt{[]}. Imprimir una lista es el \chip[lists]{mostrar lista mochila} de Python.
+
+% ---------------------------------------------------------------------
+\needspace{12\baselineskip}
+\subsection*{Mete cosas en la mochila}
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}
+\blocklist{Eliminar todos de \selectmenu{mochila}}
+\blocklist{añadir \ovalnum{manzana} a \selectmenu{mochila}}
+\blocklist{añadir \ovalnum{linterna} a \selectmenu{mochila}}
+\blocklist{añadir \ovalnum{mapa} a \selectmenu{mochila}}
+\end{scratch}
+\end{tcolorbox}
+\begin{code}
+mochila = []
+mochila.append("manzana")
+mochila.append("linterna")
+mochila.append("mapa")
+print(mochila)
+\end{code}
+\end{tcbraster}
+
+\begin{outputbox}
+{[}'manzana', 'linterna', 'mapa']
+\end{outputbox}
+
+\textbf{Cómo funciona:} \py|append| quiere decir «añadir al final». El punto une el nombre de la lista con el trabajo que quieres que haga: \py|mochila.append("linterna")| quiere decir «mochila, añade linterna a tu final». También puedes llenar una mochila de una sola vez: \py|mochila = ["manzana", "linterna", "mapa"]|. Las comas van entre los elementos.
+
+% ---------------------------------------------------------------------
+\needspace{12\baselineskip}
+\subsection*{¡Python cuenta desde 0!}
+
+Piensa en una lista como un tren. Cada vagón lleva un elemento. Scratch numera los vagones como asientos: 1, 2, 3. Python cuenta \textbf{a cuántos vagones de distancia del frente} está cada uno, así que el primer vagón es el número \textbf{0}.
+
+\begin{center}
+\begin{tikzpicture}[font=\sffamily]
+  \fill[ink] (-1.9,0) rectangle (-0.3,1.3);
+  \fill[ink] (-1.6,1.3) rectangle (-1.2,1.75);
+  \node[white, font=\sffamily\scriptsize\bfseries] at (-1.1,0.65) {locomotora};
+  \foreach \i/\item in {0/manzana, 1/linterna, 2/mapa}{
+    \draw[lists!80!black, line width=1pt, fill=lists!25, rounded corners=3pt] (\i*2.7,0) rectangle (\i*2.7+2.3,1.3);
+    \node[font=\ttfamily\small] at (\i*2.7+1.15,0.65) {"\item"};
+    \fill[ink] (\i*2.7+0.5,-0.15) circle (0.18);
+    \fill[ink] (\i*2.7+1.8,-0.15) circle (0.18);
+    \node[font=\sffamily\scriptsize, text=muted] at (\i*2.7+1.15,1.7) {Scratch: elemento \the\numexpr\i+1\relax};
+    \node[font=\sffamily\bfseries, text=kw] at (\i*2.7+1.15,-0.75) {Python: [\i]};
+  }
+  \draw[ink, line width=1.5pt] (-0.3,0.4) -- (0,0.4);
+  \draw[ink, line width=1.5pt] (2.3,0.4) -- (2.7,0.4);
+  \draw[ink, line width=1.5pt] (5.0,0.4) -- (5.4,0.4);
+\end{tikzpicture}
+\end{center}
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}[scale=0.96]
+\blocklook{decir \ovallist{elemento \ovalnum{1} de \selectmenu{mochila}}}
+\blocklook{decir \ovallist{elemento \ovalnum{3} de \selectmenu{mochila}}}
+\end{scratch}
+\end{tcolorbox}
+\begin{code}
+print(mochila[0])
+print(mochila[2])
+\end{code}
+\end{tcbraster}
+
+\begin{outputbox}
+manzana\\
+mapa
+\end{outputbox}
+
+\textbf{Cómo funciona:} Los corchetes después del nombre eligen un vagón. Esta es la regla que hay que recordar: \textbf{el elemento $n$ de Scratch es \texttt{[n - 1]} en Python}. El elemento 1 es \py|mochila[0]|, el elemento 3 es \py|mochila[2]|.
+
+% ---------------------------------------------------------------------
+\needspace{12\baselineskip}
+\subsection*{¿Qué tan larga es la lista?}
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}
+\blocklook{decir \ovallist{longitud de \selectmenu{mochila}}}
+\end{scratch}
+\end{tcolorbox}
+\begin{code}
+print(len(mochila))
+\end{code}
+\end{tcbraster}
+
+\textbf{Cómo funciona:} \py|len| es la abreviatura de \textbf{length}, que en inglés quiere decir «longitud». Cuenta los vagones: para nuestra mochila da \texttt{3}. Fíjate en que la longitud es 3, pero el último elemento es \py|mochila[2]|. Otra vez la regla de contar desde 0.
+
+% ---------------------------------------------------------------------
+\needspace{12\baselineskip}
+\subsection*{Saca cosas}
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}
+\blocklist{eliminar \ovalnum{2} de \selectmenu{mochila}}
+\blocklist{Eliminar todos de \selectmenu{mochila}}
+\end{scratch}
+\end{tcolorbox}
+\begin{code}
+del mochila[1]
+mochila.clear()
+\end{code}
+\end{tcbraster}
+
+\textbf{Cómo funciona:} \py|del| es la abreviatura de \textbf{delete}, «eliminar» en inglés. El elemento 2 de Scratch es el \texttt{[1]} de Python, así que \py|del mochila[1]| saca \texttt{"linterna"}, y el tren cierra el hueco: \texttt{['manzana', 'mapa']}. \py|mochila.clear()| vacía toda la mochila y deja \texttt{[]} (\textbf{clear} quiere decir «vaciar»).
+
+% ---------------------------------------------------------------------
+\needspace{12\baselineskip}
+\subsection*{Mete a presión y cambia}
+
+Empieza otra vez con \py|mochila = ["manzana", "linterna", "mapa"]|.
+
+\begin{center}
+\begin{scratch}
+\blocklist{insertar \ovalnum{cuerda} en \ovalnum{2} de \selectmenu{mochila}}
+\blocklist{reemplazar elemento \ovalnum{4} de \selectmenu{mochila} con \ovalnum{lámpara}}
+\end{scratch}
+\end{center}
+\begin{code}
+mochila.insert(1, "cuerda")
+mochila[3] = "lámpara"
+\end{code}
+
+\begin{outputbox}[Después de la línea 1, y después de la línea 2]
+{[}'manzana', 'cuerda', 'linterna', 'mapa']\\
+{[}'manzana', 'cuerda', 'linterna', 'lámpara']
+\end{outputbox}
+
+\textbf{Cómo funciona:} \py|insert(1, "cuerda")| mete a presión un vagón nuevo en el lugar 1 (el lugar 2 de Scratch), y los demás se recorren hacia atrás. \py|mochila[3] = "lámpara"| usa el signo de «mete en la caja»: el vagón 3 (el elemento 4 de Scratch) recibe un elemento nuevo, y el viejo \texttt{"mapa"} sale volando. ¡Cada vagón funciona como una cajita!
+
+% ---------------------------------------------------------------------
+\needspace{12\baselineskip}
+\subsection*{¿Está en la mochila?}
+
+\begin{center}
+\begin{scratch}
+\blocklook{decir \boollist{¿\ovalnum{linterna} está en \selectmenu{mochila}?}}
+\blocklook{decir \boollist{¿\ovalnum{espada} está en \selectmenu{mochila}?}}
+\end{scratch}
+\end{center}
+\begin{code}
+mochila = ["manzana", "linterna", "mapa"]
+print("linterna" in mochila)
+print("espada" in mochila)
+\end{code}
+
+\begin{outputbox}
+True\\
+False
+\end{outputbox}
+
+\textbf{Cómo funciona:} \py|"espada" in mochila| hace una pregunta de sí o no. Python contesta \texttt{True} (sí, verdadero) o \texttt{False} (no, falso), donde Scratch dice \texttt{true} o \texttt{false}. En la Parte 5 usarás preguntas como esta con \py|if|, para hacer algo solo cuando la espada está ahí.
+
+\begin{watchout}[¡Cuidado! Otra vez las mayúsculas]
+Scratch piensa que \texttt{Linterna} y \texttt{linterna} son iguales. Python no: \py|"Linterna" in mochila| es \texttt{False}. Escribe tus elementos exactamente igual.
+\end{watchout}
+
+% ---------------------------------------------------------------------
+\needspace{24\baselineskip}
+\subsection*{Un superpoder de Python: recorre la mochila}
+
+En Scratch, para visitar cada elemento necesitas una variable contadora y estos dos bloques:\newline \chip[control]{repetir (longitud de mochila)} y \chip[lists]{elemento (i) de mochila}.\newline Python tiene una forma mucho más corta.
+
+\begin{center}
+\begin{scratch}
+\blockvariable{fijar \selectmenu{i} a \ovalnum{1}}
+\blockrepeat{repetir \ovallist{longitud de \selectmenu{mochila}}}{
+  \blocklook{decir \ovallist{elemento \ovalvariable{i} de \selectmenu{mochila}} durante \ovalnum{1} segundos}
+  \blockvariable{cambiar \selectmenu{i} en \ovalnum{1}}
+}
+\end{scratch}
+\end{center}
+\begin{code}
+for cosa in mochila:
+    print("En mi mochila:", cosa)
+\end{code}
+
+\begin{outputbox}
+En mi mochila: manzana\\
+En mi mochila: linterna\\
+En mi mochila: mapa
+\end{outputbox}
+
+\textbf{Cómo funciona:} \py|for cosa in mochila:| quiere decir «saca cada elemento de la mochila, uno por uno, y llámalo \texttt{cosa}». La primera vuelta del bucle, \texttt{cosa} guarda \texttt{"manzana"}, luego \texttt{"linterna"} y luego \texttt{"mapa"}. Tú eliges el nombre: \py|for botana in botanas:| se lee muy bien. ¡Sin contador, sin \texttt{- 1}, sin errores!
+
+% ---------------------------------------------------------------------
+\needspace{12\baselineskip}
+\subsection*{Elige uno al azar}
+
+\begin{center}
+\begin{scratch}
+\blocklook{decir \ovallist{elemento \ovalnum{al azar} de \selectmenu{botanas}}}
+\end{scratch}
+\end{center}
+\begin{code}
+import random
+botanas = ["papitas", "plátano", "galleta"]
+print(random.choice(botanas))
+\end{code}
+
+\textbf{Cómo funciona:} ¿Sabías que puedes escribir \texttt{al azar} en el bloque \chip[lists]{elemento 1 de} de Scratch? La versión de Python es \py|random.choice(botanas)| (\textbf{choice} quiere decir «elección»): mete la mano en la lista sin mirar y saca un elemento. Igual que \py|import time| en la Parte 2, \py|import random| trae primero las herramientas de azar de Python. Ejecútalo varias veces: no siempre te va a tocar la misma botana.
+
+% ---------------------------------------------------------------------
+\needspace{12\baselineskip}
+\begin{watchout}[¡Cuidado! Python te avisa cuando falta un vagón]
+Pídele a Scratch el \chip[lists]{elemento 4 de mochila} cuando solo hay 3 elementos, y Scratch te da nada, calladito. Python se detiene y te avisa:
+\begin{codenonum}
+mochila = ["manzana", "linterna", "mapa"]
+print(mochila[3])
+\end{codenonum}
+\begin{errorbox}
+IndexError: list index out of range
+\end{errorbox}
+\textbf{Index} (índice) es la palabra de Python para el número de un vagón. «Out of range» quiere decir «fuera de rango»: «no hay ningún vagón con ese número». Una lista de 3 solo tiene los vagones 0, 1 y 2. Este error es una nota con una pista, no un regaño: te muestra exactamente qué línea arreglar.
+\end{watchout}
+
+% =====================================================================
+\mission{Contador de puntos}{a crear una variable, cambiarla en un bucle e imprimirla}
+
+Todo juego necesita puntos. Este programa te da 10 puntos cada segundo, cinco veces, y muestra los puntos cada vez, igual que un monitor de Scratch que va subiendo.
+
+\step{Paso 1: Constrúyelo en Scratch}
+\noindent\begin{minipage}[t]{0.58\linewidth}\vspace{0pt}
+\begin{scratch}[scale=0.95]
+\blockinit{al presionar \greenflag}
+\blockvariable{fijar \selectmenu{puntos} a \ovalnum{0}}
+\blockvariable{mostrar variable \selectmenu{puntos}}
+\blockrepeat{repetir \ovalnum{5}}{
+  \blockcontrol{esperar \ovalnum{1} segundos}
+  \blockvariable{cambiar \selectmenu{puntos} en \ovalnum{10}}
+}
+\blocklook{decir \ovaloperator{unir \ovalnum{¡Fin del juego! Puntos finales: } \ovalvariable{puntos}}}
+\end{scratch}
+\end{minipage}\hfill\begin{minipage}[t]{0.33\linewidth}\vspace{0pt}
+Haz clic en \textbf{Crear una variable} y llámala \textbf{puntos}. Luego construye:
+\end{minipage}
+
+
+\step{Paso 2: Escríbelo en Colab}
+Este no dibuja, así que no necesitas las tres líneas de inicio.
+
+\begin{typethis}
+import time
+puntos = 0
+print("Puntos:", puntos)
+for i in range(5):
+    time.sleep(1)
+    puntos = puntos + 10
+    print("Puntos:", puntos)
+print("¡Fin del juego! Puntos finales:", puntos)
+\end{typethis}
+
+\needspace{8\baselineskip}
+\step{Paso 3: Léelo línea por línea}
+
+\begin{longtable}{>{\centering\arraybackslash}p{1.1cm} P{5.3cm} P{9.1cm}}
+\toprule
+\textbf{Línea} & \textbf{Bloque de Scratch} & \textbf{Qué significa} \\
+\midrule
+--- & \chip[events]{al presionar bandera verde} & No hace falta código. El botón de reproducir \playbtn{} lo inicia. \\
+1 & (esperar necesita esto) & Trae las herramientas de reloj de Python, para poder usar \py|time.sleep|. \\
+2 & \chip[variables]{fijar puntos a 0} & Hace una caja llamada \texttt{puntos} y mete 0 en ella. \\
+3 & \chip[variables]{mostrar variable puntos} & Muestra lo que hay en la caja: \texttt{Puntos: 0}. \\
+4 & \chip[control]{repetir 5} & Haz las líneas con sangría 5 veces. \\
+5 & \chip[control]{esperar 1 segundos} & Espera un segundo. \\
+6 & \chip[variables]{cambiar puntos en 10} & Toma lo que hay en la caja, súmale 10 y vuelve a meterlo. \\
+7 & (el monitor se actualiza) & El monitor de Scratch cambia solo. En Python, imprimimos otra vez para ver los puntos nuevos. \\
+8 & \chip[looks]{decir unir ¡Fin del juego! \ldots} & No tiene espacios delante, así que se ejecuta una vez, después del bucle. \\
+\bottomrule
+\end{longtable}
+
+\step{Paso 4: Ejecútalo}
+Presiona \playbtn. Aparece una línea nueva cada segundo.
+
+\noindent\begin{minipage}[t]{0.44\linewidth}\vspace{0pt}
+\begin{outputbox}
+Puntos: 0\\
+Puntos: 10\\
+Puntos: 20\\
+Puntos: 30\\
+Puntos: 40\\
+Puntos: 50\\
+¡Fin del juego! Puntos finales: 50
+\end{outputbox}
+\end{minipage}\hfill\begin{minipage}[t]{0.53\linewidth}\vspace{0pt}
+\begin{think}[¿Y si olvidas la línea 2?]
+Borra la línea 2 y haz clic en \textbf{Entorno de ejecución} (\textit{Runtime}), luego en \textbf{Reiniciar sesión} (\textit{Restart session}), y vuelve a ejecutar la celda. Python dice \texttt{NameError: name 'puntos' is not defined}. ¡No puedes sumarle 10 a una caja que todavía no existe! En Scratch, una variable nueva empieza en 0 solita. En Python, siempre llenas la caja primero.
+\end{think}
+\end{minipage}
+
+
+\begin{challenge}
+\tick Cambia la línea 6 por \py|puntos += 10|. ¿Cambia algo cuando lo ejecutas?\par
+\tick Haz que cuente \textbf{hacia atrás}: empieza los puntos en 50 y quita 10 cada vez. (Pista: \texttt{-=}.)\par
+\tick Agrega una segunda caja, \py|vidas = 3|, antes del bucle. Dentro del bucle, quita una vida e imprime las dos: \py|print("Puntos:", puntos, "Vidas:", vidas)|. ¿Qué les pasa a las vidas después de 5 vueltas?\par
+\tick \textbf{Superreto:} haz que los puntos que ganas sean cada vez más. Agrega \py|premio = 10| antes del bucle. Dentro de él, suma \py|premio| a los puntos y luego haz \py|premio| 10 más grande. ¿Cuántos puntos tienes al final?
+\end{challenge}
+
+% =====================================================================
+\mission{Espiral que crece}{a usar una variable para la medida y cambiarla dentro de un bucle}
+
+En la página «Las variables también dibujan», la medida cambió una sola vez, entre dos cuadrados. Ahora la medida crece un poquito después de \textbf{cada} línea. Cada línea es más larga que la anterior, y la tortuga hace una espiral hacia afuera.
+
+\step{Paso 1 y Paso 2: Constrúyelo en Scratch y luego escríbelo en Colab}
+Crea una variable llamada \textbf{medida}. Agrega la extensión \textbf{Lápiz} y construye el programa de la izquierda. Luego escribe el Python de la derecha.
+
+\noindent\begin{minipage}[t]{0.37\linewidth}\vspace{0pt}
+\setscratch{scale=0.85}
+\begin{scratch}
+\blockinit{al presionar \greenflag}
+\blockpen{borrar todo}
+\blockpen{bajar lápiz}
+\blockpen{fijar color de lápiz a \ovalnum{morado}}
+\blockvariable{fijar \selectmenu{medida} a \ovalnum{5}}
+\blockrepeat{repetir \ovalnum{40}}{
+  \blockmove{mover \ovalvariable{medida} pasos}
+  \blockmove{girar \turnright{} \ovalnum{90} grados}
+  \blockvariable{cambiar \selectmenu{medida} en \ovalnum{5}}
+}
+\end{scratch}
+\end{minipage}\hfill\begin{minipage}[t]{0.61\linewidth}\vspace{0pt}
+\begin{typethis}
+from ColabTurtlePlus.Turtle import *
+clearscreen()
+initializeTurtle((480, 360))
+speed(13)
+pencolor("purple")
+medida = 5
+for i in range(40):
+    forward(medida)
+    right(90)
+    medida = medida + 5
+\end{typethis}
+\end{minipage}
+
+\step{Paso 3: Léelo línea por línea}
+
+\begin{longtable}{>{\centering\arraybackslash}p{1.1cm} P{5.3cm} P{9.1cm}}
+\toprule
+\textbf{Línea} & \textbf{Bloque de Scratch} & \textbf{Qué significa} \\
+\midrule
+1--3 & \chip[events]{al presionar bandera verde}\newline\chip[pen]{borrar todo} & Las tres líneas de inicio. \py|clearscreen()| limpia el escenario, como \chip[pen]{borrar todo}. El lápiz empieza abajo. \\
+4 & & La velocidad más rápida, para que no esperes demasiado. \\
+5 & \chip[pen]{fijar color de lápiz a}\newline\chip[pen]{morado} & Los nombres de colores van entre comillas, en minúsculas. Los colores se escriben en inglés: \texttt{"purple"} es morado, \texttt{"red"} rojo, \texttt{"blue"} azul, \texttt{"gold"} dorado\ldots \\
+6 & \chip[variables]{fijar medida a 5} & La primera línea medirá 5 pasos. \\
+7 & \chip[control]{repetir 40} & Haz las líneas con sangría 40 veces. \\
+8 & \chip[motion]{mover (medida) pasos} & Camina hacia adelante lo que haya en la caja \texttt{medida} en este momento. \\
+9 & \chip[motion]{girar a la derecha 90 grados} & Da vuelta en una esquina. \\
+10 & \chip[variables]{cambiar medida en 5} & Hace la caja 5 más grande, \textbf{dentro} del bucle, para que la siguiente línea sea más larga. \\
+\bottomrule
+\end{longtable}
+
+\step{Paso 4: Ejecútalo}
+Una espiral cuadrada morada crece desde el centro del escenario. Las líneas miden 5, 10, 15, 20 \ldots{} pasos, y la última mide 200 pasos.
+
+\begin{think}[Los espacios importan]
+La línea 10 tiene cuatro espacios delante, así que está dentro del bucle. Quítale los espacios y ejecútalo. Ahora \py|medida| solo cambia \textbf{una vez}, cuando el bucle ya terminó, así que cada línea mide 5 pasos y la tortuga solo da vueltas a un cuadradito 40 veces. ¡No sale ningún error rojo, pero el dibujo está mal!
+\end{think}
+
+\enlargethispage{\baselineskip}
+\begin{challenge}\small
+\tick Cambia \py|right(90)| por \py|right(91)|. ¡La espiral se tuerce! Prueba también con 89, 120 y 144.\par
+\tick Haz la espiral más apretada con \py|medida = medida + 2|, o más abierta con \py|medida = medida + 8|. Con \texttt{+ 8}, ¿todavía cabe en el escenario?\par
+\tick Haz el lápiz más grueso también: agrega \py|grueso = 1| antes del bucle, y luego \py|pensize(grueso)| y \py|grueso = grueso + 0.2| dentro de él.\par
+\tick \textbf{Superreto:} haz una espiral que se \textbf{encoja}. Empieza con \py|medida = 200| y quita 5 cada vez. (Pista: para que quepa en el escenario, salta a \py|goto(-100, 100)| con el lápiz arriba antes de empezar.)
+\end{challenge}
+
+% =====================================================================
+\mission{Arcoíris con una lista de colores}{una lista de colores y un bucle \texttt{for} que la recorre}
+
+¡Un arcoíris es una lista de colores! Este programa guarda los seis colores en una lista y luego dibuja una franja gruesa por cada color, de arriba abajo.
+
+\step{Paso 1: Constrúyelo en Scratch}
+\noindent\begin{minipage}[t]{0.61\linewidth}\vspace{0pt}
+\begin{scratch}[scale=0.79]
+\blockinit{al presionar \greenflag}
+\blockpen{borrar todo}
+\blockpen{fijar tamaño de lápiz a \ovalnum{15}}
+\blockvariable{fijar \selectmenu{y} a \ovalnum{60}}
+\blockvariable{fijar \selectmenu{i} a \ovalnum{1}}
+\blockrepeat{repetir \ovallist{longitud de \selectmenu{colores}}}{
+  \blockpen{fijar color de lápiz a \ovallist{elemento \ovalvariable{i} de \selectmenu{colores}}}
+  \blockpen{subir lápiz}
+  \blockmove{ir a x: \ovalnum{-150} y: \ovalvariable{y}}
+  \blockpen{bajar lápiz}
+  \blockmove{mover \ovalnum{300} pasos}
+  \blockvariable{cambiar \selectmenu{y} en \ovalnum{-15}}
+  \blockvariable{cambiar \selectmenu{i} en \ovalnum{1}}
+}
+\end{scratch}
+\end{minipage}\hfill\begin{minipage}[t]{0.36\linewidth}\vspace{0pt}
+Crea una lista llamada \textbf{colores} y dos variables llamadas \textbf{y} e \textbf{i}. El lápiz de Scratch no entiende nombres de colores, así que llena la lista en el escenario con seis códigos de color: \texttt{\#FF0000}, \texttt{\#FFA500}, \texttt{\#FFFF00}, \texttt{\#008000}, \texttt{\#0000FF}, \texttt{\#800080}. Luego construye:
+\end{minipage}
+
+
+\step{Paso 2: Escríbelo en Colab}
+
+\begin{typethis}
+from ColabTurtlePlus.Turtle import *
+clearscreen()
+initializeTurtle((480, 360))
+speed(13)
+pensize(15)
+colores = ["red", "orange", "yellow",
+           "green", "blue", "purple"]
+y = 60
+for color in colores:
+    pencolor(color)
+    penup()
+    goto(-150, y)
+    pendown()
+    forward(300)
+    y = y - 15
+hideturtle()
+\end{typethis}
+
+\par\medskip{\large\bfseries\color{ink}Paso 3: Léelo línea por línea}\par\nopagebreak
+
+\begin{longtable}{>{\centering\arraybackslash}p{1.1cm} P{5.3cm} P{9.1cm}}
+\toprule
+\textbf{Línea} & \textbf{Bloque de Scratch} & \textbf{Qué significa} \\
+\midrule
+1--3 & \chip[events]{al presionar bandera verde} & Las tres líneas de inicio. También hacen \chip[pen]{borrar todo}. \\
+4--5 & \chip[pen]{fijar tamaño de lápiz a 15} & La velocidad más rápida, y franjas gruesas. \\
+6--7 & (la lista en el escenario) & Seis nombres de colores, en inglés: rojo, naranja, amarillo, verde, azul y morado. Dentro de los corchetes puedes seguir en la línea siguiente. \\
+8 & \chip[variables]{fijar y a 60} & La primera franja está en $y = 60$. \\
+9 & \chip[control]{repetir longitud de colores} & Saca cada color, uno por uno, y llámalo \texttt{color}. ¡Sin contador \texttt{i}! \\
+10 & \chip[pen]{fijar color de lápiz a}\newline\chip[lists]{elemento i de colores} & Usa el color que acabamos de sacar. \texttt{color} no lleva comillas: es una caja, no la palabra «color». Python entiende \textbf{nombres} de colores, así que no hacen falta códigos. \\
+11--13 & \chip[pen]{subir lápiz}\newline\chip[motion]{ir a x: -150 y: (y)}\newline\chip[pen]{bajar lápiz} & Salta al extremo izquierdo de esta franja sin dibujar. \\
+14 & \chip[motion]{mover 300 pasos} & Dibuja la franja. La tortuga mira a la derecha. \\
+15 & \chip[variables]{cambiar y en -15} & Baja 15 para la siguiente franja. Luego la línea 16 esconde la tortuga. \\
+\bottomrule
+\end{longtable}
+
+\step{Paso 4: Ejecútalo}
+Aparecen seis franjas gruesas, una debajo de otra: roja arriba, luego naranja, amarilla, verde, azul y morada hasta abajo.
+
+\begin{think}[\texttt{color} y \texttt{pencolor}]
+¡Qué suerte! En español decimos \textbf{color}, y en inglés también se escribe \textbf{color}. Por eso Python usa esa misma palabra en sus nombres: \py|pencolor| quiere decir «color del lápiz». Pero ojo: \py|pencolor| es una palabra de Python, y \texttt{colores} y \texttt{color} son cajas que inventamos nosotros. Nuestros nombres de listas y cajas pueden ser los que queramos, siempre que los escribamos igual cada vez.
+\end{think}
+
+\begin{challenge}
+\tick Agrega una séptima franja con \py|colores.append("pink")| (rosa) en una línea nueva después de la línea 7.\par
+\tick Deja huecos entre las franjas: cambia el \texttt{15} de la línea 15 por \texttt{20}.\par
+\tick Haz tu propia bandera. Cambia la lista por \py|["red", "white", "blue"]| (rojo, blanco, azul). ¿Qué países podrías hacer?\par
+\tick \textbf{Superreto:} haz que cada franja sea más corta que la de arriba. Agrega \py|largo = 300| antes del bucle, usa \py|forward(largo)| y quítale 30 a \texttt{largo} en cada vuelta.
+\end{challenge}
+
+% =====================================================================
+\mission{Inventor de historias al azar}{a llenar listas, añadirles cosas y elegir con \texttt{random.choice}}
+
+Tres listas, una pizca de azar, y te sale una oración chistosa cada vez. ¿Se comerá un dragón tu tarea?
+
+\step{Paso 1: Constrúyelo en Scratch}
+\noindent\begin{minipage}[t]{0.70\linewidth}\vspace{0pt}
+\setscratch{scale=0.92}
+\begin{scratch}[scale=0.89]
+\blockinit{al presionar \greenflag}
+\blocklist{añadir \ovalnum{mi tarea} a \selectmenu{cosas}}
+\blockrepeat{repetir \ovalnum{3}}{
+  \blockvariable{fijar \selectmenu{heroe} a \ovallist{elemento \ovalnum{al azar} de \selectmenu{heroes}}}
+  \blockvariable{fijar \selectmenu{accion} a \ovallist{elemento \ovalnum{al azar} de \selectmenu{acciones}}}
+  \blockvariable{fijar \selectmenu{cosa} a \ovallist{elemento \ovalnum{al azar} de \selectmenu{cosas}}}
+  \blocklook{decir \ovaloperator{unir \ovalvariable{heroe} \ovaloperator{unir \ovalvariable{accion} \ovalvariable{cosa}}} durante \ovalnum{2} segundos}
+}
+\end{scratch}
+\end{minipage}\hfill\begin{minipage}[t]{0.27\linewidth}\vspace{0pt}
+Crea tres listas, \textbf{heroes}, \textbf{acciones} y \textbf{cosas}, y llénalas en el escenario. Crea tres variables, \textbf{heroe}, \textbf{accion} y \textbf{cosa}. Luego construye:
+\end{minipage}
+
+
+\step{Paso 2: Escríbelo en Colab}
+
+\begin{typethis}
+import random
+heroes = ["Un dragón", "Mi maestra", "Un robotito"]
+acciones = ["se comió", "le cantó a", "persiguió a"]
+cosas = ["un plátano", "la luna", "un calcetín"]
+cosas.append("mi tarea")
+for i in range(3):
+    heroe = random.choice(heroes)
+    accion = random.choice(acciones)
+    cosa = random.choice(cosas)
+    print(heroe, accion, cosa)
+\end{typethis}
+
+\needspace{8\baselineskip}
+\step{Paso 3: Léelo línea por línea}
+
+\begin{longtable}{>{\centering\arraybackslash}p{1.1cm} P{5.3cm} P{9.1cm}}
+\toprule
+\textbf{Línea} & \textbf{Bloque de Scratch} & \textbf{Qué significa} \\
+\midrule
+1 & & Trae las herramientas de azar de Python. \\
+2--4 & (listas llenadas en el escenario) & Tres listas, cada una con tres elementos. Cada elemento es un texto, así que cada uno lleva comillas. Las comas van entre los elementos. \\
+5 & \chip[lists]{añadir mi tarea a cosas} & Pone una cuarta cosa al final de la lista \texttt{cosas}. \\
+6 & \chip[control]{repetir 3} & Haz tres oraciones. \\
+7--9 & \chip[variables]{fijar heroe a}\newline\chip[lists]{elemento al azar de heroes} \ldots & Elige un elemento de cada lista y mételo en una caja. \\
+10 & \chip[looks]{decir unir heroe \ldots} & Imprime las tres cajas seguidas. Las comas ponen espacios entre ellas, así que no necesitas tres bloques \chip[operators]{unir}. \\
+\bottomrule
+\end{longtable}
+
+\step{Paso 4: Ejecútalo}
+Te van a salir tres oraciones al azar. ¡Las tuyas serán diferentes!
+
+\begin{outputbox}[Podrías ver]
+Un dragón se comió un calcetín\\
+Un robotito persiguió a mi tarea\\
+Mi maestra le cantó a la luna
+\end{outputbox}
+
+\begin{think}[Haz clic dos veces en la bandera]
+En Scratch, las listas recuerdan sus elementos aunque el proyecto se detenga. Haz clic dos veces en la bandera verde, ¡y \texttt{mi tarea} se añade \textbf{dos veces}! En Python, la línea 4 hace una lista \texttt{cosas} nuevecita cada vez que ejecutas la celda, así que siempre empieza con exactamente tres cosas.
+\end{think}
+
+\begin{challenge}
+\tick Agrega tus propias palabras a cada lista. ¡No olvides las comillas y las comas!\par
+\tick Haz 5 oraciones en vez de 3.\par
+\tick Agrega una cuarta lista, \texttt{lugares}, como \py|["en la tina", "en el camión"]|, e imprime un lugar al final de cada oración.\par
+\tick \textbf{Superreto:} después del bucle, imprime \py|len(cosas)| y la lista \texttt{cosas} completa. ¿Cuántas cosas hay, y a dónde fue a parar \texttt{"mi tarea"}?
+\end{challenge}
+
+% =====================================================================
+\banner{variables}{TU TURNO}{Tradúcelo tú}
+
+¡Ahora el traductor eres tú! Escribe el Python de este nuevo programa de Scratch y luego ejecútalo en Colab.
+
+\noindent\begin{minipage}[t]{0.47\linewidth}\vspace{0pt}
+\setscratch{scale=0.9}
+\begin{scratch}[scale=0.63]
+\blockinit{al presionar \greenflag}
+\blocklist{Eliminar todos de \selectmenu{mascotas}}
+\blocklist{añadir \ovalnum{gato} a \selectmenu{mascotas}}
+\blocklist{añadir \ovalnum{perro} a \selectmenu{mascotas}}
+\blocklist{añadir \ovalnum{pez} a \selectmenu{mascotas}}
+\blocklook{decir \ovallist{longitud de \selectmenu{mascotas}} durante \ovalnum{2} segundos}
+\blocklook{decir \ovallist{elemento \ovalnum{2} de \selectmenu{mascotas}} durante \ovalnum{2} segundos}
+\end{scratch}
+\end{minipage}\hfill\begin{minipage}[t]{0.5\linewidth}\vspace{0pt}
+\begin{tcolorbox}[colback=white, colframe=codeframe, arc=5pt, title=\textbf{Mi Python}, coltitle=ink, colbacktitle=codebg]
+\vspace{4pt}
+\foreach \n in {1,...,6}{\rule{\linewidth}{0.4pt}\par\vspace{9pt}}
+\end{tcolorbox}
+\small\textbf{Pistas:} ¿Qué empieza una lista vacía? ¿Qué palabra añade al final? ¡El elemento 2 no es \texttt{[2]}!
+\end{minipage}
+
+\medskip
+\begin{puzzle}
+¿Puedes contar los elementos de una lista \textbf{sin} \py|len|? Escribe las \textbf{dos} líneas que faltan, con un bucle \py|for| y \texttt{+=}. Debe imprimir \texttt{4}.
+\begin{codenonum}
+palabras = ["tigre", "león", "cebra", "hipopótamo"]
+cuenta = 0
+\end{codenonum}
+\vspace{10pt}
+\rule{\linewidth}{0.4pt}\par\vspace{10pt}
+\rule{\linewidth}{0.4pt}\par\vspace{2pt}
+\hspace*{8pt}\texttt{print(cuenta)}
+\end{puzzle}
+
+\smallskip
+\begin{tcolorbox}[colback=variables!10, colframe=variables!80!black, arc=6pt, boxrule=0.8pt, left=10pt, top=2pt, bottom=2pt, title={\textbf{Lista de la Parte 3}}, coltitle=white, colbacktitle=variables!80!black]
+\tick Ya sé crear una variable con \py|=| y explicar que significa «mete en la caja».\par
+\tick Puedo cambiar una variable con \py|puntos += 1| y mostrarla con \py|print|.\par
+\tick Ya sé las reglas de los nombres, y que \texttt{5} y \texttt{"5"} son diferentes.\par
+\tick Puedo crear una lista y usar \py|append|, \py|len|, \py|del|, \py|insert| y \py|clear|.\par
+\tick Ya sé que el elemento 1 de Scratch es \texttt{[0]} en Python, y sé qué significa \texttt{IndexError}.\par
+\tick Puedo recorrer una lista con \py|for| y elegir al azar con \py|random.choice|.
+\end{tcolorbox}

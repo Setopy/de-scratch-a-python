@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>De Scratch a Python</title>
+<meta name="description" content="Un libro de trabajo gratuito para niños que pasan de Scratch a Python de verdad en Google Colab: cada bloque de Scratch con su código, 35 misiones.">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#1b2550">
+<link rel="icon" type="image/png" href="icons/favicon-48.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="De Scratch a Python">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="alternate" hreflang="en" href="https://setopy.github.io/JesusArrows-scratch2python/">
+<link rel="alternate" hreflang="es" href="https://setopy.github.io/JesusArrows-de-scratch-a-python/">
+<link rel="canonical" href="https://setopy.github.io/JesusArrows-de-scratch-a-python/">
+<style>
+:root {
+  --bg: #f6f8fd; --card: #ffffff; --ink: #1b2550; --muted: #56618a; --line: #dfe4f2;
+  --code-bg: #eef2fc; --accent: #4c97ff; --accent-ink: #ffffff;
+  --motion: #4c97ff; --looks: #9966ff; --sound: #cf63cf; --events: #ffbf00;
+  --control: #ffab19; --sensing: #5cb1d6; --operators: #59c059; --variables: #ff8c1a;
+  --myblocks: #ff6680; --pen: #0fbd8c;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #11152b; --card: #1a2040; --ink: #e8ecff; --muted: #a3acd6; --line: #2c3563;
+    --code-bg: #232a52; --accent: #6aa8ff; --accent-ink: #0d1330;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #11152b; --card: #1a2040; --ink: #e8ecff; --muted: #a3acd6; --line: #2c3563;
+  --code-bg: #232a52; --accent: #6aa8ff; --accent-ink: #0d1330;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+.wrap { max-width: 980px; margin: 0 auto; padding: 0 16px; }
+.strip { display: flex; height: 8px; }
+.strip span { flex: 1; }
+.topbar { display: flex; justify-content: flex-end; padding-top: 14px; font-size: 15px; }
+.topbar a { color: var(--accent); font-weight: 700; text-decoration: none; }
+header { padding: 24px 0 32px; }
+.kicker { color: var(--muted); font-weight: 700; letter-spacing: .04em; text-transform: uppercase; font-size: 14px; margin: 0; }
+h1 { font-size: clamp(36px, 7vw, 60px); line-height: 1.05; margin: 8px 0 16px; }
+.lead { font-size: 19px; max-width: 640px; margin: 0 0 24px; }
+.buttons { display: flex; flex-wrap: wrap; gap: 12px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 999px;
+  font: inherit; font-weight: 700; text-decoration: none; border: 2px solid var(--accent); cursor: pointer;
+}
+.btn.primary { background: var(--accent); color: var(--accent-ink); }
+.btn.secondary { color: var(--accent); background: transparent; }
+.btn.install { color: var(--ink); background: var(--events); border-color: var(--events); }
+.btn:focus-visible { outline: 3px solid var(--events); outline-offset: 2px; }
+.btn[hidden] { display: none; }
+.facts { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 20px; color: var(--muted); font-size: 15px; }
+section { padding: 28px 0; }
+h2 { font-size: 26px; margin: 0 0 14px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px; }
+.side { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+.side > * { min-width: 0; }
+.blocks { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+.block {
+  color: #fff; font-weight: 700; font-size: 15px; padding: 7px 14px; border-radius: 6px;
+  text-shadow: 0 1px 0 rgba(0,0,0,.18);
+}
+.block.in { margin-left: 22px; }
+.block.hat { border-radius: 18px 18px 6px 6px; }
+pre {
+  margin: 0; background: var(--code-bg); border-radius: 10px; padding: 14px 16px; overflow-x: auto;
+  font: 15px/1.55 ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+.k { color: var(--motion); font-weight: 700; }
+.parts { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+.part { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px; border-top: 6px solid var(--c); }
+.part h3 { margin: 0 0 4px; font-size: 17px; }
+.part p { margin: 0; color: var(--muted); font-size: 15px; }
+ol.steps { margin: 0; padding-left: 22px; }
+ol.steps li { margin-bottom: 8px; }
+.note { border-left: 5px solid var(--control); padding: 10px 14px; background: var(--card); border-radius: 8px; margin-top: 14px; font-size: 15px; }
+.ios { margin-top: 14px; font-size: 15px; color: var(--muted); }
+.ios[hidden] { display: none; }
+code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 6px; border-radius: 5px; font-size: .92em; }
+footer { color: var(--muted); font-size: 14px; padding: 28px 0 40px; border-top: 1px solid var(--line); margin-top: 20px; }
+footer a, .card a, .note a { color: var(--accent); }
+@media (max-width: 640px) {
+  .side { grid-template-columns: minmax(0, 1fr); }
+}
+</style>
+</head>
+<body>
+<div class="strip" aria-hidden="true">
+  <span style="background:var(--motion)"></span><span style="background:var(--looks)"></span>
+  <span style="background:var(--sound)"></span><span style="background:var(--events)"></span>
+  <span style="background:var(--control)"></span><span style="background:var(--sensing)"></span>
+  <span style="background:var(--operators)"></span><span style="background:var(--variables)"></span>
+  <span style="background:var(--myblocks)"></span><span style="background:var(--pen)"></span>
+</div>
+
+<div class="wrap">
+<div class="topbar"><a href="https://setopy.github.io/JesusArrows-scratch2python/" hreflang="en" lang="en">Read in English →</a></div>
+<header>
+  <p class="kicker">🐢 Un libro de trabajo gratuito para jóvenes programadores</p>
+  <h1>De Scratch<br>a Python</h1>
+  <p class="lead">Ya sabes programar. Cada vez que encajas bloques de Scratch, estás escribiendo un programa. Este libro te enseña a escribir las mismas ideas en Python de verdad, en Google Colab, una misión a la vez.</p>
+  <div class="buttons">
+    <a class="btn primary" href="de-scratch-a-python.pdf">📘 Descargar el libro (PDF)</a>
+    <a class="btn secondary" href="https://colab.research.google.com/github/Setopy/JesusArrows-de-scratch-a-python/blob/main/Mis%20aventuras%20con%20Python.ipynb">▶ Abrir el cuaderno en Colab</a>
+    <button class="btn install" id="install" type="button" hidden>⬇ Instalar la app</button>
+  </div>
+  <p class="ios" id="ios-tip" hidden>En iPhone o iPad: toca <strong>Compartir</strong> y luego <strong>Agregar a inicio</strong> para instalar la app.</p>
+  <div class="facts">
+    <span>277 páginas</span><span>35 misiones</span><span>147 bloques de Scratch traducidos</span><span>No hay que instalar nada para programar</span>
+  </div>
+</header>
+
+<section>
+  <h2>Así es una misión</h2>
+  <div class="side">
+    <div class="card">
+      <div class="blocks" aria-label="Bloques de Scratch">
+        <span class="block hat" style="background:var(--events)">al presionar 🏁</span>
+        <span class="block" style="background:var(--control)">repetir 4</span>
+        <span class="block in" style="background:var(--motion)">mover 100 pasos</span>
+        <span class="block in" style="background:var(--motion)">girar ↻ 90 grados</span>
+      </div>
+    </div>
+    <div class="card">
+<pre><span class="k">from</span> ColabTurtlePlus.Turtle <span class="k">import</span> *
+clearscreen()
+initializeTurtle((480, 360))
+
+<span class="k">for</span> i <span class="k">in</span> range(4):
+    forward(100)
+    right(90)</pre>
+    </div>
+  </div>
+  <p>Cada misión tiene cinco pasos: <strong>constrúyelo en Scratch</strong>, <strong>escríbelo en Colab</strong>, <strong>léelo línea por línea</strong>, <strong>ejecútalo</strong> y <strong>hazlo tuyo</strong>. Las palabras de Python siempre van en inglés; los nombres que tú inventas van en español.</p>
+</section>
+
+<section>
+  <h2>Qué hay adentro</h2>
+  <div class="parts">
+    <div class="part" style="--c:var(--motion)"><h3>Parte 1: Movimiento y Lápiz</h3><p>Mueve la tortuga, gira y dibuja con colores.</p></div>
+    <div class="part" style="--c:var(--control)"><h3>Parte 2: Bucles</h3><p><code>repetir</code> se convierte en <code>for</code>. Estrellas, espirales, flores.</p></div>
+    <div class="part" style="--c:var(--variables)"><h3>Parte 3: Variables y listas</h3><p>Cajas con etiqueta y una mochila llena de cosas.</p></div>
+    <div class="part" style="--c:var(--operators)"><h3>Parte 4: Operadores</h3><p>Cuentas, números al azar y unir palabras.</p></div>
+    <div class="part" style="--c:var(--sensing)"><h3>Parte 5: Sensores y decisiones</h3><p>Haz preguntas, decide y mide el tiempo.</p></div>
+    <div class="part" style="--c:var(--myblocks)"><h3>Parte 6: Mis Bloques</h3><p>Crea tus propios bloques con <code>def</code>.</p></div>
+    <div class="part" style="--c:var(--looks)"><h3>Parte 7: Apariencia, sonido y eventos</h3><p>Disfraces, música y una carrera de tortugas.</p></div>
+    <div class="part" style="--c:var(--pen)"><h3>Grandes proyectos</h3><p>Ocho juegos, de un cuento a un juego de persecución.</p></div>
+    <div class="part" style="--c:var(--sound)"><h3>El Zoológico de Bichos</h3><p>Lee los mensajes de error como un detective.</p></div>
+    <div class="part" style="--c:var(--events)"><h3>Diccionario de bloques</h3><p>El Python de cada bloque de Scratch.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>Para los adultos: cómo empezar</h2>
+  <div class="card">
+    <ol class="steps">
+      <li><strong>Abre o imprime el libro.</strong> Lee primero <em>Para los adultos</em>, cerca del final.</li>
+      <li><strong>Abre el cuaderno en Colab</strong> con el botón de arriba y luego elige <em>Archivo → Guardar una copia en Drive</em> para que se guarde el trabajo.</li>
+      <li><strong>Ejecuta la celda «En el principio»</strong>, <code>!pip install ColabTurtlePlus</code>, cada vez que abras el cuaderno.</li>
+      <li><strong>Haz una misión por sesión</strong>, de 20 a 30 minutos, con tu hijo o hija al teclado.</li>
+    </ol>
+    <div class="note">Instala <code>ColabTurtlePlus</code> (con <em>Plus</em>). La biblioteca <code>ColabTurtle</code>, que se llama casi igual, es otra distinta y no funciona con este libro. Todo se probó en Colab en noviembre de 2026.</div>
+    <div class="note">La app instalada guarda esta página y el libro en tu dispositivo, así que puedes leer el PDF sin internet. Para programar en Colab sí necesitas conexión.</div>
+  </div>
+</section>
+
+<footer>
+  <p>Los archivos fuente, las notas de investigación y los programas de prueba están en <a href="https://github.com/Setopy/JesusArrows-de-scratch-a-python">GitHub</a>. También hay una <a href="https://setopy.github.io/JesusArrows-scratch2python/" hreflang="en">edición en inglés</a>.</p>
+  <p>Este es un libro independiente. No lo hacen Scratch, la Fundación Scratch, el MIT ni Google, ni tiene relación con ellos. Scratch es un proyecto de la Fundación Scratch.</p>
+</footer>
+</div>
+
+<script>
+(function () {
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('sw.js', { scope: './' }).catch(function () {});
+    });
+  }
+  var btn = document.getElementById('install');
+  var deferred = null;
+  window.addEventListener('beforeinstallprompt', function (e) {
+    e.preventDefault();
+    deferred = e;
+    btn.hidden = false;
+  });
+  btn.addEventListener('click', function () {
+    if (!deferred) return;
+    deferred.prompt();
+    deferred.userChoice.finally(function () { deferred = null; btn.hidden = true; });
+  });
+  window.addEventListener('appinstalled', function () { btn.hidden = true; });
+  var standalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  var ios = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  if (ios && !standalone) document.getElementById('ios-tip').hidden = false;
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+{
+  "name": "De Scratch a Python",
+  "short_name": "Scratch a Python",
+  "description": "Libro de trabajo gratuito para niños que pasan de Scratch a Python en Google Colab.",
+  "lang": "es",
+  "dir": "ltr",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f6f8fd",
+  "theme_color": "#1b2550",
+  "categories": ["education", "kids", "books"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Leer el libro (PDF)", "short_name": "Libro", "url": "de-scratch-a-python.pdf",
+      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" }] }
+  ]
+}

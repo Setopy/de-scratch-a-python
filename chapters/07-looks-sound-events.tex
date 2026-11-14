@@ -1,0 +1,1008 @@
+% =====================================================================
+% PARTE 7: Apariencia, sonido y eventos
+% =====================================================================
+\partopener{events}{PARTE 7}{Apariencia, sonido y eventos}{Haz que tus objetos se disfracen, canten una melodía y se pasen mensajes, y luego hazlos competir a todos en un solo bucle.}
+
+Esta es la última parte, ¡y es muy divertida! Vas a disfrazar a tu tortuga, hacer que Colab toque música y aprender cómo hace Python el trabajo de los bloques amarillos con sombrero de Scratch. Estos son algunos de los bloques que vas a conocer:
+
+\begin{center}
+\chip[looks]{decir ¡Hola! durante 2 segundos}\quad
+\chip[looks]{siguiente disfraz}\par\vspace{6pt}
+\chip[looks]{fijar tamaño a 200 \%}\quad
+\chip[looks]{cambiar fondo a cielo azul}\par\vspace{6pt}
+\chip[sound]{iniciar sonido Miau}\quad
+\chip[sound]{tocar sonido Miau hasta que termine}\par\vspace{6pt}
+\chip[events]{al presionar bandera verde}\quad
+\chip[events]{enviar mensaje1}\quad
+\chip[events]{al recibir mensaje1}
+\end{center}
+
+Algunos funcionan casi igual en Python. Otros necesitan un truco ingenioso. Y hay una gran idea que es distinta: Scratch parece ejecutar muchos programas a la vez, pero Python hace \textbf{una cosa a la vez}. Al final de esta parte sabrás cómo hacer que un solo bucle mueva a todos los objetos.
+
+% ---------------------------------------------------------------------
+\needspace{18\baselineskip}
+\subsection*{Decir cosas: \texttt{print}}
+
+Conociste \py|print| al principio del libro. Es el bloque \chip[looks]{decir} de Python. Las palabras aparecen debajo de la celda de código en lugar de en un globo de diálogo.
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}
+\blockinit{al presionar \greenflag}
+\blocklook{decir \ovalnum{¡Hola!} durante \ovalnum{2} segundos}
+\blocklook{decir \ovalnum{¡Adiós!}}
+\end{scratch}
+\end{tcolorbox}
+\begin{code}
+import time
+print("¡Hola!")
+time.sleep(2)
+print("¡Adiós!")
+\end{code}
+\end{tcbraster}
+
+\textbf{Cómo funciona.} \py|print("¡Hola!")| es la parte de \chip[looks]{decir}. La parte de «durante 2 segundos» es una espera, así que se convierte en \py|time.sleep(2)|, que ya conociste con el bloque \chip[control]{esperar}. \py|import time| arriba trae las herramientas del reloj. En Scratch, el globo desaparece después de 2 segundos. Las palabras impresas se quedan en la página, así que verás \texttt{¡Hola!} y luego, 2 segundos después, \texttt{¡Adiós!} debajo.
+
+\begin{think}[¿Y pensar?]
+Python no tiene globo de pensamiento, así que \chip[looks]{pensar Mmm...} también es solo \py|print("Mmm...")|. Si quieres que se sepa que es un pensamiento, puedes escribir \py|print("(piensa) Mmm...")|.
+\end{think}
+
+% ---------------------------------------------------------------------
+\needspace{14\baselineskip}
+\subsection*{Palabras en el escenario: una tortuga globo}
+
+¿Quieres que las palabras aparezcan \textbf{en el escenario}, junto a tu objeto? La tortuga tiene un comando \py|write()| que escribe palabras donde está parada. El truco es crear una segunda tortuga, \textbf{invisible}, cuyo único trabajo es escribir. Vamos a llamarla \py|globo|, como el globo de diálogo de Scratch.
+
+\begin{center}
+\begin{scratch}
+\blockinit{al presionar \greenflag}
+\blocklook{cambiar disfraz a \selectmenu{tortuga}}
+\blocklook{decir \ovalnum{¡Hola!} durante \ovalnum{2} segundos}
+\end{scratch}
+\end{center}
+
+\begin{typethis}
+from ColabTurtlePlus.Turtle import *
+clearscreen()
+initializeTurtle((480, 360))
+import time
+
+shape("turtle")
+globo = Turtle()
+globo.hideturtle()
+globo.penup()
+globo.goto(0, 30)
+globo.write("¡Hola!", align="center",
+            font=("Arial", 20, "normal"))
+time.sleep(2)
+globo.clear()
+\end{typethis}
+
+\textbf{Cómo funciona.} Las líneas 7 a 10 crean un objeto nuevo llamado \py|globo|, lo esconden, levantan su lápiz y lo mueven justo encima de la tortuga. Las líneas 11 y 12 son la parte de \chip[looks]{decir}: \py|write| escribe las palabras donde está parado \py|globo|. \py|align="center"| pone ahí el centro de las palabras, y \py|font=| da el tipo de letra, el tamaño (20) y \py|"normal"|. Es un solo comando partido en dos líneas: Python sabe que no ha terminado hasta que se cierra el paréntesis. La línea 13 espera, y la línea 14 hace desaparecer el «globo»: \py|clear()| borra todo lo que \py|globo| ha escrito o dibujado.
+
+\begin{watchout}[¿Por qué una tortuga globo aparte?]
+\py|clear()| borra \textbf{todo} lo que dibujó esa tortuga, no solo las palabras. Si tu tortuga principal escribiera las palabras y luego las borrara, ¡sus líneas también desaparecerían! Una tortuga globo es como un amigo que sostiene un pizarrón: para cambiar el letrero, el amigo borra el pizarrón y vuelve a escribir, y tu dibujo queda a salvo. Para un pensamiento, cambia \py|"normal"| por \py|"italic"| y las palabras salen inclinadas, como cuando piensas.
+\end{watchout}
+
+% ---------------------------------------------------------------------
+\needspace{20\baselineskip}
+\subsection*{Disfraces: \texttt{shape}}
+
+En Scratch, un objeto puede cambiar de disfraz. La tortuga también, con \py|shape()|. Le das el nombre de un disfraz entre comillas.
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}
+\blocklook{cambiar disfraz a \selectmenu{tortuga}}
+\end{scratch}
+\end{tcolorbox}
+\begin{code}
+shape("turtle")
+\end{code}
+\end{tcbraster}
+
+La tortuga tiene nueve disfraces. ¡Pruébalos todos! Python habla inglés: sus palabras (\py|shape|, \py|print|, \py|forward|...) siempre van en inglés, y los nombres de los disfraces también.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lll}
+\toprule
+\py|"classic"| (el del principio) & \py|"arrow"| (flecha) & \py|"triangle"| (triángulo) \\
+\py|"square"| (cuadrado) & \py|"circle"| (círculo) & \py|"turtle"| (tortuga) \\
+\py|"turtle2"| (tortuga puntiaguda) & \py|"ring"| (anillo) & \py|"blank"| (invisible) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Cómo funciona.} El nombre del disfraz es texto, así que necesita comillas, y debe estar escrito exactamente igual. Si escribes un nombre que no está en la lista, Python se detiene con un \texttt{ValueError} y te muestra la lista de nombres que conoce. ¡Esa es una nota de pista muy útil! Python siempre escribe sus errores en inglés; lo importante es el nombre del error (\texttt{ValueError}, \texttt{NameError}...).
+
+\begin{watchout}[En Colab no hay disfraces con dibujos]
+En Scratch puedes pintar un disfraz o elegir un gato. La tortuga de Colab solo tiene las formas de la tabla: no puede cargar imágenes. En su lugar, haz que tus disfraces sean diferentes cambiando su \textbf{forma}, su \textbf{color} y su \textbf{tamaño}. De eso trata el resto de esta página.
+\end{watchout}
+
+% ---------------------------------------------------------------------
+\needspace{12\baselineskip}
+\subsection*{Siguiente disfraz: una lista y un gancho}
+
+Scratch te guarda un ropero de disfraces. En Python, tú construyes el ropero, como una \textbf{lista}. Un número llamado \py|n| es el gancho al que estás apuntando.
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center, raster force size=false, raster column 1/.style={add to width=-2.2cm}, raster column 2/.style={add to width=2.2cm}]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}
+\blockinit{al presionar \greenflag}
+\blockrepeat{repetir \ovalnum{6}}{
+  \blockcontrol{esperar \ovalnum{1} segundos}
+  \blocklook{siguiente disfraz}
+}
+\end{scratch}
+\end{tcolorbox}
+\begin{code}
+disfraces = ["turtle", "circle",
+             "square"]
+n = 0
+shape(disfraces[n])
+for i in range(6):
+    time.sleep(1)
+    n = (n + 1) % len(disfraces)
+    shape(disfraces[n])
+\end{code}
+\end{tcbraster}
+
+\textbf{Cómo funciona.} \py|disfraces[n]| toma el disfraz del gancho \py|n|. Recuerda que las listas empiezan a contar en 0, así que el gancho 0 es \py|"turtle"|. La línea 7 es la parte ingeniosa. \py|n + 1| pasa al siguiente gancho. \py|len(disfraces)| es 3, el número de disfraces. El signo \texttt{\%} es el bloque \chip[operators]{módulo} de Scratch: da el residuo de una división. Así que cuando \py|n + 1| llega a 3, \py|3 % 3| es 0 y vuelves al primer gancho, igual que Scratch cuando pasa del último disfraz al primero.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{cccc}
+\toprule
+\py|n| antes & \py|n + 1| & \py|(n + 1) % 3| & disfraz \\
+\midrule
+0 & 1 & 1 & \py|"circle"| \\
+1 & 2 & 2 & \py|"square"| \\
+2 & 3 & 0 & \py|"turtle"| \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+El bloque \chip[looks]{disfraz número} de Scratch cuenta desde 1, así que en Python es \py|n + 1|.
+
+% ---------------------------------------------------------------------
+\needspace{16\baselineskip}
+\subsection*{Tamaño: \texttt{shapesize}}
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}
+\blocklook{fijar tamaño a \ovalnum{200} \%}
+\blockrepeat{repetir \ovalnum{5}}{
+  \blocklook{cambiar tamaño en \ovalnum{50}}
+}
+\end{scratch}
+\end{tcolorbox}
+\begin{code}
+shapesize(2)
+medida = 200
+for i in range(5):
+    medida = medida + 50
+    shapesize(medida / 100)
+\end{code}
+\end{tcbraster}
+
+\textbf{Cómo funciona.} Scratch mide el tamaño en porcentaje, y 100\,\% es lo normal. Python usa «cuántas veces más grande», así que \py|shapesize(1)| es normal (100\,\%), \py|shapesize(2)| es el doble (200\,\%) y \py|shapesize(0.5)| es la mitad (50\,\%). Para cambiar el tamaño poco a poco, guarda tu propia variable \py|medida| en porcentaje, igual que en Scratch, y divídela entre 100 cuando se la des a \py|shapesize|.
+
+\begin{watchout}[Nunca tamaño 0]
+\py|shapesize(0)| hace que Python se detenga con un \texttt{ValueError}. Scratch evita en silencio que tu objeto se haga demasiado pequeño, pero Python no. Si tu tamaño baja dentro de un bucle, asegúrate de que nunca llegue a 0. Usa 0.1 para una tortuga diminuta.
+\end{watchout}
+
+% ---------------------------------------------------------------------
+\needspace{16\baselineskip}
+\subsection*{Mostrar y esconder}
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}
+\blockrepeat{repetir \ovalnum{3}}{
+  \blocklook{esconder}
+  \blockcontrol{esperar \ovalnum{0.5} segundos}
+  \blocklook{mostrar}
+  \blockcontrol{esperar \ovalnum{0.5} segundos}
+}
+\end{scratch}
+\end{tcolorbox}
+\begin{code}
+for i in range(3):
+    hideturtle()
+    time.sleep(0.5)
+    showturtle()
+    time.sleep(0.5)
+\end{code}
+\end{tcbraster}
+
+\textbf{Cómo funciona.} \py|hideturtle()| hace invisible a la tortuga y \py|showturtle()| la trae de vuelta. Los paréntesis están vacíos porque no hay nada que decirle, pero igual los necesitas: son los que hacen que Python \textbf{haga} el comando. Una tortuga escondida puede seguir moviéndose y dibujando. ¡Así funciona la tortuga globo!
+
+% ---------------------------------------------------------------------
+\needspace{18\baselineskip}
+\subsection*{Fondos y colores}
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}[scale=0.94]
+\blocklook{cambiar fondo a \selectmenu{cielo azul}}
+\blockrepeat{repetir \ovalnum{4}}{
+  \blocklook{cambiar el efecto \selectmenu{color} en \ovalnum{25}}
+  \blockcontrol{esperar \ovalnum{0.5} segundos}
+}
+\end{scratch}
+\end{tcolorbox}
+\begin{code}
+bgcolor("skyblue")
+arcoiris = ["red", "orange",
+            "gold", "green"]
+for c in arcoiris:
+    color(c)
+    time.sleep(0.5)
+\end{code}
+\end{tcbraster}
+
+\textbf{Cómo funciona.} \py|bgcolor()| («color de fondo», en inglés \emph{background color}) pinta todo el escenario. En Colab los fondos son solo colores lisos, no imágenes, así que elige un color que vaya bien: \py|"skyblue"| para el cielo, \py|"black"| para el espacio, \py|"lightgreen"| para un prado. \py|color(c)| colorea a la tortuga misma. El bucle recorre la lista \py|arcoiris| y le da a la tortuga cada color por turno, que es una forma sencilla de hacer el efecto de color de Scratch. Los colores se escriben en inglés: \py|"red"| es rojo, \py|"orange"| naranja, \py|"gold"| dorado, \py|"green"| verde y \py|"skyblue"| azul cielo. Y por suerte, en Python \texttt{color} se escribe igual que en español. Recuerda: los nombres de los colores van todos en minúsculas.
+
+% ---------------------------------------------------------------------
+\needspace{16\baselineskip}
+\subsection*{Sonido en Colab: la celda de sonido}
+
+Colab funciona en las computadoras de Google, muy lejos de ti, así que Python no puede llegar a tus bocinas. Pero \textbf{sí} puede mandar un sonido a la página web, y tu navegador lo toca. Para eso, ejecuta esta \textbf{celda de sonido} una vez, después de la celda «En el principio». Crea un bloque nuevo llamado \py|pitido| (porque hace un pitido).
+
+\begin{typethis}[Celda de sonido: ejecútala una vez cada vez que abras Colab]
+import numpy as np
+from IPython.display import Audio, display
+
+def pitido(frec=440, segs=0.5):
+    instantes = np.linspace(0, segs, int(22050 * segs))
+    sonido = np.sin(2 * np.pi * frec * instantes)
+    display(Audio(sonido, rate=22050, autoplay=True))
+\end{typethis}
+
+No necesitas entender cada línea. Es una tarjeta de receta que escribió otra persona, y tú solo la usas, como un bloque de una extensión. Esta es la idea. Las líneas 1 y 2 traen dos extensiones: \py|numpy| (matemáticas superrápidas) y las herramientas que ponen un reproductor de sonido en la página. La línea 4 crea tu propio bloque, \py|pitido|, con dos entradas: qué tan aguda es la nota (\py|frec|, abreviatura de \emph{frecuencia}) y cuánto dura (\py|segs|, de \emph{segundos}). \py|frec=440| significa «si nadie dice otra cosa, usa 440». Las líneas 5 y 6 calculan la forma de la onda de sonido, y la línea 7 pone un pequeño reproductor de sonido en la página y lo toca enseguida (\py|autoplay=True|).
+
+\begin{watchout}[¿No se oye nada?]
+\begin{itemize}
+  \item Revisa que el volumen de tu computadora esté alto.
+  \item Algunos navegadores bloquean los sonidos que suenan solos. Si ves un pequeño reproductor con un botón \playbtn{} debajo de la celda pero no oyes nada, presiona su botón de reproducir.
+  \item ¿Sale \texttt{NameError: name 'pitido' is not defined}? Ejecuta primero la celda de sonido.
+\end{itemize}
+\end{watchout}
+
+% ---------------------------------------------------------------------
+\needspace{18\baselineskip}
+\subsection*{Iniciar sonido, y tocar hasta que termine}
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}[scale=0.8]
+\blocksound{tocar sonido \selectmenu{Do grave} hasta que termine}
+\blocksound{tocar sonido \selectmenu{Mi} hasta que termine}
+\blocksound{iniciar sonido \selectmenu{Sol largo}}
+\end{scratch}
+\end{tcolorbox}
+\begin{code}
+import time
+pitido(262)
+time.sleep(0.5)
+pitido(330)
+time.sleep(0.5)
+pitido(392, 1)
+\end{code}
+\end{tcbraster}
+
+\textbf{Cómo funciona.} \py|pitido(262)| es \chip[sound]{iniciar sonido}: empieza la nota y Python sigue de inmediato con la siguiente línea. \chip[sound]{tocar sonido hasta que termine} espera a que el sonido acabe. Colab no sabe cuándo terminó un sonido, así que esperas tú: la nota dura 0.5 segundos, así que \py|time.sleep(0.5)| espera 0.5 segundos. \py|pitido(392, 1)| también da la segunda entrada, así que esa nota dura 1 segundo.
+
+\begin{think}[El timbre y el radio]
+\chip[sound]{iniciar sonido} es como prender el radio e irte a hacer otra cosa. \chip[sound]{tocar sonido hasta que termine} es como quedarte junto al radio hasta que acabe la canción. Quita las dos líneas de \py|time.sleep| y ejecútalo otra vez. ¡Todas las notas empiezan a la vez y suenan unas encima de otras!
+\end{think}
+
+% ---------------------------------------------------------------------
+\needspace{14\baselineskip}
+\subsection*{Las notas son números}
+
+El número que le das a \py|pitido| decide qué tan aguda es la nota. Los números más grandes son más agudos. Estas son las notas de una escala, empezando en el Do central. En inglés las notas se nombran con letras: Do es C, Re es D, y así.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{l*{8}{c}}
+\toprule
+\textbf{Nota} & Do & Re & Mi & Fa & Sol & La & Si & Do agudo \\
+\textbf{Letra en inglés} & C & D & E & F & G & A & B & C \\
+\textbf{Número} & 262 & 294 & 330 & 349 & 392 & 440 & 494 & 523 \\
+\textbf{Nota en Música} & 60 & 62 & 64 & 65 & 67 & 69 & 71 & 72 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Una melodía es una lista de notas, así que puedes tocarla con un bucle \py|for|:
+
+\begin{code}
+notas = [262, 294, 330, 349, 392, 440, 494, 523]
+for nota in notas:
+    pitido(nota, 0.3)
+    time.sleep(0.4)
+\end{code}
+
+Esto toca toda la escala, desde Do hasta Do agudo. Cada nota dura 0.3 segundos, y la espera de 0.4 segundos deja un huequito antes de la siguiente.
+
+\begin{think}[Para los adultos: si todas las notas suenan al final]
+En la mayoría de las computadoras, cada nota suena en cuanto se ejecuta \py|pitido|. Si la tuya las guarda todas y las toca juntas cuando termina la celda, une las notas en un solo sonido y toca ese. Pega esto debajo de la celda de sonido y usa \py|tocar_melodia([262, 294, 330])|:
+\begin{codenonum}
+def tocar_melodia(notas, segs=0.4):
+    partes = []
+    for nota in notas:
+        instantes = np.linspace(0, segs, int(22050 * segs))
+        partes.append(np.sin(2 * np.pi * nota * instantes))
+    cancion = np.concatenate(partes)
+    display(Audio(cancion, rate=22050, autoplay=True))
+\end{codenonum}
+\end{think}
+
+% ---------------------------------------------------------------------
+\needspace{14\baselineskip}
+\subsection*{La bandera verde: ejecutar la celda}
+
+Todo programa de Scratch empieza con un bloque de sombrero. El que más usas es \chip[events]{al presionar bandera verde}. En Colab, la bandera verde es el botón de reproducir \playbtn: al ejecutar una celda empieza todo lo que tiene, desde arriba. Por eso tus programas de dibujo empiezan con las tres líneas de inicio. Hacen lo que hace un programa de bandera verde al empezar: limpiar el escenario y preparar al objeto.
+
+Los otros bloques de sombrero de Scratch necesitan trucos diferentes en Python. Aquí están:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{P{5.6cm} P{9.6cm}}
+\toprule
+\textbf{Scratch} & \textbf{Python en Colab} \\
+\midrule
+\chip[events]{al presionar bandera verde} & Presiona \playbtn{} para ejecutar la celda. \\
+\chip[events]{al recibir mensaje1} & Crea una función: \py|def mensaje1():| \\
+\chip[events]{enviar mensaje1} & Llama a la función: \py|mensaje1()| \\
+\chip[events]{al presionar tecla espacio} & No existe en Colab. Pregunta con \py|input()| o usa Thonny (página al final de esta parte). \\
+\chip[events]{al hacer clic en este objeto} & No existe en Colab. Pregunta con \py|input()|. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+% ---------------------------------------------------------------------
+\needspace{12\baselineskip}
+\subsection*{Enviar mensajes es llamar funciones}
+
+En Scratch, un programa puede \textbf{enviar} un mensaje, y otro programa que empieza con \chip[events]{al recibir} hace su trabajo. En Python, el programa que recibe es una \textbf{función}, y enviar el mensaje es \textbf{llamarla}.
+
+\begin{center}
+\begin{tabular}{c@{\hspace{1cm}}c}
+\begin{scratch}
+\blockinit{al presionar \greenflag}
+\blocklook{decir \ovalnum{Listos...}}
+\blockevent{enviar \selectmenu{vamos} y esperar}
+\blocklook{decir \ovalnum{¡Listo!}}
+\end{scratch}
+&
+\begin{scratch}
+\blockinit{al recibir \selectmenu{vamos}}
+\blocklook{decir \ovalnum{¡Vamos, vamos, vamos!}}
+\end{scratch}
+\end{tabular}
+\end{center}
+
+\begin{code}
+def vamos():
+    print("¡Vamos, vamos, vamos!")
+
+print("Listos...")
+vamos()
+print("¡Listo!")
+\end{code}
+
+\begin{outputbox}
+Listos...\\
+¡Vamos, vamos, vamos!\\
+¡Listo!
+\end{outputbox}
+
+\textbf{Cómo funciona.} Las líneas 1--2 son el programa \chip[events]{al recibir vamos}. Python aprende la receta, pero todavía no la hace. La línea 4 se ejecuta primero. La línea 5 es el envío del mensaje: Python salta dentro de \py|vamos|, hace todo lo que tiene adentro, luego regresa y sigue con la línea 6.
+
+\begin{think}[Una llamada siempre espera]
+Scratch tiene dos bloques para enviar mensajes. \chip[events]{enviar} manda el mensaje y sigue de inmediato. \chip[events]{enviar y esperar} espera hasta que el otro programa haya terminado. Una llamada a una función en Python \textbf{siempre espera}: Python termina \py|vamos()| antes de pasar a la siguiente línea. Así que una llamada normal es como \chip[events]{enviar y esperar}. Buena noticia: así es fácil saber qué pasa y en qué orden.
+\end{think}
+
+% ---------------------------------------------------------------------
+\needspace{12\baselineskip}
+\subsection*{Las teclas se vuelven preguntas}
+
+La tortuga de Colab no puede oír el teclado ni el ratón mientras corre un programa. Así que en lugar de \chip[events]{al presionar tecla a}, \textbf{preguntas} qué tecla, con \py|input()|. El jugador escribe una letra y presiona Enter. Es como un juego de mesa: una jugada por turno. Usaremos \texttt{a} para avanzar, \texttt{i} para izquierda y \texttt{d} para derecha.
+
+\begin{center}
+\begin{tabular}{c@{\hspace{0.6cm}}c@{\hspace{0.6cm}}c}
+\begin{scratch}
+\blockinit{al presionar tecla \selectmenu{a}}
+\blockmove{mover \ovalnum{50} pasos}
+\end{scratch}
+&
+\begin{scratch}
+\blockinit{al presionar tecla \selectmenu{i}}
+\blockmove{girar \turnleft{} \ovalnum{90} grados}
+\end{scratch}
+&
+\begin{scratch}
+\blockinit{al presionar tecla \selectmenu{d}}
+\blockmove{girar \turnright{} \ovalnum{90} grados}
+\end{scratch}
+\end{tabular}
+\end{center}
+
+\begin{typethis}
+from ColabTurtlePlus.Turtle import *
+clearscreen()
+initializeTurtle((480, 360))
+
+shape("turtle")
+for turno in range(5):
+    tecla = input("¿a, i o d? ")
+    if tecla == "a":
+        forward(50)
+    elif tecla == "i":
+        left(90)
+    elif tecla == "d":
+        right(90)
+\end{typethis}
+
+\textbf{Cómo funciona.} Tres programas de Scratch se convierten en un solo bucle con cinco turnos. En cada turno, \py|input| espera una letra. Luego el \py|if| revisa qué letra fue y hace el trabajo del bloque de sombrero correspondiente. \py|elif| significa «si no, si...» (en inglés \emph{else if}): solo se revisa cuando las líneas de arriba no fueron verdaderas. Prueba a escribir \texttt{a}, \texttt{i}, \texttt{a}, \texttt{d}, \texttt{a}. ¡La tortuga dibuja un escalón en zigzag!
+
+\begin{watchout}[¡Cuidado! Dale siempre una salida a tu bucle]
+En Scratch, \chip[control]{por siempre} es seguro porque puedes hacer clic en la señal roja de alto. En Colab, \py|while True:| sin salida hace que la celda corra para siempre, y no puede pasar nada más. Usa un bucle \py|for| como \py|for turno in range(5):|, o un \py|while| cuya condición llegue a ser falsa, como el de la Carrera de tortugas más adelante en esta parte. Si una celda se queda atorada, presiona el botón de detener \stopbtn.
+\end{watchout}
+
+% ---------------------------------------------------------------------
+\needspace{12\baselineskip}
+\subsection*{Muchos objetos, un solo bucle}
+
+En Scratch, cada objeto puede tener su propio programa \chip[events]{al presionar bandera verde}, y todos parecen correr al mismo tiempo. Aquí un gato camina a la derecha mientras un perro camina hacia arriba:
+
+\begin{center}
+\begin{tabular}{c@{\hspace{1cm}}c}
+\textbf{Objeto Gato} & \textbf{Objeto Perro} \\[4pt]
+\begin{scratch}
+\blockinit{al presionar \greenflag}
+\blockrepeat{repetir \ovalnum{20}}{
+  \blockmove{mover \ovalnum{10} pasos}
+}
+\end{scratch}
+&
+\begin{scratch}
+\blockinit{al presionar \greenflag}
+\blockmove{apuntar en dirección \ovalnum{0}}
+\blockrepeat{repetir \ovalnum{20}}{
+  \blockmove{mover \ovalnum{5} pasos}
+}
+\end{scratch}
+\end{tabular}
+\end{center}
+
+Python hace \textbf{una cosa a la vez}. Si escribieras el bucle del gato y después el bucle del perro, el gato terminaría toda su caminata antes de que el perro siquiera empezara. En lugar de eso, escribe \textbf{un solo bucle que mueva un poquito a cada objeto}:
+
+\begin{typethis}
+from ColabTurtlePlus.Turtle import *
+clearscreen()
+initializeTurtle((480, 360))
+
+hideturtle()
+gato = Turtle()
+gato.shape("turtle")
+perro = Turtle()
+perro.shape("circle")
+perro.left(90)
+for paso in range(20):
+    gato.forward(10)
+    perro.forward(5)
+\end{typethis}
+
+\textbf{Cómo funciona.} Cada vuelta del bucle, el gato da un pasito y luego el perro da un pasito. Pasa tan rápido que parecen moverse juntos. Esto se llama un \textbf{bucle de juego}, y todos los videojuegos de verdad tienen uno. Scratch también tiene uno, escondido por dentro, como un malabarista que le da un empujoncito a cada pelota.
+
+
+% =====================================================================
+\mission{Desfile de disfraces}{listas de disfraces y colores, \texttt{shapesize}, \texttt{\%} y \texttt{time.sleep}}
+
+¡Tu tortuga va a dar un desfile de moda! Cambia de disfraz, de color y de tamaño cada medio segundo, luego hace una reverencia y desaparece.
+
+\step{Paso 1: Constrúyelo en Scratch}
+Dale cuatro disfraces a un objeto y luego construye:
+
+\begin{center}
+\begin{scratch}
+\blockinit{al presionar \greenflag}
+\blocklook{cambiar fondo a \selectmenu{lavanda}}
+\blocklook{cambiar disfraz a \selectmenu{tortuga}}
+\blocklook{fijar tamaño a \ovalnum{100} \%}
+\blockrepeat{repetir \ovalnum{8}}{
+  \blocklook{cambiar el efecto \selectmenu{color} en \ovalnum{25}}
+  \blockcontrol{esperar \ovalnum{0.5} segundos}
+  \blocklook{siguiente disfraz}
+  \blocklook{cambiar tamaño en \ovalnum{50}}
+}
+\blocklook{esconder}
+\blocklook{decir \ovalnum{¡Tarán!}}
+\end{scratch}
+\end{center}
+
+\step{Paso 2: Escríbelo en Colab}
+
+\begin{typethis}
+from ColabTurtlePlus.Turtle import *
+clearscreen()
+initializeTurtle((480, 360))
+import time
+
+disfraces = ["turtle", "circle", "square", "triangle"]
+colores = ["green", "red", "blue", "orange"]
+n = 0
+medida = 100
+bgcolor("lavender")
+for i in range(8):
+    shape(disfraces[n])
+    color(colores[n])
+    shapesize(medida / 100)
+    print("Disfraz", n + 1, disfraces[n])
+    time.sleep(0.5)
+    n = (n + 1) % len(disfraces)
+    medida = medida + 50
+hideturtle()
+print("¡Tarán!")
+\end{typethis}
+
+\step{Paso 3: Léelo línea por línea}
+
+\begin{longtable}{>{\centering\arraybackslash}p{1.1cm} P{5.3cm} P{9.1cm}}
+\toprule
+\textbf{Línea} & \textbf{Bloque de Scratch} & \textbf{Qué significa} \\
+\midrule
+1--4 & \chip[events]{al presionar bandera verde} & Las tres líneas de inicio, más las herramientas del reloj. \\
+6 & (la pestaña Disfraces) & El ropero: una lista de cuatro disfraces. \\
+7 & \chip[looks]{cambiar el efecto color} & Una lista de cuatro colores, uno para cada disfraz. \\
+8 & \chip[looks]{cambiar disfraz a tortuga} & El gancho empieza en 0, el primer disfraz. \\
+9 & \chip[looks]{fijar tamaño a 100 \%} & Tu propia variable de tamaño, en porcentaje como en Scratch. \\
+10 & \chip[looks]{cambiar fondo a lavanda} & Pinta el escenario de morado clarito (\texttt{lavender} es lavanda). \\
+11 & \chip[control]{repetir 8} & Haz 8 veces las líneas de adentro. \\
+12--14 & & Ponte el disfraz número \py|n|, con el color número \py|n|, en el tamaño correcto. \\
+15 & (el número de disfraz) & Di qué disfraz es. \py|print| puede mostrar varias cosas a la vez si pones comas entre ellas, y agrega los espacios por ti. \py|n + 1| porque Scratch cuenta los disfraces desde 1. \\
+16 & \chip[control]{esperar 0.5 segundos} & Pausa para que puedas ver el disfraz. \\
+17 & \chip[looks]{siguiente disfraz} & Pasa al siguiente gancho, y vuelve al 0 después del último. \\
+18 & \chip[looks]{cambiar tamaño en 50} & Crece un 50\,\% para la próxima vez. \\
+19 & \chip[looks]{esconder} & Desaparece\ldots \\
+20 & \chip[looks]{decir ¡Tarán!} & \ldots y hace una reverencia. \\
+\bottomrule
+\end{longtable}
+
+\step{Paso 4: Ejecútalo}
+El escenario se vuelve morado clarito. La tortuga cambia de disfraz y de color cada medio segundo, y se hace más grande cada vez. Luego desaparece. Debajo de la celda verás:
+
+\begin{outputbox}
+Disfraz 1 turtle\\
+Disfraz 2 circle\\
+Disfraz 3 square\\
+Disfraz 4 triangle\\
+Disfraz 1 turtle\\
+Disfraz 2 circle\\
+Disfraz 3 square\\
+Disfraz 4 triangle\\
+¡Tarán!
+\end{outputbox}
+
+\begin{think}
+El disfraz y el color siempre van juntos: el disfraz 2 siempre es rojo. Eso es porque las dos listas usan el mismo número de gancho \py|n|. Las dos listas son como dos percheros de ropa, uno al lado del otro.
+\end{think}
+
+\enlargethispage{\baselineskip}
+\begin{challenge}\small
+\tick Agrega un quinto disfraz, \py|"arrow"|, al final de la lista de disfraces. ¿Qué más tienes que agregar para que la línea 13 no truene? (Pista: cuenta los colores.)\par
+\tick Haz que la tortuga se \textbf{encoja}: empieza con \py|medida = 400| y réstale 40 cada vez. ¡Revisa que nunca llegue a 0!\par
+\tick Agrega una lista de colores de fondo, como \py|["lavender", "pink", "skyblue", "lightyellow"]|, y cambia también el fondo cada vez.\par
+\tick Usa una tortuga globo para escribir el nombre del disfraz en el escenario, encima de la tortuga, en lugar de imprimirlo. Acuérdate de borrar primero el nombre anterior con \py|clear()|.
+\end{challenge}
+
+% =====================================================================
+\mission{Hacer música}{a tocar una melodía con una lista de notas, y \texttt{range(len(...))}}
+
+Ahora vamos a hacer que Colab cante. Vas a tocar el principio de «Estrellita, ¿dónde estás?». Antes de empezar, ejecuta la celda «En el principio» y la \textbf{celda de sonido}.
+
+\step{Paso 1: Constrúyelo en Scratch}
+Haz clic en el botón \textbf{Agregar Extensión} y agrega \textbf{Música}. Sus bloques son verdes en Scratch. Este libro los dibuja en rosa, junto con los bloques de sonido.
+
+\begin{center}
+\begin{scratch}
+\blockinit{al presionar \greenflag}
+\blocksound{fijar tempo a \ovalnum{150}}
+\blocksound{tocar nota \ovalnum{60} durante \ovalnum{1} tiempos}
+\blocksound{tocar nota \ovalnum{60} durante \ovalnum{1} tiempos}
+\blocksound{tocar nota \ovalnum{67} durante \ovalnum{1} tiempos}
+\blocksound{tocar nota \ovalnum{67} durante \ovalnum{1} tiempos}
+\blocksound{tocar nota \ovalnum{69} durante \ovalnum{1} tiempos}
+\blocksound{tocar nota \ovalnum{69} durante \ovalnum{1} tiempos}
+\blocksound{tocar nota \ovalnum{67} durante \ovalnum{2} tiempos}
+\blocklook{decir \ovalnum{Estrellita, ¿dónde estás?}}
+\end{scratch}
+\end{center}
+
+\step{Paso 2: Escríbelo en Colab}
+
+\begin{typethis}
+import time
+Do = 262
+Re = 294
+Mi = 330
+Fa = 349
+Sol = 392
+La = 440
+
+melodia = [Do, Do, Sol, Sol, La, La, Sol]
+tiempos = [1, 1, 1, 1, 1, 1, 2]
+for i in range(len(melodia)):
+    segs = tiempos[i] * 0.4
+    pitido(melodia[i], segs)
+    time.sleep(segs + 0.1)
+print("Estrellita, ¿dónde estás?")
+\end{typethis}
+
+\step{Paso 3: Léelo línea por línea}
+
+\begin{longtable}{>{\centering\arraybackslash}p{1.1cm} P{5.3cm} P{9.1cm}}
+\toprule
+\textbf{Línea} & \textbf{Bloque de Scratch} & \textbf{Qué significa} \\
+\midrule
+--- & \chip[events]{al presionar bandera verde} & No hace falta la tortuga, así que no hay líneas de inicio. La celda de sonido ya debe estar ejecutada. \\
+1 & & Las herramientas del reloj, para esperar. \\
+2--7 & (los números de las notas) & Seis variables, una para cada nota. Ahora puedes escribir \py|Sol| en lugar de acordarte de 392. Las mayúsculas sirven en los nombres de variables, y así parecen notas de verdad. \\
+9 & los siete bloques \chip[sound]{tocar nota} & La melodía es una lista de notas, en orden. \\
+10 & los tiempos & Cuántos tiempos dura cada nota. La última nota dura el doble. \\
+11 & \chip[control]{repetir 7} & \py|len(melodia)| es 7, así que \py|range(7)| da \py|i| = 0, 1, 2 \ldots{} 6: un número para cada nota. \\
+12 & \chip[sound]{fijar tempo a 150} & Un tiempo dura 0.4 segundos. Multiplica para saber cuánto dura esta nota. \\
+13 & \chip[sound]{tocar nota durante tiempos} & Toca la nota número \py|i| durante el tiempo correcto. \\
+14 & («hasta que termine») & Espera a que la nota termine, más un huequito para que oigas dos Do, y no uno largo. \\
+15 & \chip[looks]{decir} & Se imprime cuando termina la melodía. \\
+\bottomrule
+\end{longtable}
+
+\begin{think}[¿Por qué \texttt{range(len(melodia))}?]
+La línea 11 cuenta las posiciones, de 0 a 6, en lugar de las notas mismas. Eso es porque necesitas la \textbf{misma posición} de dos listas: \py|melodia[i]| es la nota y \py|tiempos[i]| es cuánto dura. Es el mismo truco de los dos percheros del Desfile de disfraces.
+\end{think}
+
+\step{Paso 4: Ejecútalo}
+Deberías oír «Estrellita, ¿dónde estás?» y ver aparecer un pequeño reproductor de sonido por cada nota. Luego aparecen las palabras debajo de la celda:
+
+\begin{outputbox}
+Estrellita, ¿dónde estás?
+\end{outputbox}
+
+Si no oyes nada, vuelve a mirar el recuadro \textbf{¿No se oye nada?} en la página de la celda de sonido.
+
+\begin{challenge}
+\tick Hazla más rápida: cambia \py|0.4| en la línea 12 por \py|0.25|. Es como \chip[sound]{fijar tempo a 240}.\par
+\tick Agrega la siguiente línea de la canción, «me pregunto qué serás»: las notas son Fa Fa Mi Mi Re Re Do, y la última es larga. Agrégalas al final de las dos listas.\par
+\tick \textbf{¡Feliz cumpleaños!} Agrega \py|Si = 494| y \py|Do2 = 523|, y luego toca \py|[Sol, Sol, La, Sol, Do2, Si]| con los tiempos \py|[0.75, 0.25, 1, 1, 1, 2]|.\par
+\tick Haz una tortuga bailarina: agrega las tres líneas de inicio arriba y pon \py|right(30)| dentro del bucle, para que la tortuga gire con cada nota.
+\end{challenge}
+
+% =====================================================================
+\mission{Carrera de tortugas}{dos objetos en un bucle, una función que crea objetos, e \texttt{if}/\texttt{else}}
+
+Dos tortugas corren a través del escenario. En cada paso del bucle, las dos avanzan una cantidad al azar. ¿Quién ganará? ¡Ni la computadora lo sabe!
+
+\step{Paso 1: Constrúyelo en Scratch}
+Crea dos objetos llamados \textbf{Rojo} y \textbf{Azul}. El rojo lleva este programa, y el azul lleva el mismo programa con $y = -50$:
+
+\begin{center}
+\begin{scratch}
+\blockinit{al presionar \greenflag}
+\blocklook{cambiar disfraz a \selectmenu{tortuga}}
+\blockpen{subir lápiz}
+\blockmove{ir a x: \ovalnum{-200} y: \ovalnum{50}}
+\blockpen{bajar lápiz}
+\blockrepeat{repetir hasta que \booloperator{\ovalmove{posición en x} > \ovalnum{200}}}{
+  \blockmove{cambiar x en \ovaloperator{elegir número al azar entre \ovalnum{1} y \ovalnum{20}}}
+}
+\blocklook{decir \ovalnum{¡Gané!}}
+\end{scratch}
+\end{center}
+
+En Scratch, cada objeto corre su propio programa \textbf{al mismo tiempo}. En Python, \textbf{un solo bucle mueve a las dos tortugas}, un paso cada una, una y otra vez. Y como los dos objetos se preparan de la misma forma, una función puede prepararlos por ti.
+
+\step{Paso 2: Escríbelo en Colab}
+
+\begin{typethis}
+from ColabTurtlePlus.Turtle import *
+clearscreen()
+initializeTurtle((480, 360))
+import random
+
+def crear_corredor(su_color, y):
+    corredor = Turtle()
+    corredor.shape("turtle")
+    corredor.color(su_color)
+    corredor.penup()
+    corredor.goto(-200, y)
+    corredor.pendown()
+    return corredor
+
+hideturtle()
+rojo = crear_corredor("red", 50)
+azul = crear_corredor("blue", -50)
+
+while rojo.xcor() < 200 and azul.xcor() < 200:
+    rojo.forward(random.randint(1, 20))
+    azul.forward(random.randint(1, 20))
+
+if rojo.xcor() > azul.xcor():
+    print("¡Gana Rojo!")
+    rojo.write("¡Gané!", font=("Arial", 16, "bold"))
+else:
+    print("¡Gana Azul!")
+    azul.write("¡Gané!", font=("Arial", 16, "bold"))
+\end{typethis}
+
+\step{Paso 3: Léelo línea por línea}
+
+\begin{longtable}{>{\centering\arraybackslash}p{1.1cm} P{5.3cm} P{9.1cm}}
+\toprule
+\textbf{Línea} & \textbf{Bloque de Scratch} & \textbf{Qué significa} \\
+\midrule
+1--4 & \chip[events]{al presionar bandera verde} & Las tres líneas de inicio, más las herramientas de números al azar. \\
+6 & (una fábrica de objetos) & Una función con dos entradas: el color del corredor y a qué altura empieza. \\
+7 & (un objeto nuevo) & Crea un objeto nuevecito y llámalo \py|corredor| por ahora. \\
+8--9 & \chip[looks]{cambiar disfraz a tortuga} & El disfraz de tortuga, en el color que pediste. \\
+10--12 & \chip[pen]{subir lápiz}\newline\chip[motion]{ir a x: -200 y: 50}\newline\chip[pen]{bajar lápiz} & Ve a la línea de salida sin dibujar, y luego baja el lápiz para que deje un rastro. \\
+13 & & \py|return| le entrega el objeto terminado a quien lo pidió. \\
+15 & \chip[looks]{esconder} & Esconde la tortuga normal del centro: ella no corre. \\
+16--17 & (dos objetos) & Usa la fábrica dos veces. Cada llamada crea un objeto nuevo, y tú le pones nombre. \\
+19 & \chip[control]{repetir hasta que}\newline\chip[operators]{posición en x > 200} & Sigue \textbf{mientras} (\emph{while}) rojo no haya llegado a 200 \textbf{y} (\emph{and}) azul no haya llegado a 200. Este es el bucle de juego, y tiene una salida: en cuanto una tortuga cruza la meta, se detiene. \\
+20--21 & \chip[motion]{cambiar x en}\newline\chip[operators]{elegir número al azar} & Un pasito para cada tortuga, en cada vuelta. \\
+23 & \chip[control]{si entonces si no} & ¿Está rojo más a la derecha que azul? \\
+24--25 & \chip[looks]{decir ¡Gané!} & Gana rojo: imprímelo y escríbelo en el escenario junto a rojo, en negritas. \\
+26--28 & (la parte del si no) & Si no, gana azul. \\
+\bottomrule
+\end{longtable}
+
+\begin{think}[¿Por qué una función?]
+Sin \py|crear_corredor|, tendrías que escribir dos veces las seis líneas de preparación, una para rojo y otra para azul. Con ella, agregar un corredor verde es solo una línea más: \py|verde = crear_corredor("green", 0)|. Una función es una tarjeta de receta que puedes usar una y otra vez.
+\end{think}
+
+\step{Paso 4: Ejecútalo}
+¡Mira cómo corren las tortugas! La ganadora escribe \textbf{¡Gané!} en la meta, y debajo del dibujo verás uno de estos:
+
+\begin{outputbox}
+¡Gana Rojo!
+\end{outputbox}
+
+Ejecútalo otra vez. ¿Gana la misma cada vez?
+
+\begin{challenge}
+\tick Agrega un tercer corredor: \py|verde = crear_corredor("green", 0)|. Luego cambia la línea 19 para que la carrera se detenga cuando \textbf{cualquiera} de los tres cruce la meta, y agrega una línea de \py|forward| para verde. (Pista: tres tortugas significan \texttt{and} dos veces.)\par
+\tick Haz que una tortuga haga trampa: que avance \py|random.randint(1, 25)|. Corre la carrera 5 veces. ¿Quién gana más?\par
+\tick Dale a \py|crear_corredor| una tercera entrada, \py|disfraz|, para que un corredor pueda ser un \py|"circle"| y el otro un \py|"triangle"|.\par
+\tick Toca un sonido cuando termine la carrera: ejecuta primero la celda de sonido y luego agrega \py|pitido(523, 1)| justo al final.
+\end{challenge}
+
+% =====================================================================
+\mission{Cuento con mensajes}{funciones como mensajes, y decisiones con \texttt{input()}}
+
+En Scratch, los cuentos grandes muchas veces se construyen con mensajes. El escenario envía \texttt{escena 1}, luego hace una pregunta y luego envía un mensaje distinto según la respuesta. En Python, cada mensaje es una función, y cada envío es una llamada a la función.
+
+\step{Paso 1: Constrúyelo en Scratch}
+Estos programas pueden ir en el escenario o en un objeto. El de la izquierda dirige el cuento. Los otros esperan sus mensajes. (Los programas \texttt{camino izquierda} y \texttt{el fin} se parecen al de \texttt{camino derecha}.)
+
+\begin{center}
+\begin{tabular}{c@{\hspace{0.5cm}}c}
+\begin{scratch}[scale=0.75]
+\blockinit{al presionar \greenflag}
+\blockevent{enviar \selectmenu{escena 1} y esperar}
+\blocksensing{preguntar \ovalnum{¿Izquierda o derecha?} y esperar}
+\blockifelse{si \booloperator{\ovalsensing{respuesta} = \ovalnum{izquierda}} entonces}{
+  \blockevent{enviar \selectmenu{camino izquierda} y esperar}
+}{
+  \blockevent{enviar \selectmenu{camino derecha} y esperar}
+}
+\blockevent{enviar \selectmenu{el fin} y esperar}
+\end{scratch}
+&
+\begin{tabular}{c}
+\begin{scratch}[scale=0.75]
+\blockinit{al recibir \selectmenu{escena 1}}
+\blocklook{decir \ovalnum{Una tortuguita despierta...} durante \ovalnum{2} segundos}
+\blocklook{decir \ovalnum{Dos caminos salen de aquí...}}
+\end{scratch}
+\\[8pt]
+\begin{scratch}[scale=0.75]
+\blockinit{al recibir \selectmenu{camino derecha}}
+\blocklook{decir \ovalnum{¡Conoces a un dragón amistoso!}}
+\end{scratch}
+\end{tabular}
+\end{tabular}
+\end{center}
+
+\step{Paso 2: Escríbelo en Colab}
+
+\begin{typethis}
+import time
+
+def escena1():
+    print("Una tortuguita despierta en un bosque.")
+    time.sleep(2)
+    print("Dos caminos salen de aquí.")
+
+def camino_izquierda():
+    print("Encuentras un río lleno de peces. ¡Ñam!")
+
+def camino_derecha():
+    print("¡Conoces a un dragón amistoso!")
+
+def el_fin():
+    time.sleep(1)
+    print("FIN")
+
+escena1()
+eleccion = input("¿Izquierda o derecha? ")
+if eleccion == "izquierda":
+    camino_izquierda()
+else:
+    camino_derecha()
+el_fin()
+\end{typethis}
+
+\step{Paso 3: Léelo línea por línea}
+
+\begin{longtable}{>{\centering\arraybackslash}p{1.1cm} P{5.3cm} P{9.1cm}}
+\toprule
+\textbf{Línea} & \textbf{Bloque de Scratch} & \textbf{Qué significa} \\
+\midrule
+1 & & Las herramientas del reloj. No hace falta la tortuga: este cuento es solo de palabras. \\
+3--6 & \chip[events]{al recibir escena 1} & El programa \texttt{escena 1}. Python lo aprende ahora, y lo hace después, cuando lo llamen. \\
+8--9 & \chip[events]{al recibir camino izquierda} & El programa \texttt{camino izquierda}. Los nombres de funciones no pueden tener espacios, así que usamos un guion bajo: \py|camino_izquierda|. \\
+11--12 & \chip[events]{al recibir camino derecha} & El programa \texttt{camino derecha}. \\
+14--16 & \chip[events]{al recibir el fin} & El programa \texttt{el fin}. \\
+18 & \chip[events]{enviar escena 1 y esperar} & ¡Aquí empieza el cuento! Llama a \py|escena1| y espera a que termine. \\
+19 & \chip[sensing]{preguntar y esperar} & Haz la pregunta y guarda la respuesta en \py|eleccion|. \\
+20--23 & \chip[control]{si entonces si no} con dos envíos & Llama a la función que corresponde a la respuesta. \\
+24 & \chip[events]{enviar el fin y esperar} & Esta línea está otra vez pegada a la orilla, así que pasa sin importar qué camino elegiste. \\
+\bottomrule
+\end{longtable}
+
+\begin{watchout}[El cuento empieza en la línea 18, no en la línea 1]
+Las líneas 3 a 16 solo le \textbf{enseñan} las escenas a Python. No se imprime nada hasta que la línea 18 llama a la primera. Si olvidas las llamadas de abajo, ejecutarás la celda y verás\ldots{} ¡nada de nada! Es como construir programas \chip[events]{al recibir} y nunca enviar los mensajes.
+\end{watchout}
+
+\step{Paso 4: Ejecútalo}
+Escribe \texttt{izquierda} o \texttt{derecha} cuando aparezca la pregunta (sin acento ni mayúscula), y luego presiona Enter.
+
+\begin{outputbox}[Podrías ver]
+Una tortuguita despierta en un bosque.\\
+Dos caminos salen de aquí.\\
+¿Izquierda o derecha? izquierda\\
+Encuentras un río lleno de peces. ¡Ñam!\\
+FIN
+\end{outputbox}
+
+\begin{think}
+¿Qué pasa si escribes \texttt{Izquierda} con I mayúscula? Python piensa que \texttt{"Izquierda"} y \texttt{"izquierda"} son distintas, ¡así que te vas a la derecha! Puedes arreglarlo cambiando la línea 19 por \py|eleccion = input("¿Izquierda o derecha? ").lower()|, que convierte la respuesta a minúsculas.
+\end{think}
+
+\enlargethispage{\baselineskip}
+\begin{challenge}\small
+\tick Agrega una tercera opción, \texttt{derecho}, con su propia función. Vas a necesitar un \py|elif|.\par
+\tick Dentro de \py|camino_derecha|, haz otra pregunta («¿Quieres ser su amigo? si o no») y llama a una función diferente para cada respuesta. Usa \texttt{si} sin acento, para que sea fácil de escribir.\par
+\tick Haz que el cuento sea musical: ejecuta la celda de sonido y luego pon un \py|pitido| dentro de cada escena. Una nota grave (\py|pitido(262)|) para el miedo y una aguda (\py|pitido(523)|) para la alegría.\par
+\tick Agrega un fondo: pon las tres líneas de inicio arriba, y usa \py|bgcolor("darkgreen")| en \py|escena1| (el bosque) y \py|bgcolor("skyblue")| en \py|camino_izquierda| (el río).
+\end{challenge}
+
+% =====================================================================
+\banner{events}{EXTRA}{Teclas en tu computadora: Thonny}
+
+La tortuga de Colab no puede oír las teclas, pero Python en tu propia computadora sí. \textbf{Thonny} (\texttt{thonny.org}) es un editor de Python gratuito hecho para principiantes. Funciona sin internet y no necesita cuenta. Pídele a un adulto que lo instale. Thonny trae la \texttt{turtle} propia de Python, que abre su propia ventana y \textbf{sí} puede escuchar el teclado.
+
+Este es \chip[events]{al presionar tecla espacio} en Thonny:
+
+\begin{center}
+\begin{tabular}{c}
+\begin{scratch}
+\blockinit{al presionar tecla \selectmenu{espacio}}
+\blockmove{girar \turnleft{} \ovalnum{90} grados}
+\blockmove{mover \ovalnum{50} pasos}
+\blockmove{mover \ovalnum{-50} pasos}
+\blockmove{girar \turnright{} \ovalnum{90} grados}
+\end{scratch}
+\end{tabular}
+\end{center}
+
+\begin{typethis}[Escribe esto en Thonny y presiona el botón verde de ejecutar (Run)]
+import turtle
+
+t = turtle.Turtle()
+t.shape("turtle")
+pantalla = turtle.Screen()
+
+def saltar():
+    t.left(90)
+    t.forward(50)
+    t.back(50)
+    t.right(90)
+
+pantalla.onkeypress(saltar, "space")
+pantalla.listen()
+turtle.mainloop()
+\end{typethis}
+
+\begin{longtable}{>{\centering\arraybackslash}p{1.1cm} P{14.4cm}}
+\toprule
+\textbf{Línea} & \textbf{Qué significa} \\
+\midrule
+1--5 & Las líneas de inicio de Thonny. No hay \texttt{pip install}: la tortuga ya viene incluida. La tortuga se llama \py|t|, así que cada comando empieza con \py|t.|, y \py|pantalla| es la ventana. \\
+7--11 & Una función: el programa que va debajo del bloque de sombrero. \\
+13 & «Cuando se presione la tecla espacio, ejecuta \py|saltar|». ¡Este es el bloque de sombrero! Los nombres de las teclas son quisquillosos y van en inglés: \py|"space"| (espacio), \py|"Right"|, \py|"Left"|, \py|"Up"|, \py|"Down"| (las flechas), o una letra como \py|"a"|. \\
+14 & Dile a la ventana que empiece a escuchar el teclado. \\
+15 & Mantén la ventana abierta y sigue esperando teclas. Esta debe ser la \textbf{última} línea. \\
+\bottomrule
+\end{longtable}
+
+Ejecútalo, luego \textbf{haz clic en la ventana de la tortuga} para que sepa que le estás hablando a ella, y presiona la barra espaciadora. ¡La tortuga salta! ¿Puedes agregar una función \py|ir_derecha| para la flecha \py|"Right"|?
+
+\begin{watchout}[Tres cosas que le pasan a todo el mundo]
+\begin{itemize}
+  \item \textbf{Sin paréntesis después del nombre de la función.} Escribe \py|pantalla.onkeypress(saltar, "space")|, no \py|saltar()|. Le estás diciendo a Python \emph{qué} bloque ejecutar después, no lo estás ejecutando ahora.
+  \item \textbf{Usa \texttt{onkeypress}, no \texttt{onkey}.} \py|onkey| espera hasta que sueltas la tecla, y se siente lento. \py|onkeypress| funciona en el momento en que la presionas, como en Scratch.
+  \item \textbf{Haz clic primero en la ventana de la tortuga}, o tus teclas irán al código.
+\end{itemize}
+\end{watchout}
+
+En Thonny, \py|t.setheading()| usa la misma brújula que Colab, así que la regla de \textbf{90 menos} sigue funcionando.
+
+% =====================================================================
+\needspace{30\baselineskip}
+\subsection*{Tradúcelo tú}
+
+Este es un programa de Scratch que no has visto antes. Escribe el Python en las líneas. Empieza con las tres líneas de inicio e \py|import time|. Luego escríbelo en Colab y revisa que la tortuga haga lo mismo que el objeto de Scratch.
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=top]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt]
+\begin{scratch}
+\blockinit{al presionar \greenflag}
+\blocklook{cambiar disfraz a \selectmenu{tortuga}}
+\blocklook{fijar tamaño a \ovalnum{300} \%}
+\blockrepeat{repetir \ovalnum{3}}{
+  \blocklook{esconder}
+  \blockcontrol{esperar \ovalnum{0.5} segundos}
+  \blocklook{mostrar}
+  \blockcontrol{esperar \ovalnum{0.5} segundos}
+}
+\blocklook{decir \ovalnum{¡Bu!} durante \ovalnum{2} segundos}
+\end{scratch}
+\end{tcolorbox}
+\begin{tcolorbox}[colback=white, colframe=codeframe, arc=5pt, title=\textbf{Mi Python}, coltitle=ink, colbacktitle=codebg]
+\vspace{4pt}
+\foreach \n in {1,...,13}{\rule{\linewidth}{0.4pt}\par\vspace{9pt}}
+\end{tcolorbox}
+\end{tcbraster}
+
+% ---------------------------------------------------------------------
+\needspace{12\baselineskip}
+\subsection*{Acertijo de dos líneas}
+
+\begin{puzzle}
+Escribe el Python para este programa de Scratch. ¡Solo necesita dos líneas!
+\begin{center}
+\begin{scratch}
+\blockinit{al recibir \selectmenu{festejo}}
+\blocklook{decir \ovalnum{¡Hurra!}}
+\end{scratch}
+\end{center}
+Luego agrega una tercera línea que \textbf{envíe} el mensaje \texttt{festejo}, y ejecútalo.
+\end{puzzle}
+
+% ---------------------------------------------------------------------
+\needspace{14\baselineskip}
+\subsection*{Lista de la parte 7}
+
+\tick Puedo hacer que la tortuga diga cosas con \py|print|, y en el escenario con una tortuga globo.\par
+\tick Puedo cambiar el disfraz, el tamaño y el color de la tortuga y el fondo, y hacer que se esconda y se muestre.\par
+\tick Puedo usar una lista y \texttt{\%} para hacer \chip[looks]{siguiente disfraz}.\par
+\tick Puedo tocar notas y una melodía en Colab con \py|pitido| y \py|time.sleep|.\par
+\tick Puedo convertir \chip[events]{al recibir} en una función y \chip[events]{enviar} en una llamada.\par
+\tick Puedo mover dos objetos con un solo bucle, y siempre le doy una salida a mis bucles.

@@ -1,0 +1,49 @@
+\subsection*{Parte 2, Dibuja figuras por el camino corto: la tabla de figuras}
+Pentágono: $360 \div 5 = 72$. \quad Hexágono: $360 \div 6 = 60$. \quad Octágono: $360 \div 8 = 45$. \quad Decágono: $360 \div 10 = 36$. \quad Casi un círculo: $360 \div 36 = 10$.
+
+La figura de 36 lados es la que más se parece a un círculo. Con \py|pencolor("red")| dentro del bucle, todo el triángulo sale rojo: la línea 4 pone el lápiz azul, pero la línea del rojo se ejecuta antes de cada \py|forward|, así que el azul nunca se usa. Con \py|print("¡Tarán!")| pegado al borde se escribe una vez; con cuatro espacios queda dentro del bucle y se escribe 3 veces.
+
+\subsection*{Parte 2, Estrellas: la tabla de estrellas}
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{P{2.4cm} P{3.4cm} P{2.4cm}}
+\toprule
+\textbf{Puntas} & \textbf{$180 \div$ puntas} & \textbf{Giro} \\
+\midrule
+9 & 20 & 160 \\
+15 & 12 & 168 \\
+45 & 4 & 176 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection*{Parte 2, Espiral cuadrada: la línea que falta}
+En la primera vuelta, \texttt{i} vale 0, así que \py|forward(i * 5)| es \py|forward(0)|. La tortuga no se mueve, así que la primera «línea» no mide nada. Con \py|range(60)| y \py|forward(i * 3)|, la línea más larga mide $59 \times 3 = 177$ pasos, cerca de los $39 \times 5 = 195$ pasos de la primera espiral, así que el tamaño queda más o menos igual mientras las líneas quedan más juntas.
+
+\subsection*{Parte 2, Flor de cuadrados}
+36 cuadrados $\times$ 10 grados $= 360$, y 12 cuadrados $\times$ 30 grados $= 360$: los giros entre los cuadrados tienen que sumar un círculo completo. \py|hideturtle()| no lleva \textbf{ningún} espacio, así que se ejecuta una vez, después de toda la flor.
+
+\subsection*{Parte 2, Tradúcelo tú}
+Tu código puede verse un poco distinto y aun así estar bien. Si la tortuga dibuja el mismo dibujo, ¡lo lograste!
+\begin{codenonum}
+from ColabTurtlePlus.Turtle import *
+clearscreen()
+initializeTurtle((480, 360))
+pensize(4)
+pencolor("purple")
+for i in range(8):
+    for j in range(6):
+        forward(40)
+        right(60)
+    right(45)
+penup()
+print("¡Listo!")
+\end{codenonum}
+\py|forward(40)| y \py|right(60)| llevan 8 espacios (dentro de los dos bucles). \py|right(45)| lleva 4 espacios. \py|penup()| y \py|print("¡Listo!")| no llevan ninguno, porque van después de los bucles. Te salen 8 hexágonos en un anillo.
+
+\subsection*{Parte 2, Acertijo de dos líneas}
+\begin{codenonum}
+for i in range(5):
+    print(i + 1)
+\end{codenonum}
+\texttt{i} va 0, 1, 2, 3, 4, así que \py|i + 1| va 1, 2, 3, 4, 5.

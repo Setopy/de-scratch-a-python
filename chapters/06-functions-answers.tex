@@ -1,0 +1,75 @@
+\subsection*{Parte 6, Misión: Haz tu propio bloque}
+\textbf{Triángulo:}
+\begin{codenonum}
+def triangulo(lado):
+    for i in range(3):
+        forward(lado)
+        right(120)
+\end{codenonum}
+\textbf{Entrada de color:}
+\begin{codenonum}
+def cuadrado(lado, tinta):
+    pencolor(tinta)
+    for i in range(4):
+        forward(lado)
+        right(90)
+\end{codenonum}
+\textbf{Sin paréntesis:} una línea que solo dice \py|cuadrado| no hace nada, y no sale ningún error. Sin los paréntesis solo dices el nombre del bloque. Tienes que llamarlo, por ejemplo \py|cuadrado(60)|.
+
+\subsection*{Parte 6, Misión: Máquina de figuras}
+\py|flor(8, 4, 60)| dibuja 8 pétalos, y cada pétalo es un cuadrado. Con \py|animationOff()| la tortuga salta en vez de caminar, así que el dibujo aparece más rápido. Entrada de color:
+\begin{codenonum}
+def flor(petalos, lados, medida, tinta):
+    pencolor(tinta)
+    for i in range(petalos):
+        poligono(lados, medida)
+        right(360 / petalos)
+\end{codenonum}
+Llámalo con cuatro entradas, por ejemplo \py|flor(12, 6, 40, "red")|.
+
+\subsection*{Parte 6, Misión: Máquina de respuestas}
+\begin{codenonum}
+def mitad(n):
+    return n / 2
+
+def perimetro(ancho, alto):
+    return 2 * ancho + 2 * alto
+
+def es_par(n):
+    return n % 2 == 0
+\end{codenonum}
+\py|print(mitad(9))| muestra \texttt{4.5}. \py|es_par(7)| es \py|False|, así que la parte del \py|if| se salta.
+
+Con \py|print(n * 2)| en la línea 2, \py|doble| solo \textbf{muestra} el número y devuelve \texttt{None}. Así que la línea 7 muestra \texttt{8} y luego \texttt{None}. Después, la línea 11 intenta hacer \py|area(None, 10)|, y Python se detiene con un \texttt{TypeError}, porque no puede multiplicar «nada» por 10.
+
+\subsection*{Parte 6, Misión: Ejército de objetos}
+\begin{codenonum}
+def girar_todos(angulo):
+    for s in ejercito:
+        s.left(angulo)
+\end{codenonum}
+Llama \py|girar_todos(90)| antes de marchar, y el ejército marcha hacia arriba. Para la carrera, pon \py|import random| hasta arriba y usa \py|s.forward(random.randint(10, 80))| en \texttt{marchar}. \py|ejercito[0]| es el primer objeto que se creó: el rojo de arriba (las listas cuentan desde 0).
+
+\subsection*{Parte 6, Tradúcelo tú}
+\begin{codenonum}
+from ColabTurtlePlus.Turtle import *
+clearscreen()
+initializeTurtle((480, 360))
+
+def estrella(medida):
+    for i in range(5):
+        forward(medida)
+        right(144)
+
+pencolor("gold")
+estrella(100)
+estrella(50)
+\end{codenonum}
+Deberías ver una estrella dorada grande con una pequeña adentro, que comparten una punta.
+
+\subsection*{Parte 6, Acertijo de dos líneas}
+\begin{codenonum}
+def triple(n):
+    return n * 3
+\end{codenonum}
+\py|triple(2)| es 6, y \py|triple(6)| es 18.

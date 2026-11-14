@@ -1,0 +1,677 @@
+% =====================================================================
+% PARTE 2: Bucles
+% =====================================================================
+\partopener{control}{PARTE 2}{Bucles}{Haz que la computadora repita las cosas por ti.}
+
+En la Parte 1 dibujaste figuras orden por orden. Para dibujar un cuadrado escribiste \py|forward(100)| y \py|right(90)| cuatro veces cada una. ¡Eso es mucho escribir! En Scratch nunca harías eso. Tomarías un bloque \chip[control]{repetir 4} y dejarías que él hiciera el trabajo.
+
+En esta parte vas a aprender el Python de los bloques naranjas de \textbf{Control} que repiten y esperan:
+
+\begin{center}
+\chip[control]{repetir 10}\quad \chip[control]{por siempre}\quad \chip[control]{esperar 1 segundos}\quad \chip[control]{detener este programa}
+\end{center}
+
+Al final vas a dibujar estrellas, espirales y flores con solo unas pocas líneas de código.
+
+% ---------------------------------------------------------------------
+\needspace{14\baselineskip}
+\subsection*{Repetir se convierte en \texttt{for}}
+
+Aquí está el cuadrado de la Parte 1, pero con un bucle. Mira los dos lados y une cada bloque con su línea. (En esta parte, los dibujos lado a lado no muestran las tres líneas de inicio para ahorrar espacio. Cuando escribas un programa de dibujo en Colab, empieza siempre con ellas).
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}[scale=0.85]
+\blockinit{al presionar \greenflag}
+\blockrepeat{repetir \ovalnum{4}}{
+  \blockmove{mover \ovalnum{100} pasos}
+  \blockmove{girar \turnright{} \ovalnum{90} grados}
+}
+\end{scratch}
+\end{tcolorbox}
+\begin{code}
+for i in range(4):
+    forward(100)
+    right(90)
+\end{code}
+\end{tcbraster}
+
+\textbf{Cómo funciona.} La línea 1, \py|for i in range(4):|, es el bloque \chip[control]{repetir 4}. Puedes leerla como «por cada vuelta, 4 veces». La parte \py|range(4)| quiere decir «cuenta 4 veces». Las líneas 2 y 3 son los bloques que están dentro del bucle, así que pasan 4 veces.
+
+Python habla inglés: sus palabras (\py|for|, \py|print|, \py|forward|...) siempre van en inglés. Lo que tú inventas, como los nombres y los textos entre comillas, sí puede ir en español.
+
+% ---------------------------------------------------------------------
+\needspace{14\baselineskip}
+\subsection*{La boca de la C: dos puntos y cuatro espacios}
+
+En Scratch, un bloque va \textbf{dentro} de un bucle cuando lo sueltas en la boca con forma de C. Python no tiene forma de C, así que usa dos cosas en su lugar:
+
+\begin{enumerate}
+  \item Los \textbf{dos puntos} \texttt{:} al final de la línea del \py|for|. Los dos puntos \textbf{abren la boca}. Dicen «lo de adentro empieza en la siguiente línea».
+  \item \textbf{Cuatro espacios} al principio de una línea. Esas líneas están \textbf{dentro} de la boca. A esos espacios se les llama \textbf{sangría}.
+\end{enumerate}
+
+La primera línea que vuelve al borde izquierdo, sin espacios, es el bloque pegado \textbf{debajo} de la C. Se ejecuta una sola vez, cuando el bucle ya terminó.
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}[scale=0.85]
+\blockrepeat{repetir \ovalnum{4}}{
+  \blockmove{mover \ovalnum{100} pasos}
+  \blockmove{girar \turnright{} \ovalnum{90} grados}
+}
+\blocklook{decir \ovalnum{¡Cuadrado listo!}}
+\end{scratch}
+\end{tcolorbox}
+\begin{spaces}
+for i in range(4):
+    forward(100)
+    right(90)
+print("¡Cuadrado listo!")
+\end{spaces}
+\end{tcbraster}
+
+Las marquitas \texttt{\textvisiblespace} muestran los espacios, que normalmente son invisibles. Las líneas 2 y 3 tienen cuatro espacios, así que se repiten 4 veces. La línea 4 no tiene espacios, así que está fuera del bucle. Ves \texttt{¡Cuadrado listo!} una sola vez, cuando el cuadrado ya está terminado.
+
+\begin{think}[Colab te ayuda]
+Cuando escribes los dos puntos y presionas \textbf{Enter}, Colab pone los cuatro espacios por ti. Para salir del bucle, presiona \textbf{Retroceso} (\textit{Backspace}) una vez al principio de la línea.
+\end{think}
+
+% ---------------------------------------------------------------------
+\needspace{12\baselineskip}
+\subsection*{¿Qué cuenta la \texttt{i}?}
+
+La \texttt{i} de \py|for i in range(4):| es un \textbf{contador}. Cada vez que el bucle da una vuelta, Python cambia la \texttt{i} él solito. El bloque \chip[control]{repetir} de Scratch no tiene un contador que puedas ver. En Scratch tendrías que hacerte uno tú.
+
+Vamos a espiar la \texttt{i}. Este programa no dibuja, así que no necesita las tres líneas de inicio.
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{code}
+for i in range(4):
+    print(i)
+\end{code}
+\begin{outputbox}
+0\\
+1\\
+2\\
+3
+\end{outputbox}
+\end{tcbraster}
+
+Python empieza a contar en \textbf{0}, así que \texttt{i} vale 0, luego 1, luego 2, luego 3. ¡Siguen siendo 4 vueltas! Fíjate en que \py|range(4)| se detiene \textbf{antes} de llegar a 4. No tienes que usar la \texttt{i}, pero siempre está ahí si la quieres.
+
+% ---------------------------------------------------------------------
+\needspace{12\baselineskip}
+\subsection*{Usar la \texttt{i} dentro del bucle}
+
+Como la \texttt{i} cambia en cada vuelta, puedes usarla para que cada vuelta del bucle sea un poquito distinta. La estrella \texttt{*} quiere decir \textbf{por} (multiplicar) en Python (en el teclado no hay tecla $\times$).
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{code}
+for i in range(5):
+    print(i * 10)
+\end{code}
+\begin{outputbox}
+0\\
+10\\
+20\\
+30\\
+40
+\end{outputbox}
+\end{tcbraster}
+
+Ahora imagina \py|forward(i * 5)| en lugar de \py|print(i * 10)|. La tortuga caminaría un poco más lejos en cada vuelta. ¡Así vas a dibujar una espiral en una misión muy pronto! Un nombre como \texttt{i} que guarda un número se llama \textbf{variable}. Vas a crear tus propias variables en la Parte 3.
+
+% ---------------------------------------------------------------------
+\needspace{14\baselineskip}
+\subsection*{Cuando los espacios fallan}
+
+Python es muy exigente con los dos puntos y los espacios. Aquí están los dos mensajes rojos que vas a ver más seguido. Léelos como la nota con pistas de un detective: la última línea te dice qué está mal. Python siempre escribe sus errores en inglés, aunque tu Colab esté en español. La palabra importante es el nombre del error (\texttt{SyntaxError}, \texttt{IndentationError}...).
+
+\textbf{¿Olvidaste los dos puntos?}
+
+\begin{codenonum}
+for i in range(3)
+    print("hola")
+\end{codenonum}
+\begin{errorbox}
+SyntaxError: expected ':'
+\end{errorbox}
+
+Python quiere los dos puntos que abren la boca (\texttt{expected ':'} quiere decir «esperaba \texttt{:}»). Agrega \texttt{:} al final de la línea del \py|for|.
+
+\needspace{10\baselineskip}
+\textbf{¿Olvidaste los espacios?}
+
+\begin{codenonum}
+for i in range(3):
+print("hola")
+\end{codenonum}
+\begin{errorbox}
+IndentationError: expected an indented block after 'for' statement on line 1
+\end{errorbox}
+
+Esto quiere decir «la C tiene la boca vacía». No hay nada dentro del bucle. Pon cuatro espacios delante de \py|print("hola")|.
+
+\needspace{16\baselineskip}
+\begin{watchout}[¡Cuidado! El bicho tramposo sin letras rojas]
+¿Y si solo \textbf{una} línea pierde sus espacios?
+\begin{codenonum}
+for i in range(4):
+    forward(100)
+right(90)
+\end{codenonum}
+Python está contento, así que \textbf{no hay error}. Pero ahora \py|right(90)| está fuera del bucle, como un bloque soltado \textbf{debajo} de la C en lugar de adentro. La tortuga camina hacia adelante 4 veces seguidas (una línea larguísima que se sale del escenario) y gira una sola vez, al final de todo. Si tu dibujo se ve mal, ¡revisa primero los espacios!
+\end{watchout}
+
+% ---------------------------------------------------------------------
+\needspace{14\baselineskip}
+\subsection*{Un bucle dentro de otro bucle}
+
+En Scratch puedes poner un bloque \chip[control]{repetir} dentro de otro bloque \chip[control]{repetir}. Python puede hacer lo mismo. El bucle de adentro lleva \textbf{más} espacios.
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}[scale=0.85]
+\blockrepeat{repetir \ovalnum{6}}{
+  \blockrepeat{repetir \ovalnum{3}}{
+    \blockmove{mover \ovalnum{80} pasos}
+    \blockmove{girar \turnright{} \ovalnum{120} grados}
+  }
+  \blockmove{girar \turnright{} \ovalnum{60} grados}
+}
+\end{scratch}
+\end{tcolorbox}
+\begin{spaces}
+for i in range(6):
+    for j in range(3):
+        forward(80)
+        right(120)
+    right(60)
+\end{spaces}
+\end{tcbraster}
+
+\textbf{Cómo funciona.} Cuenta los espacios al principio de cada línea:
+\begin{itemize}
+  \item \textbf{0 espacios} (línea 1): el bucle de afuera. Da 6 vueltas.
+  \item \textbf{4 espacios} (líneas 2 y 5): dentro del bucle de afuera.
+  \item \textbf{8 espacios} (líneas 3 y 4): dentro de \textbf{los dos} bucles. Dibujan un triángulo.
+\end{itemize}
+La línea 5 tiene 4 espacios, así que no es parte del triángulo. Gira un poquito la tortuga después de cada triángulo. El bucle de adentro usa otra letra para su contador, \texttt{j}, para que los dos contadores no se revuelvan. El resultado son 6 triángulos girando alrededor del centro, 18 líneas en total.
+
+% ---------------------------------------------------------------------
+\needspace{14\baselineskip}
+\subsection*{Por siempre se convierte en \texttt{while True}}
+
+El bloque \chip[control]{por siempre} repite sin fin. En Python es \py|while True:|. Léelo como «sigue mientras verdadero sea verdadero» (\texttt{while} es «mientras» y \texttt{True} es «verdadero»), ¡y verdadero siempre es verdadero!
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}[scale=0.85]
+\blockinit{al presionar \greenflag}
+\blockinfloop{por siempre}{
+  \blockmove{mover \ovalnum{100} pasos}
+  \blockmove{girar \turnright{} \ovalnum{90} grados}
+}
+\end{scratch}
+\end{tcolorbox}
+\begin{code}
+while True:
+    forward(100)
+    right(90)
+\end{code}
+\end{tcbraster}
+
+\textbf{Cómo funciona.} Los dos puntos y los cuatro espacios funcionan igual que en un bucle \py|for|. La diferencia es que este bucle \textbf{nunca se detiene solo}. La tortuga dibuja el mismo cuadrado una y otra vez, y la celda sigue ejecutándose. Mientras una celda se está ejecutando, su botón de reproducir se convierte en un círculo que gira. Haz clic en él (\stopbtn) para detener la celda, igual que la señal roja de alto en Scratch. También puedes usar el menú: \textbf{Entorno de ejecución} (\textit{Runtime}) y luego \textbf{Interrumpir ejecución} (\textit{Interrupt execution}).
+
+\begin{watchout}[¡Cuidado! Por siempre quiere decir por siempre]
+Cuando detienes la celda, Colab muestra unas letras rojas que terminan con \texttt{KeyboardInterrupt}. Eso no es un error tuyo. Solo quiere decir «presionaste detener». Mientras un bucle por siempre se está ejecutando, ninguna otra celda puede ejecutarse, así que acuérdate de detenerlo. Para los dibujos, casi siempre es mejor un bucle \py|for| con un número: termina solo, y de todos modos ves el dibujo completo.
+\end{watchout}
+
+% ---------------------------------------------------------------------
+\needspace{14\baselineskip}
+\subsection*{Esperar se convierte en \texttt{time.sleep}}
+
+El bloque \chip[control]{esperar 1 segundos} pausa el programa. Python guarda su reloj en una caja de herramientas llamada \py|time| («tiempo»). Abres la caja de herramientas una vez, arriba de todo, con \py|import time|. Después, \py|time.sleep(2)| quiere decir «duerme 2 segundos».
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}[scale=0.85]
+\blockinit{al presionar \greenflag}
+\blocklook{decir \ovalnum{En sus marcas...}}
+\blockcontrol{esperar \ovalnum{2} segundos}
+\blocklook{decir \ovalnum{¡Fuera!}}
+\end{scratch}
+\end{tcolorbox}
+\begin{code}
+import time
+print("En sus marcas...")
+time.sleep(2)
+print("¡Fuera!")
+\end{code}
+\end{tcbraster}
+
+El punto en \py|time.sleep| quiere decir «la herramienta \texttt{sleep} (dormir) de la caja \texttt{time}». Si olvidas la línea 1, Python da un \texttt{NameError}, porque todavía no sabe qué es \texttt{time}.
+
+\needspace{12\baselineskip}
+\textbf{Cohete con cuenta regresiva.} Aquí un bucle y una espera trabajan juntos. En cada vuelta, \py|5 - i| calcula el siguiente número: $5-0=5$, luego $5-1=4$, y así sucesivamente.
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{code}
+import time
+for i in range(5):
+    print(5 - i)
+    time.sleep(1)
+print("¡Despegue!")
+\end{code}
+\begin{outputbox}
+5\\
+4\\
+3\\
+2\\
+1\\
+¡Despegue!
+\end{outputbox}
+\end{tcbraster}
+
+\begin{think}[Adivina primero]
+¿Qué pasaría si \py|print("¡Despegue!")| tuviera cuatro espacios delante? Di lo que crees y luego pruébalo. (¡Acuérdate del bicho tramposo!)
+\end{think}
+
+% ---------------------------------------------------------------------
+\needspace{14\baselineskip}
+\subsection*{Detener este programa se convierte en \texttt{break}}
+
+El bloque \chip[control]{detener este programa} termina el programa. Dentro de un bucle de Python, la palabra \py|break| («romper») hace el mismo trabajo: \textbf{rompe} el bucle y se sale de inmediato.
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}[scale=0.85]
+\blockinit{al presionar \greenflag}
+\blockinfloop{por siempre}{
+  \blocklook{decir \ovalnum{¡Hola!}}
+  \blockstop{detener \selectmenu{este programa}}
+}
+\end{scratch}
+\end{tcolorbox}
+\begin{code}
+while True:
+    print("¡Hola!")
+    break
+print("Fuera del bucle")
+\end{code}
+\end{tcbraster}
+
+Esto escribe \texttt{¡Hola!} una sola vez, y luego \texttt{Fuera del bucle}. Aquí hay algo que Scratch no puede hacer: en Scratch no se puede pegar nada debajo de un \chip[control]{por siempre}, pero en Python la línea que va después del bucle se ejecuta en cuanto \py|break| se sale. Por ahora \py|break| parece un poco tonto, porque siempre detiene el bucle en la primera vuelta. En la Parte 5 vas a aprender \py|if|, y entonces \py|break| se vuelve muy útil: «si adivinaste, detente».
+
+\begin{think}[¿Y repetir hasta que?]
+Scratch también tiene \chip[control]{repetir hasta que}. En Python se convierte en \py|while not ...:|, donde los puntos son una pregunta como «¿ya llegó el gato al borde?». Necesitas unas cuantas herramientas más para hacer esas preguntas, así que \chip[control]{repetir hasta que} espera hasta la Parte 5.
+\end{think}
+
+% =====================================================================
+\mission{Dibuja figuras por el camino corto}{bucles \texttt{for}, los dos puntos y los cuatro espacios, y el truco del 360}
+
+Ahora puedes dibujar cualquier figura con solo tres líneas de bucle. Empecemos con un triángulo. (En Scratch, primero agrega la extensión \textbf{Lápiz} con el botón \textbf{Agregar Extensión}).
+
+\begin{tcbraster}[raster columns=2, raster column skip=12pt, raster valign=top, raster force size=false,
+  raster column 1/.style={add to width=-2.0cm}, raster column 2/.style={add to width=2.0cm}]
+\begin{tcolorbox}[blankest]{\normalsize\bfseries\color{ink}Paso 1: Constrúyelo en Scratch}\end{tcolorbox}
+\begin{tcolorbox}[blankest]{\normalsize\bfseries\color{ink}Paso 2: Escríbelo en Colab}\end{tcolorbox}
+\begin{tcolorbox}[blankest]
+\begin{scratch}[scale=0.75]
+\blockinit{al presionar \greenflag}
+\blockpen{fijar color de lápiz a \ovalnum{azul}}
+\blockpen{fijar tamaño de lápiz a \ovalnum{3}}
+\blockrepeat{repetir \ovalnum{3}}{
+  \blockmove{mover \ovalnum{120} pasos}
+  \blockmove{girar \turnright{} \ovalnum{120} grados}
+}
+\end{scratch}
+\end{tcolorbox}
+\begin{typethis}
+from ColabTurtlePlus.Turtle import *
+clearscreen()
+initializeTurtle((480, 360))
+pencolor("blue")
+pensize(3)
+for i in range(3):
+    forward(120)
+    right(120)
+\end{typethis}
+\end{tcbraster}
+
+\step{Paso 3: Léelo línea por línea}
+
+\begin{longtable}{>{\centering\arraybackslash}p{1.1cm} P{5.3cm} P{9.1cm}}
+\toprule
+\textbf{Línea} & \textbf{Bloque de Scratch} & \textbf{Qué significa} \\
+\midrule
+1--3 & \chip[events]{al presionar bandera verde} & Las tres líneas de inicio. Preparan el escenario y la tortuga. El lápiz empieza abajo. \\
+4 & \chip[pen]{fijar color de lápiz a azul} & El color es una palabra entre comillas, en minúsculas. Los colores se escriben en inglés: \py|"blue"| es azul, \py|"red"| rojo, \py|"gold"| dorado... \\
+5 & \chip[pen]{fijar tamaño de lápiz a 3} & Una línea más gruesa. \\
+6 & \chip[control]{repetir 3} & \py|for i in range(3):| quiere decir «haz esto 3 veces». Los dos puntos abren la boca. \\
+7 & \chip[motion]{mover 120 pasos} & Lleva cuatro espacios delante, así que está dentro del bucle. \\
+8 & \chip[motion]{girar a la derecha 120 grados} & También lleva cuatro espacios, así que también está dentro del bucle. \\
+\bottomrule
+\end{longtable}
+
+\step{Paso 4: Ejecútalo}
+Presiona \playbtn. La tortuga dibuja un triángulo azul y se detiene otra vez donde empezó, apuntando hacia el mismo lado que al principio.
+
+\needspace{14\baselineskip}
+\step{Paso 5: Hazlo tuyo}
+
+Aquí va un truco: \textbf{cuando la tortuga da toda la vuelta a una figura, sus giros suman 360 grados}, un círculo completo. Así que, para encontrar el giro, divide 360 entre el número de lados. Llena la tabla y luego dibuja cada figura cambiando los números de las líneas 6, 7 y 8. Las figuras con más lados necesitan un avance más corto, o se salen del escenario.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{P{3.2cm} P{2.6cm} P{2.0cm} P{3.0cm} P{2.3cm}}
+\toprule
+\textbf{Figura} & \textbf{Lados (range)} & \textbf{Avance} & \textbf{Giro} & \textbf{¿Dibujada?} \\
+\midrule
+Triángulo & 3 & 120 & $360 \div 3 = 120$ & $\square$ \\
+Cuadrado & 4 & 120 & $360 \div 4 = 90$ & $\square$ \\
+Pentágono & 5 & 100 & \rule{2.2cm}{0.5pt} & $\square$ \\
+Hexágono & 6 & 80 & \rule{2.2cm}{0.5pt} & $\square$ \\
+Octágono & 8 & 60 & \rule{2.2cm}{0.5pt} & $\square$ \\
+Decágono & 10 & 50 & \rule{2.2cm}{0.5pt} & $\square$ \\
+Casi un círculo & 36 & 10 & \rule{2.2cm}{0.5pt} & $\square$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{challenge}
+\tick Llena la tabla y dibuja todas las figuras. ¿Cuál se parece más a un círculo?\par
+\tick Agrega \py|speed(13)| justo después de la línea 3 para que la tortuga dibuje más rápido.\par
+\tick Pon \py|pencolor("red")| \textbf{dentro} del bucle, con cuatro espacios, justo antes de \py|forward(120)|. ¿Cambia algo? ¿Por qué?\par
+\tick Agrega \py|print("¡Tarán!")| al final de todo, \textbf{sin} espacios. ¿Cuántas veces se escribe? Ahora ponle cuatro espacios y ejecútalo otra vez.
+\end{challenge}
+
+
+% =====================================================================
+\mission{Estrellas}{a dar más de una vuelta, y a moverte antes de dibujar}
+
+Una estrella es una figura que gira \textbf{más} que un pentágono. Cada punta es un giro muy cerrado de 144 grados.
+
+\begin{tcbraster}[raster columns=2, raster column skip=12pt, raster valign=top, raster force size=false,
+  raster column 1/.style={add to width=-2.0cm}, raster column 2/.style={add to width=2.0cm}]
+\begin{tcolorbox}[blankest]{\normalsize\bfseries\color{ink}Paso 1: Constrúyelo en Scratch}\end{tcolorbox}
+\begin{tcolorbox}[blankest]{\normalsize\bfseries\color{ink}Paso 2: Escríbelo en Colab}\end{tcolorbox}
+\begin{tcolorbox}[blankest]
+\begin{scratch}[scale=0.75]
+\blockinit{al presionar \greenflag}
+\blockpen{fijar color de lápiz a \ovalnum{dorado}}
+\blockpen{fijar tamaño de lápiz a \ovalnum{4}}
+\blockpen{subir lápiz}
+\blockmove{ir a x: \ovalnum{-75} y: \ovalnum{30}}
+\blockpen{bajar lápiz}
+\blockrepeat{repetir \ovalnum{5}}{
+  \blockmove{mover \ovalnum{150} pasos}
+  \blockmove{girar \turnright{} \ovalnum{144} grados}
+}
+\end{scratch}
+\end{tcolorbox}
+\begin{typethis}
+from ColabTurtlePlus.Turtle import *
+clearscreen()
+initializeTurtle((480, 360))
+pencolor("gold")
+pensize(4)
+penup()
+goto(-75, 30)
+pendown()
+for i in range(5):
+    forward(150)
+    right(144)
+\end{typethis}
+\end{tcbraster}
+
+\step{Paso 3: Léelo línea por línea}
+
+\begin{longtable}{>{\centering\arraybackslash}p{1.1cm} P{5.3cm} P{9.1cm}}
+\toprule
+\textbf{Línea} & \textbf{Bloque de Scratch} & \textbf{Qué significa} \\
+\midrule
+1--3 & \chip[events]{al presionar bandera verde} & Las tres líneas de inicio. \\
+4--5 & \chip[pen]{fijar color de lápiz a dorado} \chip[pen]{fijar tamaño de lápiz a 4} & Un lápiz dorado y grueso (\py|"gold"| es dorado). \\
+6 & \chip[pen]{subir lápiz} & Levanta el lápiz para que el siguiente movimiento no deje línea. \\
+7 & \chip[motion]{ir a x: -75 y: 30} & Salta un poco a la izquierda, para que la estrella quede en el centro del escenario. \\
+8 & \chip[pen]{bajar lápiz} & Listo para dibujar otra vez. \\
+9 & \chip[control]{repetir 5} & 5 puntas, así que 5 vueltas. \\
+10--11 & \chip[motion]{mover 150 pasos} \chip[motion]{girar a la derecha 144 grados} & Dentro del bucle: una línea larga y un giro cerrado por cada punta. \\
+\bottomrule
+\end{longtable}
+
+\step{Paso 4: Ejecútalo}
+Presiona \playbtn. Aparece una gran estrella dorada en el centro del escenario, y la tortuga termina otra vez en el punto de partida.
+
+\begin{think}[¡Dos vueltas!]
+Un pentágono gira $5 \times 72 = 360$ grados: una vuelta. La estrella gira $5 \times 144 = 720$ grados. Eso es $360 + 360$, así que la tortuga da \textbf{dos} vueltas completas mientras dibuja la estrella. Por eso sus líneas se cruzan en el centro.
+\end{think}
+
+\needspace{12\baselineskip}
+\step{Paso 5: Hazlo tuyo}
+
+Para una estrella con un número \textbf{impar} de puntas (5, 7, 9, \ldots), aquí tienes una receta para el giro:
+\[ \text{giro} = 180 - (180 \div \text{puntas}) \]
+Compruébala con 5 puntas: $180 \div 5 = 36$, y $180 - 36 = 144$. ¡Funciona! Llena la tabla y dibuja cada estrella. Usa también el número de puntas dentro de \py|range( )|.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{P{2.6cm} P{3.8cm} P{3.4cm} P{2.3cm}}
+\toprule
+\textbf{Puntas} & \textbf{$180 \div$ puntas} & \textbf{Giro} & \textbf{¿Dibujada?} \\
+\midrule
+5 & 36 & 144 & $\square$ \\
+9 & \rule{2.2cm}{0.5pt} & \rule{2.2cm}{0.5pt} & $\square$ \\
+15 & \rule{2.2cm}{0.5pt} & \rule{2.2cm}{0.5pt} & $\square$ \\
+45 & \rule{2.2cm}{0.5pt} & \rule{2.2cm}{0.5pt} & $\square$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{challenge}
+\tick Llena la tabla de estrellas. ¡La estrella de 45 puntas parece un sol peludo! Para esa, agrega \py|speed(13)| después de la línea 3.\par
+\tick Las \textbf{estrellas pares} necesitan otro giro. Prueba \py|range(8)| con \py|right(135)|, y \py|range(12)| con \py|right(150)|.\par
+\tick Cambia el color y el tamaño del lápiz. Prueba \py|"skyblue"| (azul cielo) o \py|"hotpink"| (rosa fuerte).\par
+\tick Cambia la línea 7 para poner la estrella en una esquina del escenario. ¿Puedes hacer que quede toda dentro del escenario?
+\end{challenge}
+
+% =====================================================================
+\mission{Espiral cuadrada}{a usar el contador \texttt{i} para cambiar cada paso}
+
+En esta misión cada línea es un poco más larga que la anterior, así que la tortuga hace una espiral hacia afuera. En Scratch necesitas una variable para esto. ¡En Python el contador \texttt{i} hace el trabajo gratis!
+
+En Scratch, primero crea una variable llamada \textbf{medida} con \textbf{Crear una variable}.
+
+\begin{tcbraster}[raster columns=2, raster column skip=12pt, raster valign=top, raster force size=false,
+  raster column 1/.style={add to width=-2.0cm}, raster column 2/.style={add to width=2.0cm}]
+\begin{tcolorbox}[blankest]{\normalsize\bfseries\color{ink}Paso 1: Constrúyelo en Scratch}\end{tcolorbox}
+\begin{tcolorbox}[blankest]{\normalsize\bfseries\color{ink}Paso 2: Escríbelo en Colab}\end{tcolorbox}
+\begin{tcolorbox}[blankest]
+\begin{scratch}[scale=0.75]
+\blockinit{al presionar \greenflag}
+\blockpen{fijar color de lápiz a \ovalnum{morado}}
+\blockvariable{fijar \selectmenu{medida} a \ovalnum{0}}
+\blockrepeat{repetir \ovalnum{40}}{
+  \blockmove{mover \ovalvariable{medida} pasos}
+  \blockmove{girar \turnright{} \ovalnum{90} grados}
+  \blockvariable{cambiar \selectmenu{medida} en \ovalnum{5}}
+}
+\end{scratch}
+\end{tcolorbox}
+\begin{typethis}
+from ColabTurtlePlus.Turtle import *
+clearscreen()
+initializeTurtle((480, 360))
+pencolor("purple")
+speed(13)
+for i in range(40):
+    forward(i * 5)
+    right(90)
+\end{typethis}
+\end{tcbraster}
+
+\step{Paso 3: Léelo línea por línea}
+
+\begin{longtable}{>{\centering\arraybackslash}p{1.1cm} P{5.3cm} P{9.1cm}}
+\toprule
+\textbf{Línea} & \textbf{Bloque de Scratch} & \textbf{Qué significa} \\
+\midrule
+1--3 & \chip[events]{al presionar bandera verde} & Las tres líneas de inicio. \\
+4 & \chip[pen]{fijar color de lápiz a morado} & Un lápiz morado (\py|"purple"|). \\
+5 & (ninguno) & Dibujo lo más rápido posible, para que no esperes mucho por 40 líneas. \\
+--- & \chip[variables]{fijar medida a 0} & ¡No hace falta ninguna línea! El contador \texttt{i} empieza en 0 él solito. \\
+6 & \chip[control]{repetir 40} & 40 vueltas. \texttt{i} cuenta 0, 1, 2, \ldots{} hasta 39. \\
+7 & \chip[motion]{mover medida pasos} & \py|i * 5| quiere decir «\texttt{i} por 5». La primera línea mide $0 \times 5 = 0$ pasos, luego 5, luego 10, y así sucesivamente, hasta $39 \times 5 = 195$ pasos. \\
+8 & \chip[motion]{girar a la derecha 90 grados} & Una esquina cuadrada cada vez. \\
+--- & \chip[variables]{cambiar medida en 5} & ¡No hace falta ninguna línea! \texttt{i} sube de 1 en 1 en cada vuelta, así que \py|i * 5| sube de 5 en 5. \\
+\bottomrule
+\end{longtable}
+
+\step{Paso 4: Ejecútalo}
+Presiona \playbtn. Una espiral cuadrada morada crece desde el centro del escenario. Las líneas se hacen cada vez más largas, de 5 en 5 pasos.
+
+\begin{think}[Un acertijo para ti]
+El bucle da 40 vueltas, pero si cuentas con cuidado, la tortuga dibuja solo 39 líneas. ¿Adónde se fue una? (Fíjate en la primera vuelta. La respuesta está al final del libro).
+\end{think}
+
+\needspace{12\baselineskip}
+\step{Paso 5: Hazlo tuyo}
+
+\begin{challenge}
+\tick Cambia \py|right(90)| por \py|right(91)|. ¡Con solo un grado más, la espiral se tuerce como un remolino!\par
+\tick Cambia el giro a \py|right(120)| para una espiral triangular, o a \py|right(60)| para una espiral hexagonal.\par
+\tick Prueba \py|range(60)| con \py|forward(i * 3)|. ¿Por qué la espiral tiene más líneas pero queda más o menos del mismo tamaño?\par
+\tick \textbf{Súper reto:} ¿qué número en la línea 6 haría que la espiral se saliera del escenario? Primero adivina y luego pruébalo.
+\end{challenge}
+
+% =====================================================================
+\mission{Flor de cuadrados}{bucles dentro de bucles, con 8 espacios}
+
+Un cuadrado solo es aburrido. ¡Doce cuadrados, cada uno un poquito girado, forman una flor!
+
+\begin{tcbraster}[raster columns=2, raster column skip=12pt, raster valign=top, raster force size=false,
+  raster column 1/.style={add to width=-2.0cm}, raster column 2/.style={add to width=2.0cm}]
+\begin{tcolorbox}[blankest]{\normalsize\bfseries\color{ink}Paso 1: Constrúyelo en Scratch}\end{tcolorbox}
+\begin{tcolorbox}[blankest]{\normalsize\bfseries\color{ink}Paso 2: Escríbelo en Colab}\end{tcolorbox}
+\begin{tcolorbox}[blankest]
+\begin{scratch}[scale=0.75]
+\blockinit{al presionar \greenflag}
+\blockpen{fijar color de lápiz a \ovalnum{rosa}}
+\blockrepeat{repetir \ovalnum{12}}{
+  \blockrepeat{repetir \ovalnum{4}}{
+    \blockmove{mover \ovalnum{80} pasos}
+    \blockmove{girar \turnright{} \ovalnum{90} grados}
+  }
+  \blockmove{girar \turnright{} \ovalnum{30} grados}
+}
+\end{scratch}
+\end{tcolorbox}
+\begin{typethis}
+from ColabTurtlePlus.Turtle import *
+clearscreen()
+initializeTurtle((480, 360))
+pencolor("deeppink")
+speed(13)
+for i in range(12):
+    for j in range(4):
+        forward(80)
+        right(90)
+    right(30)
+\end{typethis}
+\end{tcbraster}
+
+\step{Paso 3: Léelo línea por línea}
+
+\begin{longtable}{>{\centering\arraybackslash}p{1.1cm} P{5.3cm} P{9.1cm}}
+\toprule
+\textbf{Línea} & \textbf{Bloque de Scratch} & \textbf{Qué significa} \\
+\midrule
+1--3 & \chip[events]{al presionar bandera verde} & Las tres líneas de inicio. \\
+4--5 & \chip[pen]{fijar color de lápiz a rosa} & Un lápiz rosa intenso (\py|"deeppink"|) que dibuja rápido. \\
+6 & \chip[control]{repetir 12} & El bucle de afuera: 12 cuadrados. Sin espacios delante. \\
+7 & \chip[control]{repetir 4} & El bucle de adentro: un cuadrado. Lleva 4 espacios, así que está dentro del bucle de afuera. Tiene su propio contador, \texttt{j}. \\
+8--9 & \chip[motion]{mover 80 pasos} \chip[motion]{girar a la derecha 90 grados} & 8 espacios: dentro de \textbf{los dos} bucles. Estas dos líneas se ejecutan $12 \times 4 = 48$ veces. \\
+10 & \chip[motion]{girar a la derecha 30 grados} & Otra vez 4 espacios: después de cada cuadrado, gira un poquito. Se ejecuta 12 veces. \\
+\bottomrule
+\end{longtable}
+
+\step{Paso 4: Ejecútalo}
+Presiona \playbtn. La tortuga dibuja un cuadrado, gira un poquito, dibuja otro cuadrado, y así sucesivamente. Después de 12 cuadrados tienes una flor rosa. Los giros suman $12 \times 30 = 360$, así que la flor da exactamente una vuelta.
+
+\needspace{14\baselineskip}
+\step{Paso 5: Hazlo tuyo}
+
+\begin{challenge}
+\tick Cambia la línea 6 a \py|range(36)| y la línea 10 a \py|right(10)|. ¿Por qué esos dos números van juntos? (Pista: el truco del 360).\par
+\tick Haz una flor de triángulos: cambia el bucle de adentro a \py|range(3)| y \py|right(120)|.\par
+\tick Haz una flor de estrellas: bucle de adentro \py|range(5)| con \py|right(144)|, bucle de afuera \py|range(8)| con \py|right(45)|.\par
+\tick Agrega \py|hideturtle()| al final de todo para que solo se vea la flor. ¿Cuántos espacios debe llevar?
+\end{challenge}
+
+\begin{watchout}
+Si te sale un cuadrado y luego un desorden, revisa la línea 10. Necesita exactamente \textbf{4} espacios. Con 8 espacios queda dentro del bucle del cuadrado, y cada esquina gira 30 grados de más.
+\end{watchout}
+
+% =====================================================================
+\clearpage
+\subsection*{Tradúcelo tú}
+
+Aquí hay un programa de Scratch que no has visto antes. Escribe el Python en las líneas. Empieza con las tres líneas de inicio.
+
+\begin{enumerate}
+  \item \textbf{Traza una línea} desde cada bloque hasta la palabra de Python que hace el mismo trabajo.
+  \item \textbf{Escribe el Python} en las líneas. ¡Cuenta tus espacios con cuidado!
+  \item \textbf{Escríbelo en Colab} y ejecútalo. ¿La tortuga dibujó lo mismo que el objeto de Scratch?
+\end{enumerate}
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=top]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt]
+\begin{scratch}[scale=0.85]
+\blockinit{al presionar \greenflag}
+\blockpen{fijar tamaño de lápiz a \ovalnum{4}}
+\blockpen{fijar color de lápiz a \ovalnum{morado}}
+\blockrepeat{repetir \ovalnum{8}}{
+  \blockrepeat{repetir \ovalnum{6}}{
+    \blockmove{mover \ovalnum{40} pasos}
+    \blockmove{girar \turnright{} \ovalnum{60} grados}
+  }
+  \blockmove{girar \turnright{} \ovalnum{45} grados}
+}
+\blockpen{subir lápiz}
+\blocklook{decir \ovalnum{¡Listo!}}
+\end{scratch}
+\end{tcolorbox}
+\begin{tcolorbox}[colback=white, colframe=codeframe, arc=5pt, title=\textbf{Mi Python}, coltitle=ink, colbacktitle=codebg]
+\vspace{4pt}
+\foreach \n in {1,...,12}{\rule{\linewidth}{0.4pt}\par\vspace{9pt}}
+\end{tcolorbox}
+\end{tcbraster}
+
+\begin{think}[Pistas]
+¿Cuántos espacios necesita \chip[motion]{mover 40 pasos}? Está dentro de dos bloques en forma de C. ¿Y dónde va \chip[pen]{subir lápiz}: dentro de un bucle, o después?
+\end{think}
+
+% ---------------------------------------------------------------------
+\needspace{9\baselineskip}
+\begin{puzzle}
+Escribe un programa que muestre los números \textbf{1, 2, 3, 4, 5}, uno en cada línea. Solo puedes usar \textbf{dos líneas} de Python, y una de ellas tiene que ser un bucle \py|for|.
+
+\textbf{Pista:} \texttt{i} empieza en 0, pero tú quieres empezar en 1. ¿Qué le puedes hacer a la \texttt{i} dentro del bucle?
+
+\vspace{4pt}
+\foreach \n in {1,2}{\rule{\linewidth}{0.4pt}\par\vspace{9pt}}
+\end{puzzle}
+
+% ---------------------------------------------------------------------
+\needspace{16\baselineskip}
+\subsection*{Lista de la Parte 2}
+Marca cada una cuando puedas hacerla sin mirar atrás.
+
+\tick Puedo convertir \chip[control]{repetir 10} en \py|for i in range(10):| con dos puntos y cuatro espacios.\par
+\tick Ya sé que \texttt{i} cuenta 0, 1, 2, \ldots{} y puedo usarla dentro de un bucle, como en \py|forward(i * 5)|.\par
+\tick Puedo poner una línea \textbf{después} de un bucle quitándole los espacios.\par
+\tick Puedo poner un bucle dentro de otro bucle, con 8 espacios para las líneas de más adentro.\par
+\tick Puedo usar \py|while True:| y detenerlo con el botón de detener \stopbtn.\par
+\tick Puedo hacer que Python espere con \py|import time| y \py|time.sleep(1)|.

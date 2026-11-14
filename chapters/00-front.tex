@@ -1,0 +1,501 @@
+% =====================================================================
+% 00-front.tex : portada, ¡Hola, programador!, Conoce Colab, palabras de
+% Scratch, hábitos, en qué se diferencia Colab.  (Sin archivo de respuestas.)
+% =====================================================================
+
+% ---------- PORTADA ----------
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[codebg] (current page.north west) rectangle (current page.south east);
+  % una estrella dibujada por la tortuga
+  \begin{scope}[shift={($(current page.center)+(0,-1.2)$)}, line width=3pt, line join=round]
+    \draw[looks] (-3.2,0.6) -- ++(0:6.4) -- ++(-144:6.4) -- ++(72:6.4) -- ++(-72:6.4) -- cycle;
+  \end{scope}
+  \foreach \c/\x in {motion/0, looks/1, events/2, control/3, operators/4, variables/5, myblocks/6, pen/7}
+    \fill[\c] ($(current page.south west)+(\x*2.625,0)$) rectangle ++(2.625,1.1);
+\end{tikzpicture}
+
+\vspace*{1.2cm}
+{\color{muted}\Large\bfseries Un libro de trabajo para jóvenes programadores}\par\vspace{6pt}
+{\fontsize{46}{52}\selectfont\bfseries De Scratch\\[2pt] a Python}\par\vspace{10pt}
+{\Large Con Google Colab}\par
+\vspace{11.5cm}
+\begin{tcolorbox}[colback=white, colframe=ink, arc=8pt, width=11cm, boxrule=1pt]
+\Large Este libro pertenece a:\par\vspace{9mm}\rule{9.5cm}{0.6pt}\par\vspace{2mm}
+\end{tcolorbox}
+
+% =====================================================================
+\banner{events}{EMPIEZA AQUÍ}{¡Hola, programador!}
+
+Tú ya sabes programar. Cada vez que encajas bloques de Scratch, estás escribiendo un programa. Le dices a la computadora qué hacer, paso a paso.
+
+En este libro vas a aprender \textbf{Python}. Python es un lenguaje de programación de verdad. Los programadores adultos lo usan para crear páginas web, juegos, robots ¡y hasta misiones espaciales! La gran noticia es que Python usa las \textbf{mismas ideas} que Scratch:
+
+\begin{itemize}
+  \item un bloque \chip[motion]{mover 100 pasos} se convierte en \py|forward(100)|
+  \item un bloque \chip[control]{repetir 4} se convierte en \py|for i in range(4):|
+  \item un bloque \chip[looks]{decir ¡Hola!} se convierte en \py|print("¡Hola!")|
+\end{itemize}
+
+La diferencia es que en Python \textbf{escribes} las palabras en lugar de arrastrar bloques. Esa es la única gran novedad. Todo lo demás, como los bucles, las variables y crear tus propios bloques, ya lo entiendes.
+
+\begin{think}[Python habla inglés]
+Las palabras propias de Python (\texttt{for}, \texttt{print}, \texttt{forward}, \texttt{range}...) siempre van en inglés, porque así las entiende Python. Por ejemplo, \texttt{forward} significa «adelante» y \texttt{print} significa «imprimir» o «mostrar». Pero los nombres que tú inventas y los textos entre comillas pueden ir en español: \py|print("¡Hola!")|.
+\end{think}
+
+\subsection*{Cómo usar este libro}
+
+Recorre el libro en orden. Cada \textbf{misión} tiene cinco pasos:
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+  \item \textbf{Constrúyelo en Scratch.} Primero haz el programa en Scratch, para saber qué debe hacer.
+  \item \textbf{Escríbelo en Colab.} Copia el código de Python en Colab, letra por letra.
+  \item \textbf{Léelo línea por línea.} Descubre a qué bloque de Scratch corresponde cada línea.
+  \item \textbf{Ejecútalo.} Presiona el botón de reproducir y comprueba que funcionó.
+  \item \textbf{Hazlo tuyo.} Cambia el programa y mira qué pasa.
+\end{enumerate}
+
+\needspace{12\baselineskip}
+\subsection*{Busca estos recuadros}
+
+\noindent
+\begin{minipage}[t]{0.485\linewidth}\vspace{0pt}
+\begin{typethis}[Escribe esto]
+print("¡Hola!")
+\end{typethis}
+\begin{think}
+Algo ingenioso que descubrir en el código.
+\end{think}
+\begin{puzzle}
+Un acertijo pequeñito al final de cada Parte. La respuesta son dos líneas de Python.
+\end{puzzle}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.485\linewidth}\vspace{0pt}
+\begin{watchout}
+Un error que comete mucha gente, para que tú lo puedas evitar.
+\end{watchout}
+\begin{challenge}
+Ideas para cambiar el programa. ¡Marca cada una que termines!
+\end{challenge}
+\end{minipage}
+
+Las respuestas de los acertijos y de las páginas «Tradúcelo tú» están al final del libro. ¡Primero inténtalo y después revisa!
+
+\needspace{17\baselineskip}
+\subsection*{Mapa del libro}
+
+El libro tiene siete \textbf{Partes}. Cada Parte toma una familia de bloques de Scratch y te muestra su Python. Después de las Partes vienen cuatro secciones especiales al final.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{l P{5.4cm} P{8.8cm}}
+\toprule
+ & \textbf{Parte} & \textbf{Lo que harás} \\
+\midrule
+1 & \chip[motion]{Movimiento y Lápiz} & Mover la tortuga y dibujar figuras. \\
+2 & \chip[control]{Bucles} & Repetir cosas sin volver a escribirlas. \\
+3 & \chip[variables]{Variables y Listas} & Guardar puntos, nombres y listas de cosas. \\
+4 & \chip[operators]{Operadores} & Hacer cuentas, elegir números al azar, unir palabras. \\
+5 & \chip[sensing]{Sensores y decisiones} & Hacer preguntas y lograr que el programa elija. \\
+6 & \chip[myblocks]{Mis Bloques (funciones)} & Crear tus propios superbloques. \\
+7 & \chip[looks]{Apariencia, Sonido y Eventos} & Figuras, colores, sonidos y reaccionar. \\
+\midrule
+ & \textbf{Grandes proyectos} & Programas más grandes que usan todo. \\
+ & \textbf{Zoológico de Bichos} & Los mensajes de error de Python y cómo atrapar cada bicho. \\
+ & \textbf{Diccionario de bloques} & Busca cualquier bloque de Scratch y encuentra su Python. \\
+ & \textbf{Para los adultos} & Notas para la persona que te ayuda. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+% =====================================================================
+\banner{sensing}{PREPARÁNDONOS}{Conoce Google Colab}
+
+\textbf{Google Colab} es una página web donde puedes escribir Python y ejecutarlo enseguida. No tienes que instalar nada. Colab guarda tu trabajo en Google Drive, así que estará ahí la próxima vez.
+
+\step{Paso 1: Abre Colab}
+Pídele a un adulto que abra esta página web y que inicie sesión con una cuenta de Google:
+\begin{center}\Large\texttt{colab.research.google.com}\end{center}
+
+\step{Paso 2: Crea un cuaderno nuevo}
+Haz clic en \textbf{Nuevo cuaderno} (\textit{New notebook}). Un cuaderno es como un proyecto de Scratch: es donde vive tu código.
+
+Arriba dice \texttt{Untitled0.ipynb}. Haz clic en ese nombre y cámbialo por \textbf{Mis aventuras en Python}.
+
+\step{Paso 3: Encuentra la celda de código}
+Verás un recuadro gris con un botón redondo a la izquierda. Este recuadro se llama \textbf{celda de código}. Ahí escribes Python.
+
+\begin{center}
+\begin{tikzpicture}
+  \draw[codeframe, fill=codebg, rounded corners=6pt] (0,0) rectangle (12,1.4);
+  \fill[ink] (0.75,0.7) circle (0.38);
+  \fill[white] (0.62,0.5) -- (0.62,0.9) -- (0.98,0.7) -- cycle;
+  \node[anchor=west, font=\ttfamily\large] at (1.5,0.7) {print("¡Hola!")};
+  \draw[-{Stealth[length=3mm]}, line width=1.2pt, operators!70!black] (0.75,-1.1) -- (0.75,0.2);
+  \node[anchor=north, font=\bfseries, text=operators!60!black, align=center] at (0.75,-1.1) {El botón de\\ reproducir};
+  \node[anchor=north west, align=left, font=\small] at (3.3,-0.6) {¡Esta es tu bandera verde!\\ Haz clic en él para ejecutar el código de la celda.};
+\end{tikzpicture}
+\end{center}
+
+\step{Paso 4: Saluda}
+Haz clic dentro de la celda y escribe esto exactamente:
+
+\begin{typethis}
+print("¡Hola!")
+\end{typethis}
+
+Ahora haz clic en el botón de reproducir \playbtn. También puedes mantener presionada la tecla \textbf{Mayús} (\textit{Shift}) y presionar \textbf{Enter}. La primera vez puede tardar unos segundos en arrancar. Luego verás esto debajo:
+
+\begin{outputbox}
+¡Hola!
+\end{outputbox}
+
+\textbf{¡Acabas de ejecutar tu primer programa de Python!}
+
+\step{Paso 5: Agrega más celdas}
+Haz clic en \textbf{+ Código} (\textit{+ Code}), arriba, para obtener una celda nueva y vacía. Usa una celda nueva para cada programa. Puedes volver a ejecutar cualquier celda cuando quieras.
+
+\needspace{16\baselineskip}
+\subsection*{La celda «En el principio»: cómo conseguir la tortuga}
+
+En Scratch, consigues los bloques de lápiz haciendo clic en el botón \textbf{Agregar Extensión}, en la esquina de abajo. Python funciona igual: agregamos las herramientas de dibujo que necesitamos. En Python, el objeto que dibuja se llama \textbf{tortuga}. Camina por el escenario y deja una línea detrás, igual que un objeto de Scratch después de \chip[pen]{bajar lápiz}.
+
+Cada vez que abras tu cuaderno, ejecuta primero esta celda. La llamamos la \textbf{celda «En el principio»}. La Biblia empieza con «En el principio creó Dios los cielos y la tierra» (Génesis 1:1, Reina-Valera 1960), y cada sesión de Colab empieza con esta celda:
+
+\begin{typethis}[La celda «En el principio»: ejecútala una vez cada vez que abras Colab]
+!pip install ColabTurtlePlus
+\end{typethis}
+
+El \texttt{!} del principio significa: «esto no es Python. Es una instrucción para que Colab descargue las herramientas de la tortuga». Va a pasar mucho texto por la pantalla. No pasa nada. Espera a que se detenga.
+
+\begin{watchout}[¡Cuidado: Plus!]
+Debe decir \textbf{ColabTurtlePlus}, con \textbf{Plus} al final. Existe otra biblioteca, más vieja, llamada \texttt{ColabTurtle}. Tiene un escenario negro, otro tamaño y el (0, 0) en la esquina equivocada, así que ninguno de los programas de este libro funcionaría con ella.
+\end{watchout}
+
+\needspace{20\baselineskip}
+\subsection*{Las tres líneas de inicio}
+
+Todo programa que dibuja empieza con estas tres líneas. Hacen el mismo trabajo que este bloque de Scratch:\par\chip[events]{al presionar bandera verde}
+
+\begin{typethis}[Empieza cada dibujo con estas líneas]
+from ColabTurtlePlus.Turtle import *
+clearscreen()
+initializeTurtle((480, 360))
+\end{typethis}
+
+\begin{longtable}{>{\centering\arraybackslash}p{1.1cm} P{14.2cm}}
+\toprule
+\textbf{Línea} & \textbf{Qué hace} \\
+\midrule
+1 & \textbf{Trae las herramientas de la tortuga.} Es como hacer clic en Agregar Extensión y elegir Lápiz. El \texttt{*} significa «tráelas todas». \\
+2 & \textbf{Limpia el escenario.} Borra el dibujo viejo y las tortugas viejas, para que empieces de cero cada vez que ejecutes la celda. \\
+3 & \textbf{Hace un escenario de 480 de ancho y 360 de alto, y prepara la tortuga.} ¡Es exactamente el mismo tamaño que el escenario de Scratch! Los dos números van dentro de su propio par extra de paréntesis, \texttt{(480, 360)}, porque el ancho y el alto viajan juntos como una sola cosa. \\
+\bottomrule
+\end{longtable}
+
+Después de estas líneas, simplemente le dices a la tortuga qué hacer. La tortuga es como el \textbf{objeto seleccionado} en Scratch: cuando haces clic en un objeto, los bloques que encajas le pertenecen a él. En Python, solo escribes \py|forward(100)|, y la tortuga sabe que le hablas a ella.
+
+\needspace{14\baselineskip}
+¡Pruébalo! Escribe las tres líneas de inicio y luego una más:
+
+\begin{typethis}
+from ColabTurtlePlus.Turtle import *
+clearscreen()
+initializeTurtle((480, 360))
+forward(100)
+\end{typethis}
+
+La tortuga empieza en el centro del escenario, en (0, 0), mirando a la \textbf{derecha}, igual que un objeto nuevo de Scratch. Cuando ejecutas la celda, camina 100 pasos a la derecha y dibuja una línea.
+
+Cuando ejecutes las líneas de inicio, puede que Colab también muestre una notita sobre \py|clearscreen()|. No pasa nada. Es solo un recordatorio, y puedes ignorarlo.
+
+\begin{watchout}[Si Colab se atora o se olvida]
+\begin{itemize}
+  \item \textbf{¿Una celda se queda ejecutándose para siempre?} Haz clic en el botón \stopbtn{}, donde estaba el botón de reproducir. Es igual que la señal roja de detener en Scratch.
+  \item \textbf{¿Ves \texttt{No module named 'ColabTurtlePlus'}?} Colab lo olvida todo cuando lo cierras o lo dejas solo un rato. Vuelve a ejecutar la celda «En el principio».
+  \item \textbf{¿Ves un \texttt{NameError}?} Python todavía no conoce una palabra, porque una celda de arriba no se ha ejecutado. Ejecuta primero las celdas de arriba, empezando desde la primera. O haz clic en \textbf{Entorno de ejecución} (\textit{Runtime}) y luego en \textbf{Ejecutar todas} (\textit{Run all}), para ejecutar todas las celdas en orden.
+\end{itemize}
+Python siempre escribe sus mensajes de error en inglés. La palabra importante es el nombre del error, como \texttt{NameError}.
+\end{watchout}
+
+\begin{think}[Truco: activa los números de línea]
+Las tablas línea por línea de este libro hablan de «la línea 3» y «la línea 4». Colab también puede numerar las líneas de tus celdas. Haz clic en \textbf{Herramientas} (\textit{Tools}), luego en \textbf{Configuración} (\textit{Settings}), luego en \textbf{Editor}, y marca \textbf{Mostrar números de línea} (\textit{Show line numbers}).
+\end{think}
+
+% =====================================================================
+\banner{motion}{EL PANORAMA COMPLETO}{Palabras de Scratch y de Python}
+
+Aquí están las cosas de Scratch que ya conoces y cómo las llama Python.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{P{3.9cm} P{4.6cm} P{7.0cm}}
+\toprule
+\textbf{En Scratch} & \textbf{En Python con Colab} & \textbf{Ejemplo} \\
+\midrule
+El objeto seleccionado & La tortuga & \py|forward(100)| \\
+Otro objeto & Una tortuga nueva con su propio nombre & \py|gato = Turtle()| \\
+El escenario & El área de dibujo & \lstinline[style=inl,basicstyle=\ttfamily\small]|initializeTurtle((480, 360))| \\
+La bandera verde & El botón de reproducir \playbtn & o Mayús + Enter \\
+La señal de detener & El botón de detener \stopbtn & \\
+Un bloque & Una línea de código & \py|forward(10)| \\
+Botón Agregar Extensión & \texttt{import} & \py|import random| \\
+Un hueco blanco para escribir & Paréntesis \texttt{( )} & \py|right(90)| \\
+Palabras en un hueco & Palabras entre comillas & \py|"¡Hola!"| \\
+Crear una variable & Solo dale un valor & \py|puntos = 0| \\
+Mis Bloques & Una función & \py|def saltar():| \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{think}[Más de un objeto]
+La mayoría de los programas solo necesitan una tortuga, así que solo escribes \py|forward(100)|. Cuando quieres un segundo objeto, creas una tortuga nueva y le pones nombre: \py|gato = Turtle()|. Después le dices a esa qué hacer escribiendo primero su nombre y un punto: \py|gato.forward(10)| significa «gato, muévete 10 pasos».
+\end{think}
+
+\needspace{20\baselineskip}
+\subsection*{El escenario es el mismo}
+
+Buena noticia: el escenario de la tortuga tiene las mismas coordenadas que el escenario de Scratch. El centro es (0, 0). \textbf{x} va de −240 a la izquierda a 240 a la derecha. \textbf{y} va de −180 abajo a 180 arriba.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.016]
+  \draw[ink, line width=1pt, fill=white] (-240,-180) rectangle (240,180);
+  \draw[muted!50, -{Stealth}] (-240,0) -- (255,0) node[right, font=\small, text=ink] {x};
+  \draw[muted!50, -{Stealth}] (0,-180) -- (0,195) node[above, font=\small, text=ink] {y};
+  \fill[motion] (0,0) circle (7);
+  \node[font=\small, anchor=south west] at (5,5) {(0, 0)};
+  \node[font=\small, anchor=east] at (-245,0) {−240};
+  \node[font=\small, anchor=west] at (262,-18) {240};
+  \node[font=\small, anchor=north] at (0,-185) {−180};
+  \node[font=\small, anchor=south west] at (6,182) {180};
+  \fill[looks] (100,80) circle (7) node[right, font=\small, text=ink] {\ (100, 80)};
+\end{tikzpicture}
+\end{center}
+
+Así que \chip[motion]{ir a x: 100 y: 80} es \py|goto(100, 80)|, y la tortuga cae en el punto morado, exactamente en el mismo lugar que en Scratch.
+
+\needspace{12\baselineskip}
+\subsection*{¡Pero la brújula está girada!}
+
+\begin{watchout}[¡Cuidado: la brújula está girada!]
+En Scratch, \chip[motion]{apuntar en dirección 90} apunta a la \textbf{derecha}, y 0 apunta \textbf{arriba}.
+
+En Python, \py|setheading(0)| apunta a la \textbf{derecha}, y 90 apunta \textbf{arriba}.
+\end{watchout}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.1]
+  \foreach \cx/\title/\up/\right/\down/\left in {0/Scratch/0/90/180/-90, 7/Python/90/0/270/180}{
+    \begin{scope}[shift={(\cx,0)}]
+      \draw[ink, line width=1pt] (0,0) circle (1.3);
+      \draw[-{Stealth}, line width=1.2pt, motion] (0,0) -- (0,1.2);
+      \draw[-{Stealth}, line width=1.2pt, motion] (0,0) -- (1.2,0);
+      \draw[-{Stealth}, line width=1.2pt, motion] (0,0) -- (0,-1.2);
+      \draw[-{Stealth}, line width=1.2pt, motion] (0,0) -- (-1.2,0);
+      \node[above, font=\bfseries] at (0,1.35) {\up};
+      \node[right, font=\bfseries] at (1.35,0) {\right};
+      \node[below, font=\bfseries] at (0,-1.35) {\down};
+      \node[left, font=\bfseries] at (-1.35,0) {\left};
+      \node[font=\Large\bfseries] at (0,-2.4) {\title};
+    \end{scope}}
+\end{tikzpicture}
+\end{center}
+
+\begin{think}[La regla secreta]
+Para convertir cualquier dirección de Scratch en una dirección de Python, réstala de 90:
+\begin{center}\textbf{dirección de Python = 90 − dirección de Scratch}\end{center}
+¡Ni siquiera tienes que hacer la resta tú! ¡Python la puede hacer por ti!
+\end{think}
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}
+\blockmove{apuntar en dirección \ovalnum{180}}
+\end{scratch}
+\end{tcolorbox}
+\begin{code}
+setheading(90 - 180)
+\end{code}
+\end{tcbraster}
+
+90 − 180 es −90. Python también entiende −90: apunta \textbf{abajo}, igual que el 180 de Scratch.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{lll}
+\toprule
+\textbf{Dirección en Scratch} & \textbf{Python} & \textbf{Apunta} \\
+\midrule
+0 & \py|setheading(90 - 0)| & arriba \\
+90 & \py|setheading(90 - 90)| & derecha \\
+180 & \py|setheading(90 - 180)| & abajo \\
+−90 & \py|setheading(90 - -90)| & izquierda \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+La buena noticia es que \textbf{girar} funciona igual. \chip[motion]{girar a la derecha 90 grados} es \py|right(90)|, y \chip[motion]{girar a la izquierda 90 grados} es \py|left(90)|. Casi siempre vas a usar giros, no direcciones.
+
+% =====================================================================
+\banner{control}{EL PANORAMA COMPLETO}{Cuatro hábitos nuevos}
+
+Python entiende las mismas ideas que Scratch. Pero como escribes en lugar de encajar bloques, hay cuatro hábitos nuevos que aprender.
+
+\subsection*{Hábito 1: Los espacios muestran qué va adentro}
+
+En Scratch, un bloque queda \textbf{dentro} de un bucle cuando lo sueltas en la boca en forma de C.
+
+En Python, dos cosas hacen ese trabajo:
+\begin{enumerate}
+  \item unos \textbf{dos puntos} \texttt{:} al final de la línea abren la boca.
+  \item \textbf{cuatro espacios} al principio de una línea la meten adentro.
+\end{enumerate}
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}
+\blockrepeat{repetir \ovalnum{4}}{
+  \blockmove{mover \ovalnum{100} pasos}
+  \blockmove{girar \turnright{} \ovalnum{90} grados}
+}
+\blockpen{subir lápiz}
+\end{scratch}
+\end{tcolorbox}
+\begin{spaces}
+for i in range(4):
+    forward(100)
+    right(90)
+penup()
+\end{spaces}
+\end{tcbraster}
+
+Las marquitas \texttt{\textvisiblespace} muestran los espacios, que normalmente son invisibles. Las líneas 2 y 3 tienen cuatro espacios, así que están \textbf{dentro} del bucle y se repiten 4 veces. La línea 4 no tiene espacios, así que está \textbf{fuera} del bucle. Pasa una sola vez, cuando el bucle ya terminó.
+
+\begin{think}[Colab te ayuda]
+Cuando escribes unos dos puntos \texttt{:} y presionas Enter, Colab pone los cuatro espacios por ti. Para salir del bucle, presiona \textbf{Retroceso} (\textit{Backspace}) una vez.
+\end{think}
+
+\needspace{14\baselineskip}
+\subsection*{Hábito 2: Escríbelo exactamente igual}
+
+Los bloques ya vienen escritos. En Python, tú escribes, y Python es muy quisquilloso. Las mayúsculas, los paréntesis y las comillas tienen que estar perfectos.
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}
+\blockmove{mover \ovalnum{100} pasos}
+\end{scratch}
+\end{tcolorbox}
+\begin{code}
+forward(100)
+\end{code}
+\end{tcbraster}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{P{4.2cm} P{11cm}}
+\toprule
+\py|forward(100)| & \textbf{¡Funciona!} \\
+\py|Forward(100)| & \textbf{Error:} F mayúscula. Para Python, \texttt{Forward} y \texttt{forward} son palabras diferentes. \\
+\py|foward(100)| & \textbf{Error:} falta la r. Python no puede adivinar lo que quisiste decir. \\
+\py|forward 100| & \textbf{Error:} no hay paréntesis alrededor del 100. \\
+\py|forward(100| & \textbf{Error:} falta el paréntesis de cierre. \\
+\py|print("Hola)| & \textbf{Error:} faltan las comillas de cierre. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{think}[La regla de los pares]
+¡Los paréntesis y las comillas siempre van en pares, como los calcetines! Cada \texttt{(} necesita un \texttt{)}, y cada \texttt{"} necesita otro \texttt{"}.
+\end{think}
+
+\needspace{20\baselineskip}
+\subsection*{Hábito 3: Una línea a la vez, desde arriba}
+
+En Scratch, puedes tener muchos programas que empiezan cuando haces clic en la bandera verde. Todos se ejecutan al mismo tiempo.
+
+Python es diferente. Lee tu celda como un libro: la línea 1, luego la línea 2, luego la línea 3, hasta llegar abajo. Solo salta de un lado a otro cuando un bucle o una de tus propias funciones se lo pide.
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}
+\blockinit{al presionar \greenflag}
+\blocklook{decir \ovalnum{primero}}
+\blocklook{decir \ovalnum{segundo}}
+\blocklook{decir \ovalnum{tercero}}
+\end{scratch}
+\end{tcolorbox}
+\begin{code}
+print("primero")
+print("segundo")
+print("tercero")
+\end{code}
+\end{tcbraster}
+
+\needspace{24\baselineskip}
+\subsection*{Hábito 4: Un = guarda, dos == comparan}
+
+Scratch tiene dos bloques diferentes: uno para \textbf{fijar} una variable y otro para \textbf{comprobar} si es igual a algo. Python usa signos de igual para las dos cosas, así que necesita una forma de distinguirlas:
+
+\begin{itemize}
+  \item \textbf{Un} signo de igual \texttt{=} significa «pon este valor en la caja». Es como \chip[variables]{fijar puntos a 0}.
+  \item \textbf{Dos} signos de igual \texttt{==} significan «¿son iguales?». Es como el bloque verde \chip[operators]{\ = \ }.
+\end{itemize}
+
+\begin{tcbraster}[raster columns=2, raster equal height=rows, raster column skip=12pt, raster valign=center]
+\begin{tcolorbox}[colback=white, colframe=white, boxrule=0pt, valign=center]
+\begin{scratch}
+\blockvariable{fijar \selectmenu{puntos} a \ovalnum{5}}
+\blockif{si \booloperator{\ovalvariable{puntos} = \ovalnum{5}} entonces}{
+  \blocklook{decir \ovalnum{¡Ganaste!}}
+}
+\end{scratch}
+\end{tcolorbox}
+\begin{code}
+puntos = 5
+if puntos == 5:
+    print("¡Ganaste!")
+\end{code}
+\end{tcbraster}
+
+% =====================================================================
+\banner{pen}{EL PANORAMA COMPLETO}{En qué se diferencia Colab de Scratch}
+\enlargethispage{3\baselineskip}
+
+\subsection*{Colab pregunta en lugar de escuchar}
+
+Colab no oye las teclas ni los clics del ratón. Por eso, en vez de \chip[events]{al presionar tecla espacio}, tu programa te \textbf{pregunta} con \py|input()|, y tú escribes tu respuesta en un recuadro debajo de la celda.
+
+\begin{typethis}
+respuesta = input("¿Te gustan los gatos? ")
+if respuesta == "si":
+    print("¡A mí también!")
+\end{typethis}
+
+Escribe \texttt{si} (sin acento), presiona Enter, y Python te contesta. Más adelante en el libro conocerás un programa que sí puede oír las teclas, para hacer juegos de verdad con teclas.
+
+\subsection*{Un solo bucle mueve todos los objetos}
+
+\noindent
+\begin{minipage}[c]{0.64\linewidth}
+\begin{typethis}[Escribe esto]
+from ColabTurtlePlus.Turtle import *
+clearscreen()
+initializeTurtle((480, 360))
+gato = Turtle()
+perro = Turtle()
+perro.left(90)
+for i in range(10):
+    gato.forward(10)
+    perro.forward(10)
+\end{typethis}
+\end{minipage}\hfill
+\begin{minipage}[c]{0.33\linewidth}\raggedright
+Python hace una línea a la vez, así que \textbf{un solo bucle mueve todos los objetos} un poquito en cada vuelta.
+
+Aquí el gato camina a la derecha y el perro camina hacia arriba. En Scratch, esto serían dos programas.
+\end{minipage}
+
+\subsection*{Figuras y colores en lugar de disfraces}
+
+En Colab no hay dibujos de disfraces, pero la tortuga puede ponerse muchas \textbf{figuras}, como \texttt{"turtle"} (tortuga), \texttt{"arrow"} (flecha) o \texttt{"circle"} (círculo), del color que más te guste: \py|shape("turtle")| y \py|color("gold")|. Las figuras y los colores se escriben en inglés y en minúsculas, porque Python solo los entiende así: \texttt{"red"} es rojo, \texttt{"blue"} azul, \texttt{"gold"} dorado... (\texttt{color} es como Python dice «color».) Además, puede dibujar todo lo que te imagines, línea por línea. \textbf{Ya estás listo. ¡Vamos!}

@@ -1,0 +1,308 @@
+% =====================================================================
+% 10 EL DICCIONARIO DE BLOQUES y MI HOJA DE AYUDA DE PYTHON
+% =====================================================================
+% Un bloque de la extensión Música (del mismo color que Lápiz, pero sin el ícono del lápiz)
+{\catcode`\_=11 \gdef\blockmusic{\_penfalse\scr_normalblock{scrpen}}}
+
+\partopener{looks}{BÚSCALO AQUÍ}{El diccionario de bloques}{¿Conoces el bloque de Scratch pero no el Python? Encuéntralo aquí.}
+
+Todos los bloques de Scratch 3.0 están en este diccionario, en el mismo orden que en la paleta de Scratch: \chip[motion]{Movimiento}, \chip[looks]{Apariencia}, \chip[sound]{Sonido}, \chip[events]{Eventos}, \chip[control]{Control}, \chip[sensing]{Sensores}, \chip[operators]{Operadores}, \chip[variables]{Variables}, \chip[lists]{Listas}, \chip[myblocks]{Mis Bloques}, \chip[pen]{Lápiz} y un poquito de \chip[pen]{Música}.
+
+\begin{itemize}
+  \item La columna de Python usa comandos sencillos, como \py|forward(10)|. Mueven a \textbf{la tortuga}, que hace el papel de tu objeto. Primero pon las tres líneas de inicio arriba de tu celda.
+  \item \texttt{gato} es un segundo objeto que hiciste con \py|gato = Turtle()|. Entonces \py|gato.forward(10)| mueve al gato.
+  \item Algunos bloques necesitan una línea hasta arriba de tu celda: \py|import random|, \py|import time| o \py|import math|.
+  \item Algunos bloques no pueden funcionar en Colab. La columna Consejo siempre te dice qué hacer en su lugar.
+  \item Python habla inglés: sus palabras (\py|for|, \py|print|, \py|forward|...) siempre van en inglés. Los nombres que tú inventas (\texttt{gato}, \texttt{puntos}, \texttt{comida}) pueden ir en español, sin acentos ni ñ.
+  \item Los colores se escriben en inglés: \texttt{"red"} es rojo, \texttt{"blue"} azul, \texttt{"gold"} dorado, \texttt{"skyblue"} celeste.
+\end{itemize}
+
+\setscratch{scale=0.8}
+\begingroup
+\small
+\renewcommand{\arraystretch}{1.0}
+\begin{longtable}{P{5.8cm} P{4.9cm} P{4.9cm}}
+\toprule
+\textbf{Scratch} & \textbf{Python} & \textbf{Consejo} \\
+\midrule
+\endhead
+% ---------------------------------------------------------------- MOVIMIENTO
+\cat{motion}{Movimiento}
+\begin{scratch}\blockmove{mover \ovalnum{10} pasos}\end{scratch} & \py|forward(10)| & Hacia atrás: \py|back(10)|. La tortuga dibuja mientras se mueve, a menos que uses \py|penup()|. \dictrow
+\begin{scratch}\blockmove{girar \turnright{} \ovalnum{15} grados}\end{scratch} & \py|right(15)| & Girar funciona igualito que en Scratch. \dictrow
+\begin{scratch}\blockmove{girar \turnleft{} \ovalnum{15} grados}\end{scratch} & \py|left(15)| & \dictrow
+\begin{scratch}\blockmove{ir a \selectmenu{posición aleatoria}}\end{scratch} & \py|x = random.randint(|\newline\py|    -240, 240)|\newline\py|y = random.randint(|\newline\py|    -180, 180)|\newline\py|goto(x, y)| & Pon \py|import random| hasta arriba. Una línea puede seguir dentro de un paréntesis. \dictrow
+\begin{scratch}\blockmove{ir a \selectmenu{puntero del ratón}}\end{scratch} & \py|x = int(input("¿x? "))|\newline\py|y = int(input("¿y? "))|\newline\py|goto(x, y)| & No se puede en Colab: no tiene ratón. Mejor escribe el lugar. \dictrow
+\begin{scratch}\blockmove{ir a \selectmenu{Objeto2}}\end{scratch} & \py|goto(gato.pos())| & \py|pos()| te da la x y la y de un objeto, juntas. \dictrow
+\begin{scratch}\blockmove{ir a x: \ovalnum{0} y: \ovalnum{0}}\end{scratch} & \py|goto(0, 0)| & Los mismos números que en Scratch: el escenario es del mismo tamaño. \py|home()| va a (0, 0) y apunta a la derecha. \dictrow
+\begin{scratch}[scale=0.68]\blockmove{desplazar en \ovalnum{1} segs a \selectmenu{posición aleatoria}}\end{scratch} & \py|speed(2)|\newline y luego las líneas de \textbf{ir a posición aleatoria} & Cualquier \textbf{ir a} se vuelve un desplazamiento cuando la velocidad es lenta. \dictrow
+\begin{scratch}\blockmove{desplazar en \ovalnum{1} segs a x: \ovalnum{0} y: \ovalnum{0}}\end{scratch} & \py|speed(1)|\newline\py|goto(0, 0)| & La velocidad va de 1 (lenta) a 13 (la más rápida). No está en segundos. \dictrow
+\begin{scratch}\blockmove{apuntar en dirección \ovalnum{90}}\end{scratch} & \py|setheading(0)| & \textbf{¡La regla del 90 menos!} Usa \py|setheading(90 - d)|: arriba 0 es 90, derecha 90 es 0, abajo 180 es $-90$, izquierda $-90$ es 180. \dictrow
+\begin{scratch}\blockmove{apuntar hacia \selectmenu{Objeto2}}\end{scratch} & \py|p = gato.pos()|\newline\py|d = towards(p)|\newline\py|setheading(d)| & Aquí no hace falta la regla: \py|towards| ya usa la brújula de Python. Puntero del ratón: no en Colab. \dictrow
+\begin{scratch}\blockmove{cambiar x en \ovalnum{10}}\end{scratch} & \py|setx(xcor() + 10)| & Toma la x, súmale 10 y luego fíjala. \dictrow
+\begin{scratch}\blockmove{fijar x a \ovalnum{0}}\end{scratch} & \py|setx(0)| & \dictrow
+\begin{scratch}\blockmove{cambiar y en \ovalnum{10}}\end{scratch} & \py|sety(ycor() + 10)| & \dictrow
+\begin{scratch}\blockmove{fijar y a \ovalnum{0}}\end{scratch} & \py|sety(0)| & \dictrow
+\begin{scratch}\blockmove{si toca un borde, rebotar}\end{scratch} & \py|h = heading()|\newline\py|if abs(xcor()) > 240:|\newline\py|    setheading(180-h)|\newline\py|if abs(ycor()) > 180:|\newline\py|    setheading(-h)| & Python no tiene paredes, así que tú revisas los bordes. Pon estas líneas dentro de tu bucle, después de \py|forward|. \dictrow
+\begin{scratch}\blockmove{fijar estilo de rotación a \selectmenu{no rotar}}\end{scratch} & \py|shape("circle")| & Una tortuga siempre apunta hacia donde va. Una forma redonda se ve igual hacia todos lados, así que parece que no gira. \dictrow
+\ovalmove{posición en x}\ \ovalmove{posición en y} & \py|xcor()|\newline\py|ycor()| & Para imprimir un número redondito: \py|round(xcor())| \dictrow
+\ovalmove{dirección} & \py|90 - heading()| & La regla del 90 menos también funciona al revés. ¿Te da menos de $-180$? Súmale 360. \dictrow
+% ---------------------------------------------------------------- APARIENCIA
+\cat{looks}{Apariencia}
+\begin{scratch}\blocklook{decir \ovalnum{¡Hola!} durante \ovalnum{2} segundos}\end{scratch} & \py|print("¡Hola!")|\newline\py|time.sleep(2)| & Pon \py|import time| hasta arriba. \dictrow
+\begin{scratch}\blocklook{decir \ovalnum{¡Hola!}}\end{scratch} & \py|print("¡Hola!")| & Las palabras aparecen debajo de la celda. Para escribir en el escenario: \py|write("¡Hola!")| \dictrow
+\begin{scratch}\blocklook{pensar \ovalnum{Umm...} durante \ovalnum{2} segundos}\end{scratch} & \py|print("(Umm...)")|\newline\py|time.sleep(2)| & En Python no hay globitos. Los paréntesis pueden mostrar que es un pensamiento. \dictrow
+\begin{scratch}\blocklook{pensar \ovalnum{Umm...}}\end{scratch} & \py|print("(Umm...)")| & \dictrow
+\begin{scratch}\blocklook{cambiar disfraz a \selectmenu{tortuga}}\end{scratch} & \py|shape("turtle")| & Los disfraces son formas, con nombre en inglés: \texttt{"turtle"} (tortuga), \texttt{"arrow"} (flecha), \texttt{"circle"} (círculo), \texttt{"square"} (cuadrado), \texttt{"triangle"} (triángulo), \texttt{"classic"} (clásica). En Colab no hay dibujos. \dictrow
+\begin{scratch}\blocklook{siguiente disfraz}\end{scratch} & \py|n = (n + 1) % 4|\newline\py|shape(disfraces[n])| & Primero haz una lista de 4 formas llamada \texttt{disfraces}, y \py|n = 0|. El \py|% 4| regresa al principio después de la última. \dictrow
+\begin{scratch}\blocklook{cambiar fondo a \selectmenu{cielo azul}}\end{scratch} & \py|bgcolor("skyblue")| & Un color liso, no un dibujo. Los nombres de los colores van en minúsculas. \dictrow
+\begin{scratch}\blocklook{siguiente fondo}\end{scratch} & \py|b = (b + 1) % 3|\newline\py|bgcolor(cielos[b])| & Igual que siguiente disfraz, con una lista de 3 colores llamada \texttt{cielos}. \dictrow
+\begin{scratch}\blocklook{cambiar tamaño en \ovalnum{10}}\end{scratch} & \py|medida = medida + 10|\newline\py|shapesize(medida / 100)| & Guarda el tamaño en tu propia caja, empezando con \py|medida = 100|. \dictrow
+\begin{scratch}\blocklook{fijar tamaño a \ovalnum{200} \%}\end{scratch} & \py|shapesize(2)| & 1 quiere decir 100\%, así que 2 quiere decir 200\%. Nunca uses 0: eso es un error. \dictrow
+\begin{scratch}\blocklook{cambiar el efecto \selectmenu{color} en \ovalnum{25}}\end{scratch} & \py|fillcolor("gold")| & En Python no hay efectos, así que escoge un color nuevo. \py|color("gold")| pinta la tortuga y el lápiz. \dictrow
+\begin{scratch}\blocklook{fijar efecto \selectmenu{desvanecer} a \ovalnum{50}}\end{scratch} & \py|fillcolor("pink")| & No se puede en Colab: no hay tortugas transparentes. Prueba un color más pálido, o \py|hideturtle()| para 100. Ojo de pez, remolino, pixelar y mosaico tampoco funcionan. \dictrow
+\begin{scratch}\blocklook{quitar efectos gráficos}\end{scratch} & \py|color("black")| & Una tortuga nueva es negra. \dictrow
+\begin{scratch}\blocklook{mostrar}\end{scratch} & \py|showturtle()| & \dictrow
+\begin{scratch}\blocklook{esconder}\end{scratch} & \py|hideturtle()| & Una tortuga escondida puede seguir dibujando. \dictrow
+\begin{scratch}\blocklook{ir a la capa \selectmenu{de adelante}}\end{scratch} & Haz este objeto \textbf{al final} & No hay comando de capas. El objeto que haces al final se dibuja encima. \dictrow
+\begin{scratch}\blocklook{ir \ovalnum{1} capas hacia \selectmenu{adelante}}\end{scratch} & Cambia el orden en que haces los objetos & Las líneas y lo que escribes siempre quedan debajo de las tortugas. \dictrow
+\ovallook{disfraz \selectmenu{número}} & \py|n + 1|\newline\py|shape()| & Python cuenta desde 0, así que suma 1. \py|shape()| con el paréntesis vacío te da el nombre del disfraz. \dictrow
+\ovallook{fondo \selectmenu{número}} & \py|b + 1|\newline\py|bgcolor()| & \py|bgcolor()| con el paréntesis vacío te da el color. \dictrow
+\ovallook{tamaño} & \py|medida| & Tu propia caja de \textbf{cambiar tamaño en}. \dictrow
+% ---------------------------------------------------------------- SONIDO
+\cat{sound}{Sonido}
+\begin{scratch}[scale=0.76]\blocksound{tocar sonido \selectmenu{Miau} hasta que termine}\end{scratch} & \py|pitido(262)|\newline\py|time.sleep(0.5)| & \py|pitido| es la ayuda de la Parte 7. Colab no espera a que termine un sonido, así que esperas tú. No hay Miau: toca notas. \dictrow
+\begin{scratch}\blocksound{iniciar sonido \selectmenu{Miau}}\end{scratch} & \py|pitido(262)| & Python sigue de inmediato. \dictrow
+\begin{scratch}\blocksound{detener todos los sonidos}\end{scratch} & El botón de detener \stopbtn & Los pitidos son cortos, así que se detienen solos. \dictrow
+\begin{scratch}\blocksound{cambiar efecto \selectmenu{tono} en \ovalnum{10}}\end{scratch} & \py|frec = frec * 1.06|\newline\py|pitido(frec)| & Guarda la nota en una caja llamada \texttt{frec}. Por 1.06 es un «10» de Scratch. \dictrow
+\begin{scratch}\blocksound{fijar efecto \selectmenu{tono} a \ovalnum{120}}\end{scratch} & \py|frec = 523| & 262 es el do central; 523 es el do de arriba (tono 120 en Scratch). \dictrow
+\begin{scratch}\blocksound{quitar efectos de sonido}\end{scratch} & \py|frec = 262| & De regreso al do central. \dictrow
+\begin{scratch}\blocksound{cambiar volumen en \ovalnum{-10}}\blocksound{fijar volumen a \ovalnum{100} \%}\end{scratch}\ovalsound{volumen} & Usa el volumen de tu computadora & \py|pitido| no tiene perilla de volumen, así que sube o baja tus bocinas. \dictrow
+% ---------------------------------------------------------------- EVENTOS
+\cat{events}{Eventos}
+\begin{scratch}\blockinit{al presionar \greenflag}\end{scratch} & El botón de reproducir \playbtn & O presiona Mayús y Enter. Python empieza en la línea 1 de la celda. \dictrow
+\begin{scratch}\blockinit{al presionar tecla \selectmenu{espacio}}\end{scratch} & \py|k = input("¿Tecla? ")|\newline\py|if k == "s":|\newline\py|    saltar()| & No se puede en Colab: prueba \py|input()| y luego presiona Enter. Las teclas de verdad funcionan en Thonny con \py|onkeypress| (no \py|onkey|). \dictrow
+\begin{scratch}\blockinit{al hacer clic en este objeto}\end{scratch} & \py|c = input("¿Clic? ")| & En Colab no hay ratón, así que pregunta con \py|input()|. Thonny puede usar clics con \py|onclick|. \dictrow
+\begin{scratch}\blockinit{cuando el fondo cambie a \selectmenu{noche}}\end{scratch} & \py|def noche():| & Haz tu propio bloque y llama a \py|noche()| justo después de cambiar el \py|bgcolor|. \dictrow
+\begin{scratch}\blockinit{cuando \selectmenu{volumen del sonido} > \ovalnum{10}}\end{scratch} & \py|input("¡Aplaude! ")| & No se puede: Colab no te oye. Presionar Enter puede ser tu aplauso de mentiritas. Para \textbf{cronómetro}, mira la fila del cronómetro en Sensores. \dictrow
+\begin{scratch}\blockinit{al recibir \selectmenu{empezar}}\end{scratch} & \py|def empezar():| & Un mensaje es como tu propio bloque. Las líneas de adentro llevan cuatro espacios. \dictrow
+\begin{scratch}\blockevent{enviar \selectmenu{empezar}}\end{scratch} & \py|empezar()| & Python ejecuta todo el bloque y luego sigue. \dictrow
+\begin{scratch}\blockevent{enviar \selectmenu{empezar} y esperar}\end{scratch} & \py|empezar()| & ¡Es lo mismo! Python siempre espera a que un bloque termine. \dictrow
+% ---------------------------------------------------------------- CONTROL
+\cat{control}{Control}
+\begin{scratch}\blockcontrol{esperar \ovalnum{1} segundos}\end{scratch} & \py|time.sleep(1)| & Pon \py|import time| hasta arriba. \dictrow
+\begin{scratch}\blockrepeat{repetir \ovalnum{10}}{\blockspace}\end{scratch} & \py|for i in range(10):|\newline\py|    forward(10)| & Los cuatro espacios son la boca de la C. Usa números enteros: \py|range(2.5)| es un error. \dictrow
+\begin{scratch}\blockinfloop{por siempre}{\blockspace}\end{scratch} & \py|while True:|\newline\py|    forward(10)| & Nunca se detiene solo, así que presiona \stopbtn{}. En Colab es más seguro un bucle \py|for| grande, como \py|range(200)|. \dictrow
+\begin{scratch}\blockif{si \booloperator{} entonces}{\blockspace}\end{scratch} & \py|if puntos > 5:|\newline\py|    print("¡Guau!")| & Los dos puntos abren la boca. \dictrow
+\begin{scratch}\blockifelse{si \booloperator{} entonces}{\blockspace}{\blockspace}\end{scratch} & \py|if puntos > 5:|\newline\py|    print("grande")|\newline\py|else:|\newline\py|    print("chico")| & \py|else:| se alinea con el \py|if|. Python también tiene \py|elif| para «si no, si...», que Scratch no tiene. \dictrow
+\begin{scratch}\blockcontrol{esperar hasta que \booloperator{}}\end{scratch} & \py|a = ""|\newline\py|while a != "si":|\newline\py|    a = input("¿Vamos? ")| & Sigue preguntando hasta que escribas \texttt{si} (sin acento, para que sea fácil de escribir). Python hace una cosa a la vez, así que algo dentro del bucle tiene que cambiar. \dictrow
+\begin{scratch}\blockrepeat{repetir hasta que \booloperator{}}{\blockspace}\end{scratch} & \py|while puntos != 5:| & ¡Al revés! Repetir \textbf{hasta que} sea 5 quiere decir seguir \textbf{mientras} no sea 5. \dictrow
+\begin{scratch}\blockstop{detener \selectmenu{todos}}\end{scratch} & \py|sys.exit()| & Pon \py|import sys| hasta arriba. Colab muestra un pequeño aviso: no pasa nada. \dictrow
+\begin{scratch}\blockstop{detener \selectmenu{este programa}}\end{scratch} & \py|break|\newline\py|return| & \py|break| salta fuera de un bucle. \py|return| sale de tu propio bloque. \dictrow
+\begin{scratch}[scale=0.75]\blockcontrol{detener \selectmenu{otros programas en el objeto}}\end{scratch} & No hace falta & Python solo ejecuta un programa a la vez. \dictrow
+\begin{scratch}\blockinitclone{al comenzar como clon}\end{scratch} & \py|s = Turtle()|\newline\py|s.shape("circle")|\newline\py|s.goto(0, 100)| & Las líneas justo después de \py|Turtle()| preparan cada objeto nuevo. \dictrow
+\begin{scratch}\blockcontrol{crear clon de \selectmenu{mí mismo}}\end{scratch} & \py|estrella = Turtle()|\newline o, para muchos:\newline\py|estrellas = []|\newline\py|s = Turtle()|\newline\py|estrellas.append(s)| & Esto hace un objeto nuevo y le pone un nombre. Si son muchos clones, guárdalos en una lista. \dictrow
+\begin{scratch}\blockcontrol{eliminar este clon}\end{scratch} & \py|s.hideturtle()|\newline\py|estrellas.remove(s)| & Escóndelo y luego sácalo de la lista. \dictrow
+% ---------------------------------------------------------------- SENSORES
+\cat{sensing}{Sensores}
+\boolsensing{¿tocando \selectmenu{Objeto2}?} & \py|p = gato.pos()|\newline\py|distance(p) < 20| & Pregunta: ¿está el gato a menos de 20 pasos? El borde: \py|abs(xcor()) > 240| \dictrow
+\boolsensing{¿tocando el color \selectmenu{rojo}?} & \py|ycor() < -100| & No se puede: las tortugas no ven colores. Mejor recuerda dónde están las cosas: «la lava está debajo de $y = -100$». \dictrow
+\boolsensing{¿color \selectmenu{rojo} está tocando \selectmenu{azul}?} & Usa lugares, no colores & El mismo truco que en \textbf{¿tocando el color?}. \dictrow
+\ovalsensing{distancia a \selectmenu{Objeto2}} & \py|distance(gato.pos())| & Puntero del ratón: no en Colab. \dictrow
+\begin{scratch}\blocksensing{preguntar \ovalnum{¿Cómo te llamas?} y esperar}\end{scratch} & \py|nombre = input("¿Quién? ")| & Tú escoges el nombre de la caja. \dictrow
+\ovalsensing{respuesta} & \py|nombre| & \py|input| siempre te da \textbf{texto}. Para un número: \py|int(nombre)| \dictrow
+\boolsensing{¿tecla \selectmenu{espacio} presionada?} & \py|k = input("¿Tecla? ")|\newline\py|k == " "| & Colab no siente las teclas. Escribe y luego presiona Enter. Thonny sí puede: \py|onkeypress|. \dictrow
+\boolsensing{¿ratón presionado?} & \py|input("¿Clic? ")| & No se puede en Colab: no hay ratón. Mejor pregunta. \dictrow
+\ovalsensing{posición x del ratón}\newline\ovalsensing{posición y del ratón} & \py|x = int(input("¿x? "))| & Mejor escribe los números. \dictrow
+\begin{scratch}\blocksensing{fijar modo de arrastre a \selectmenu{arrastrable}}\end{scratch} & No en Colab & Pruébalo en Thonny: \py|ondrag(goto)| \dictrow
+\ovalsensing{volumen del sonido} & \py|input("¿Qué tan fuerte? ")| & No se puede: Colab no puede usar tu micrófono. Mejor pide un número. \dictrow
+\ovalsensing{cronómetro} & \py|time.time() - inicio| & Primero escribe \py|inicio = time.time()|. Es tu propio cronómetro. \dictrow
+\begin{scratch}\blocksensing{reiniciar cronómetro}\end{scratch} & \py|inicio = time.time()| & Anota una nueva hora de inicio. \dictrow
+\ovalsensing{\selectmenu{posición en x} de \selectmenu{Objeto2}} & \py|gato.xcor()| & También \py|gato.ycor()| y \py|gato.heading()|. \dictrow
+\ovalsensing{\selectmenu{año} actual} & \py|d = time.localtime()|\newline\py|d.tm_year| & También \py|d.tm_mon| (mes), \py|d.tm_mday| (día), \py|d.tm_hour| (hora), \py|d.tm_min| (minuto). El reloj de Colab puede estar en la hora de Londres. \dictrow
+\ovalsensing{días desde el 2000} & \py|s = time.time()|\newline\py|s / 86400 - 10957| & Los segundos desde 1970 se vuelven días; luego resta los días de 1970 a 2000. \dictrow
+\ovalsensing{nombre de usuario} & \py|nombre = input("¿Quién? ")| & Colab no sabe cómo te llamas, ¡así que pregunta! \dictrow
+% ---------------------------------------------------------------- OPERADORES
+\cat{operators}{Operadores}
+\ovaloperator{\ovalnum{7} + \ovalnum{2}}\ \ovaloperator{\ovalnum{7} - \ovalnum{2}}\newline\ovaloperator{\ovalnum{7} * \ovalnum{2}}\ \ovaloperator{\ovalnum{7} / \ovalnum{2}} & \py|7 + 2|\quad\py|7 - 2|\newline\py|7 * 2|\quad\py|7 / 2| & \py|/| siempre da un decimal: \py|6 / 3| es \texttt{2.0}. Dividir entre 0 es un error. \dictrow
+\ovaloperator{elegir número al azar entre \ovalnum{1} y \ovalnum{10}} & \py|random.randint(1, 10)| & Pon \py|import random| hasta arriba. Pueden salir el 1 y el 10. \dictrow
+\booloperator{\ovalvariable{a} > \ovalnum{50}} & \py|a > 50| & «Mayor o igual» es \py|a >= 50|. \dictrow
+\booloperator{\ovalvariable{a} < \ovalnum{50}} & \py|a < 50| & \dictrow
+\booloperator{\ovalvariable{a} = \ovalnum{50}} & \py|a == 50| & ¡Dos signos de igual para comparar! Las mayúsculas cuentan: \py|"Gato" == "gato"| es \py|False|. \dictrow
+\booloperator{\booloperator{} y \booloperator{}} & \py|a > 1 and a < 9| & En inglés y en minúsculas: \py|and| \dictrow
+\booloperator{\booloperator{} o \booloperator{}} & \py|a < 1 or a > 9| & Aquí es \py|or|. \dictrow
+\booloperator{no \booloperator{}} & \py|not a == 5| & Igual que \py|a != 5| \dictrow
+\ovaloperator{unir \ovalnum{manzana } \ovalnum{banana}} & \py|"manzana " + "banana"| & ¿Vas a unir un número? Usa \py|str(5)|. \dictrow
+\ovaloperator{letra \ovalnum{1} de \ovalnum{manzana}} & \py|"manzana"[0]| & ¡Python cuenta desde 0! La letra \texttt{n} es \py|[n - 1]|. \dictrow
+\ovaloperator{longitud de \ovalnum{manzana}} & \py|len("manzana")| & \dictrow
+\booloperator{¿\ovalnum{manzana} contiene \ovalnum{a}?} & \py|"a" in "manzana"| & El orden se voltea. Las mayúsculas cuentan. \dictrow
+\ovaloperator{\ovalnum{7} módulo \ovalnum{3}} & \py|7 % 3| & El residuo. Números pares: \py|n % 2 == 0| \dictrow
+\ovaloperator{redondear \ovalnum{2.5}} & \py|round(2.5)|\newline\py|math.floor(x + 0.5)| & ¡Cuidado! \py|round(2.5)| da 2, pero Scratch da 3. La segunda línea redondea como Scratch. \dictrow
+\ovaloperator{\selectmenu{valor absoluto} de \ovalnum{-5}} & \py|abs(-5)| & No hace falta importar nada. \dictrow
+\ovaloperator{\selectmenu{piso} de \ovalnum{2.7}}\newline\ovaloperator{\selectmenu{techo} de \ovalnum{2.1}} & \py|math.floor(2.7)|\newline\py|math.ceil(2.1)| & Pon \py|import math| hasta arriba. Piso es \py|floor| y techo es \py|ceil| (de \emph{ceiling}, techo en inglés). \dictrow
+\ovaloperator{\selectmenu{raíz cuadrada} de \ovalnum{16}} & \py|math.sqrt(16)| & \dictrow
+\ovaloperator{\selectmenu{sen} de \ovalnum{30}}\newline\ovaloperator{\selectmenu{cos}}\ \ovaloperator{\selectmenu{tan}} & \py|r = math.radians(30)|\newline\py|math.sin(r)| & Python mide los ángulos en radianes, así que primero cambia los grados. Lo mismo para \py|cos| y \py|tan|. Ojo: seno es \py|sin|. \dictrow
+\ovaloperator{\selectmenu{arcsen} de \ovalnum{0.5}}\newline\ovaloperator{\selectmenu{arccos}}\ \ovaloperator{\selectmenu{arctan}} & \py|a = math.asin(0.5)|\newline\py|math.degrees(a)| & Vuelve a cambiar la respuesta a grados. \dictrow
+\ovaloperator{\selectmenu{ln} de \ovalvariable{x}}\ \ovaloperator{\selectmenu{log} de \ovalvariable{x}} & \py|math.log(x)|\newline\py|math.log10(x)| & El \py|log| de Python es el \texttt{ln} de Scratch. \dictrow
+\ovaloperator{\selectmenu{e \^{}} de \ovalvariable{x}}\ \ovaloperator{\selectmenu{10 \^{}} de \ovalvariable{x}} & \py|math.exp(x)|\newline\py|10 ** x| & La potencia es \py|**|. El signo \texttt{\^{}} quiere decir otra cosa en Python. \dictrow
+% ---------------------------------------------------------------- VARIABLES
+\cat{variables}{Variables}
+\chip[variables]{Crear una variable} & \py|puntos = 0| & No hay botón: el primer \py|=| hace la caja. \dictrow
+\ovalvariable{puntos} & \py|puntos| & Usa el nombre en cualquier lugar donde va un número. \dictrow
+\begin{scratch}\blockvariable{fijar \selectmenu{puntos} a \ovalnum{0}}\end{scratch} & \py|puntos = 0|\newline\py|nombre = "Ana"| & \py|=| mete un valor en la caja. El texto necesita comillas. \dictrow
+\begin{scratch}\blockvariable{cambiar \selectmenu{puntos} en \ovalnum{1}}\end{scratch} & \py|puntos = puntos + 1|\newline\py|puntos += 1| & Las dos líneas hacen lo mismo. Dentro de tu propio bloque, escribe primero \py|global puntos|. \dictrow
+\begin{scratch}\blockvariable{mostrar variable \selectmenu{puntos}}\end{scratch} & \py|print(puntos)| & Muestra el valor una vez. Imprime otra vez para ver un valor nuevo. \dictrow
+\begin{scratch}\blockvariable{esconder variable \selectmenu{puntos}}\end{scratch} & Simplemente no lo imprimas & \dictrow
+% ---------------------------------------------------------------- LISTAS
+\cat{lists}{Listas}
+\chip[lists]{Crear una lista} & \py|comida = []| & Los corchetes hacen una lista vacía. \dictrow
+\ovallist{comida} & \py|" ".join(comida)| & Todos los elementos, con espacios entre ellos. \dictrow
+\begin{scratch}\blocklist{añadir \ovalnum{manzana} a \selectmenu{comida}}\end{scratch} & \py|comida.append("manzana")| & Lo agrega al final. \dictrow
+\begin{scratch}\blocklist{eliminar \ovalnum{1} de \selectmenu{comida}}\end{scratch} & \py|del comida[0]| & ¡Contando desde 0! El elemento \texttt{n} es \py|[n - 1]|. El último: \py|comida.pop()| \dictrow
+\begin{scratch}\blocklist{Eliminar todos de \selectmenu{comida}}\end{scratch} & \py|comida.clear()| & \dictrow
+\begin{scratch}\blocklist{insertar \ovalnum{higo} en \ovalnum{1} de \selectmenu{comida}}\end{scratch} & \py|comida.insert(0, "higo")| & \dictrow
+\begin{scratch}[scale=0.62]\blocklist{reemplazar elemento \ovalnum{1} de \selectmenu{comida} con \ovalnum{kiwi}}\end{scratch} & \py|comida[0] = "kiwi"| & \dictrow
+\ovallist{elemento \ovalnum{1} de \selectmenu{comida}} & \py|comida[0]| & ¡El primer elemento es el número 0! El último: \py|comida[-1]|. Al azar: \py|random.choice(comida)| \dictrow
+\ovallist{\# de elemento de \ovalnum{higo} en \selectmenu{comida}} & \py|comida.index("higo") + 1| & Suma 1, porque Python cuenta desde 0. Revisa primero con \py|in|: un elemento que no está es un error. \dictrow
+\ovallist{longitud de \selectmenu{comida}} & \py|len(comida)| & \dictrow
+\boollist{¿\ovalnum{manzana} está en \selectmenu{comida}?} & \py|"manzana" in comida| & ¡Aquí el orden es igual que en Scratch! Las mayúsculas cuentan: \texttt{"Manzana"} es distinta. \dictrow
+\begin{scratch}\blocklist{mostrar lista \selectmenu{comida}}\end{scratch} & \py|print(comida)| & \dictrow
+\begin{scratch}\blocklist{esconder lista \selectmenu{comida}}\end{scratch} & Simplemente no la imprimas & \dictrow
+% ---------------------------------------------------------------- MIS BLOQUES
+\cat{myblocks}{Mis Bloques}
+\begin{scratch}\initmoreblocks{definir \namemoreblocks{saltar}}\end{scratch} & \py|def saltar():|\newline\py|    forward(20)| & Las líneas de adentro llevan cuatro espacios. Ejecuta esta celda antes de usar el bloque. \dictrow
+\begin{scratch}\blockmoreblocks{saltar}\end{scratch} & \py|saltar()| & El paréntesis hace que se ejecute. \dictrow
+\begin{scratch}\initmoreblocks{definir \namemoreblocks{saltar \ovalmoreblocks{altura}}}\end{scratch} & \py|def saltar(altura):|\newline\py|    forward(altura)| & La entrada es una caja que solo funciona dentro del bloque. \dictrow
+\begin{scratch}\blockmoreblocks{saltar \ovalnum{30}}\end{scratch} & \py|saltar(30)| & \dictrow
+\begin{scratch}[scale=0.78]\initmoreblocks{definir \namemoreblocks{hola \ovalmoreblocks{nombre} ¿fuerte? \boolmoreblocks{fuerte}}}\end{scratch} & \py|def hola(nombre, fuerte):|\newline\py|    if fuerte:|\newline\py|        print("¡HOLA!")| & Llámalo con \py|hola("Ana", True)|. \py|True| y \py|False| empiezan con mayúscula. \dictrow
+\chip[myblocks]{Ejecutar sin actualizar}\newline\chip[myblocks]{la pantalla} & \py|speed(13)| & La velocidad más rápida que todavía muestra el dibujo. \dictrow
+Un bloque que te devuelve una respuesta (¡Scratch no puede hacer esto!) & \py|def doble(n):|\newline\py|    return n * 2| & \py|print(doble(4))| muestra 8. Como un bloque reportero redondo hecho por ti. \dictrow
+% ---------------------------------------------------------------- LÁPIZ
+\cat{pen}{Lápiz}
+\begin{scratch}\blockpen{borrar todo}\end{scratch} & \py|clear()| & Borra el dibujo de esta tortuga. \py|clearscreen()| borra todo, también los objetos. \dictrow
+\begin{scratch}\blockpen{sellar}\end{scratch} & \py|stamp()| & Sella la forma de la tortuga. \py|clearstamps()| borra todos los sellos: ¡Scratch no puede hacer eso! \dictrow
+\begin{scratch}\blockpen{bajar lápiz}\end{scratch} & \py|pendown()| & La tortuga empieza con el lápiz ya bajado. \dictrow
+\begin{scratch}\blockpen{subir lápiz}\end{scratch} & \py|penup()| & Úsalo para moverte sin dibujar. \dictrow
+\begin{scratch}\blockpen{fijar color de lápiz a \ovalnum{rojo}}\end{scratch} & \py|pencolor("red")| & Nombres de colores en inglés y en minúsculas. \py|color("red")| pinta la tortuga y el lápiz. \dictrow
+\begin{scratch}[scale=0.77]\blockpen{cambiar \selectmenu{color} de lápiz en \ovalnum{10}}\end{scratch} & \py|c = (c + 1) % 3|\newline\py|pencolor(arcoiris[c])| & Primero haz una lista de 3 colores llamada \texttt{arcoiris}, y \py|c = 0|. \dictrow
+\begin{scratch}\blockpen{fijar \selectmenu{color} de lápiz a \ovalnum{50}}\end{scratch} & \py|pencolor("cyan")| & Números de Scratch: 0 rojo, 8 naranja, 16 amarillo, 33 verde, 50 cian, 66 azul, 75 morado. \dictrow
+\begin{scratch}\blockpen{fijar \selectmenu{brillo} de lápiz a \ovalnum{50}}\end{scratch} & \py|pencolor("darkred")| & Saturación y brillo: escoge un nombre más pálido o más oscuro, como \texttt{"pink"} (rosa) o \texttt{"darkred"} (rojo oscuro). \dictrow
+\begin{scratch}[scale=0.71]\blockpen{fijar \selectmenu{transparencia} de lápiz a \ovalnum{50}}\end{scratch} & \py|pencolor("pink")| & No se puede con el lápiz. Un color más pálido se ve un poco transparente. \dictrow
+\begin{scratch}\blockpen{cambiar tamaño de lápiz en \ovalnum{1}}\end{scratch} & \py|g = pensize() + 1|\newline\py|pensize(g)| & \py|pensize()| con el paréntesis vacío te da el tamaño de ahora. \dictrow
+\begin{scratch}\blockpen{fijar tamaño de lápiz a \ovalnum{5}}\end{scratch} & \py|pensize(5)| & \dictrow
+Sin bloque de Scratch: ¡un regalo extra! & \py|fillcolor("gold")|\newline\py|begin_fill()|\newline\py|circle(50)|\newline\py|end_fill()| & Rellena una figura de color. \dictrow
+% ---------------------------------------------------------------- MÚSICA
+\cat{pen}{Música}
+\begin{scratch}\blockmusic{tocar nota \ovalnum{60} durante \ovalnum{0.5} tiempos}\end{scratch} & \py|pitido(262)|\newline\py|time.sleep(0.5)| & La nota 60 es el do central (262); mi es 330. Nota \texttt{n}:\newline\py|f = 2 ** ((n-69)/12)|\newline\py|pitido(440 * f)| \dictrow
+\begin{scratch}[scale=0.65]\blockmusic{tocar tambor \selectmenu{(1) Caja} durante \ovalnum{0.25} tiempos}\end{scratch} & \py|pitido(100, 0.1)|\newline\py|time.sleep(0.25)| & Una nota muy grave y corta suena un poco como un tambor. \dictrow
+\begin{scratch}\blockmusic{fijar instrumento a \selectmenu{(1) Piano}}\end{scratch} & No se puede con \py|pitido| & \py|pitido| tiene un solo sonido. Mejor prueba notas cortas y largas. \dictrow
+\begin{scratch}\blockmusic{fijar tempo a \ovalnum{60}}\blockmusic{silenciar durante \ovalnum{1} tiempos}\end{scratch} & \py|tiempo = 60 / 60|\newline\py|time.sleep(tiempo)| & Tempo 60 quiere decir un tiempo cada segundo; un silencio es una espera. Un \texttt{tiempo} más chico es más rápido. \dictrow
+Una melodía & \py|melodia = [262, 330]|\newline\py|for f in melodia:|\newline\py|    pitido(f)|\newline\py|    time.sleep(0.5)| & ¡Una lista de notas y un bucle hacen una melodía! Agrega más notas a la lista. \\
+\bottomrule
+\end{longtable}
+\endgroup
+\setscratch{scale=1}
+
+% =====================================================================
+\banner{operators}{TEN ESTA PÁGINA CERCA}{Mi hoja de ayuda de Python}
+
+\begin{tcbraster}[raster columns=2, raster column skip=10pt, raster row skip=8pt, raster equal height=rows,
+  raster every box/.style={arc=6pt, coltitle=ink, fontupper=\small, left=6pt, right=4pt, top=3pt, bottom=3pt}]
+\begin{tcolorbox}[raster multicolumn=2, colback=white, colframe=pen, colbacktitle=pen!40, title=\textbf{Empieza un dibujo: las tres líneas de inicio}]
+\py|from ColabTurtlePlus.Turtle import *|\\
+\py|clearscreen()|\\
+\py|initializeTurtle((480, 360))|\\[2pt]
+{\color{muted}Una vez por sesión, primero: \py|!pip install ColabTurtlePlus|}
+\end{tcolorbox}
+\begin{tcolorbox}[colback=white, colframe=motion, colbacktitle=motion!40, title=\textbf{Moverse}]
+\py|forward(100)| \quad \py|back(50)|\\
+\py|right(90)| \quad \py|left(90)|\\
+\py|goto(0, 0)|\\
+\py|setheading(90 - d)| {\color{muted}(la regla del 90 menos)}\\
+\py|speed(13)| {\color{muted}(1 lento a 13 rápido)}
+\end{tcolorbox}
+\begin{tcolorbox}[colback=white, colframe=pen, colbacktitle=pen!40, title=\textbf{Lápiz}]
+\py|penup()| \quad \py|pendown()|\\
+\py|pencolor("red")|\\
+\py|pensize(5)|\\
+\py|clear()| \quad \py|stamp()|\\
+\py|bgcolor("skyblue")|
+\end{tcolorbox}
+\begin{tcolorbox}[colback=white, colframe=looks, colbacktitle=looks!40, title=\textbf{Decir y preguntar}]
+\py|print("Hola")|\\
+\py|write("Hola")| {\color{muted}(en el escenario)}\\
+\py|nombre = input("¿Quién? ")|\\
+\py|edad = int(input("¿Edad? "))|\\
+{\color{muted}¡\py|input| siempre te da texto!}
+\end{tcolorbox}
+\begin{tcolorbox}[colback=white, colframe=control, colbacktitle=control!40, title=\textbf{Bucles}]
+\py|for i in range(4):|\\
+\py|    forward(100)|\\[3pt]
+\py|while puntos != 5:|\\
+\py|    puntos = puntos + 1|
+\end{tcolorbox}
+\begin{tcolorbox}[colback=white, colframe=control, colbacktitle=control!40, title=\textbf{Si (if)}]
+\py|if intento < secreto:|\\
+\py|    print("Muy bajo")|\\
+\py|elif intento > secreto:|\\
+\py|    print("Muy alto")|\\
+\py|else:|\\
+\py|    print("¡Sí!")|
+\end{tcolorbox}
+\begin{tcolorbox}[colback=white, colframe=variables, colbacktitle=variables!40, title=\textbf{Variables}]
+\py|puntos = 0|\\
+\py|puntos = puntos + 1|\\
+\py|puntos += 1| {\color{muted}(lo mismo)}\\
+\py|print("Puntos: " + str(puntos))|
+\end{tcolorbox}
+\begin{tcolorbox}[colback=white, colframe=lists, colbacktitle=lists!40, title=\textbf{Listas}]
+\py|comida = ["manzana", "higo"]|\\
+\py|comida.append("kiwi")|\\
+\py|comida[0]| {\color{muted}(¡el primer elemento!)}\\
+\py|len(comida)| \quad \py|"higo" in comida|\\
+\py|for f in comida:|\\
+\py|    print(f)|
+\end{tcolorbox}
+\begin{tcolorbox}[colback=white, colframe=operators, colbacktitle=operators!40, title=\textbf{Operadores}]
+\py|+  -  *  /| \quad \py|7 % 3| {\color{muted}(residuo)}\\
+\py|==  !=  <  >  <=  >=|\\
+\py|and  or  not|\\
+\py|import random|\\
+\py|random.randint(1, 10)|
+\end{tcolorbox}
+\begin{tcolorbox}[colback=white, colframe=myblocks, colbacktitle=myblocks!40, title=\textbf{Mi propio bloque}]
+\py|def cuadrado(lado):|\\
+\py|    for i in range(4):|\\
+\py|        forward(lado)|\\
+\py|        right(90)|\\
+\py|cuadrado(50)|\\[3pt]
+\py|def doble(n):|\\
+\py|    return n * 2|\\
+\py|print(doble(4))| {\color{muted}(muestra 8)}
+\end{tcolorbox}
+\begin{tcolorbox}[colback=white, colframe=motion, colbacktitle=motion!40, title=\textbf{Más objetos}]
+\py|gato = Turtle()|\\
+\py|gato.shape("turtle")|\\
+\py|gato.goto(-100, 0)|\\
+\py|gato.forward(50)|\\
+\py|gato.distance(pos()) < 20| {\color{muted}(¿tocando?)}
+\end{tcolorbox}
+\begin{tcolorbox}[colback=white, colframe=sound, colbacktitle=sound!40, title=\textbf{Esperar y sonido}]
+\py|import time|\\
+\py|time.sleep(1)| {\color{muted}(espera 1 segundo)}\\
+\py|pitido(262)| {\color{muted}(do central, ayuda de la Parte 7)}\\
+\py|time.sleep(0.5)|
+\end{tcolorbox}
+\end{tcbraster}
+
+\vspace{8pt}
+\begin{tcolorbox}[colback=warnbg, colframe=warnframe, arc=6pt, title=\textbf{Recuerda}, coltitle=ink, colbacktitle=warnframe!35]
+\begin{tabular}{@{}P{7.7cm} P{7.7cm}@{}}
+\textbf{:} \ Los dos puntos abren un bucle, un \texttt{if} o un \texttt{def}. & \textbf{Cuatro espacios} meten una línea adentro, como la boca de un bloque en forma de C. \\
+\textbf{=} \ mete en una caja. \ \textbf{==} \ compara. \ \textbf{!=} \ quiere decir «no es igual». & \textbf{"Las palabras"} necesitan comillas. Los números no. \\
+Python cuenta desde \textbf{0}: el elemento 1 es \py|[0]|. & Las mayúsculas importan: \py|print|, no \py|Print|, y \py|"Gato" == "gato"| es \py|False|. \\
+\py|input()| da texto. Usa \py|int( )| para un número. & \py|round(2.5)| es 2 en Python, pero 3 en Scratch. \\
+Direcciones: \py|setheading(90 - d)|. & Nombres de colores en inglés y en minúsculas: \py|"red"|. \\
+Ejecuta la celda «En el principio» en cada sesión. & Lee primero la \textbf{última línea} de un error (Python la escribe en inglés). ¡Es una pista!
+\end{tabular}
+\end{tcolorbox}

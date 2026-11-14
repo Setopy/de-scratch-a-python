@@ -1,0 +1,53 @@
+\subsection*{Parte 7, Desfile de disfraces: cinco disfraces}
+Si agregas \py|"arrow"| a la lista de disfraces, la lista de colores también necesita un quinto color, por ejemplo \py|colores = ["green", "red", "blue", "orange", "purple"]|. Si no, cuando \py|n| vale 4, \py|colores[4]| no existe y Python se detiene con un \texttt{IndexError}. La línea 17 no necesita cambios: \py|len(disfraces)| ahora vale 5 solita.
+
+\subsection*{Parte 7, Hacer música: ¡Feliz cumpleaños!}
+\begin{codenonum}
+Sol = 392
+La = 440
+Si = 494
+Do2 = 523
+melodia = [Sol, Sol, La, Sol, Do2, Si]
+tiempos = [0.75, 0.25, 1, 1, 1, 2]
+\end{codenonum}
+Pon esto en lugar de las líneas 2 a 10 y deja el bucle como está. Si suena demasiado rápido, cambia \py|0.4| en la línea 12 por \py|0.5|.
+
+\subsection*{Parte 7, Carrera de tortugas: tres corredores}
+\begin{codenonum}
+verde = crear_corredor("green", 0)
+\end{codenonum}
+va después de la línea 17. El bucle y lo que tiene dentro quedan así:
+\begin{codenonum}
+while (rojo.xcor() < 200 and azul.xcor() < 200
+       and verde.xcor() < 200):
+    rojo.forward(random.randint(1, 20))
+    azul.forward(random.randint(1, 20))
+    verde.forward(random.randint(1, 20))
+\end{codenonum}
+Los paréntesis dejan que la condición ocupe dos líneas.
+
+\subsection*{Parte 7, Tradúcelo tú}
+\begin{codenonum}
+from ColabTurtlePlus.Turtle import *
+clearscreen()
+initializeTurtle((480, 360))
+import time
+
+shape("turtle")
+shapesize(3)
+for i in range(3):
+    hideturtle()
+    time.sleep(0.5)
+    showturtle()
+    time.sleep(0.5)
+print("¡Bu!")
+time.sleep(2)
+\end{codenonum}
+El tamaño 300\,\% es \py|shapesize(3)|. «Decir durante 2 segundos» es un \py|print| y luego una espera de 2 segundos. Si usaste una tortuga globo para escribir \texttt{¡Bu!} en el escenario y la borraste con \py|clear()| después de 2 segundos, ¡eso se parece todavía más a Scratch!
+
+\subsection*{Parte 7, Acertijo de dos líneas}
+\begin{codenonum}
+def festejo():
+    print("¡Hurra!")
+\end{codenonum}
+La tercera línea, la que envía el mensaje, es \py|festejo()|. Cuando ejecutas las tres, ves \texttt{¡Hurra!}.

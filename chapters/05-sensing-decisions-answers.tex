@@ -1,0 +1,75 @@
+\subsection*{Parte 5, Misión «Di hola»: retos}
+La pregunta de la edad. \py|str( )| vuelve a convertir el número en texto para poder unirlo:
+\begin{codenonum}
+nombre = input("¿Cómo te llamas? ")
+edad = int(input("¿Cuántos años tienes? "))
+print("En 10 años tendrás " + str(edad + 10))
+\end{codenonum}
+\textbf{Súper reto:} sin \py|int( )|, \py|edad + 10| intenta sumar un número a un texto. La última línea dice \texttt{TypeError: can only concatenate str (not "int") to str}. Un \texttt{TypeError} quiere decir que se mezclaron textos y números.
+
+\subsection*{Parte 5, Misión «Adivina mi número»: solo 5 intentos}
+\begin{codenonum}
+import random
+secreto = random.randint(1, 10)
+intento = 0
+veces = 0
+while intento != secreto and veces < 5:
+    intento = int(input("Adivina del 1 al 10: "))
+    veces += 1
+    if intento < secreto:
+        print("Muy bajo")
+    elif intento > secreto:
+        print("Muy alto")
+if intento == secreto:
+    print("¡Lo adivinaste en " + str(veces) + " intentos!")
+else:
+    print("¡Se acabaron los intentos! Era " + str(secreto))
+\end{codenonum}
+Si escribes \texttt{gato} sale \texttt{ValueError: invalid literal for int() with base 10: 'gato'}, porque \py|int( )| no puede convertir la palabra \texttt{gato} en un número.
+
+\subsection*{Parte 5, Misión «Concurso con puntos»: el mensaje final}
+Pon esto al final de todo, después de escribir los puntos:
+\begin{codenonum}
+if puntos == 3:
+    print("¡Campeón del concurso!")
+elif puntos >= 1:
+    print("¡Bien hecho!")
+else:
+    print("¡Más suerte la próxima vez!")
+\end{codenonum}
+\textbf{Súper reto:} pon \py|import time| e \py|inicio = time.time()| al principio, y \py|print(round(time.time() - inicio))| al final.
+
+\subsection*{Parte 5, Misión «Prueba de reflejos»: el mejor de tres}
+\begin{codenonum}
+import time
+import random
+mejor = 100
+for i in range(3):
+    input("Presiona Enter para empezar ")
+    print("Prepárate...")
+    time.sleep(random.randint(2, 5))
+    inicio = time.time()
+    input("¡YA! ¡Presiona Enter! ")
+    tiempo = time.time() - inicio
+    if tiempo < mejor:
+        mejor = tiempo
+print("Tu mejor tiempo: " + str(round(mejor, 2)) + " segundos")
+\end{codenonum}
+\py|mejor| empieza en 100 segundos, así que tu primer intento seguro lo mejora.
+
+\subsection*{Parte 5: Tradúcelo tú}
+Tu código puede verse un poco diferente y aun así estar bien. Si hace lo mismo, ¡lo lograste!
+\begin{codenonum}
+respuesta = input("¿Cuál es la contraseña? ")
+while respuesta != "banana":
+    print("¡Mal! Intenta otra vez.")
+    respuesta = input("¿Cuál es la contraseña? ")
+print("¡Adelante!")
+\end{codenonum}
+Usar \texttt{while not respuesta == "banana":} en la línea 2 también está bien.
+
+\subsection*{Parte 5: Acertijo de dos líneas}
+\begin{codenonum}
+edad = int(input("¿Cuántos años tienes? "))
+print("El próximo año tendrás " + str(edad + 1))
+\end{codenonum}

@@ -1,0 +1,80 @@
+\subsection*{Parte 3: Examen rápido, ¿caja o fracaso?}
+Python acepta \texttt{vidas}, \texttt{jugador\_1} y \texttt{mejorTiempo}. \texttt{mejor marca} tiene un espacio, \texttt{1er\_lugar} empieza con un dígito, e \texttt{import} es una palabra que Python ya usa.
+
+\subsection*{Parte 3, Misión: Contador de puntos}
+\py|puntos += 10| hace exactamente lo mismo que \py|puntos = puntos + 10|, así que nada cambia. Para contar hacia atrás, empieza con \py|puntos = 50| y usa \py|puntos -= 10|: la última línea dice \texttt{Puntos finales: 0}. Con \py|vidas -= 1| dentro del bucle, las vidas van 2, 1, 0, luego $-1$ y $-2$. Python no se detiene en 0 a menos que tú se lo digas (aprenderás cómo con \py|if| en la Parte 5).
+
+\textbf{Superreto:}
+\begin{codenonum}
+import time
+puntos = 0
+premio = 10
+print("Puntos:", puntos)
+for i in range(5):
+    time.sleep(1)
+    puntos = puntos + premio
+    premio = premio + 10
+    print("Puntos:", puntos)
+print("¡Fin del juego! Puntos finales:", puntos)
+\end{codenonum}
+Los puntos van 10, 30, 60, 100, 150. Los puntos finales son \texttt{150}.
+
+\subsection*{Parte 3, Misión: Espiral que crece}
+Con \texttt{+ 8} la última línea mide 317 pasos, y la espiral apenas cabe en el escenario. Para el lápiz más grueso, pon \py|grueso = 1| junto a \py|medida = 5|, y agrega \py|pensize(grueso)| y \py|grueso = grueso + 0.2| dentro del bucle.
+
+\textbf{Superreto} (después de las tres líneas de inicio):
+\begin{codenonum}
+speed(13)
+pencolor("purple")
+penup()
+goto(-100, 100)
+pendown()
+medida = 200
+for i in range(40):
+    forward(medida)
+    right(90)
+    medida = medida - 5
+\end{codenonum}
+
+\subsection*{Parte 3, Misión: Arcoíris con una lista de colores}
+\py|colores.append("pink")| añade el rosa al final de la lista, así que el bucle da 7 vueltas y el rosa es la franja de hasta abajo. Las franjas roja, blanca y azul, de arriba abajo, forman la bandera de los Países Bajos. Prueba \py|["white", "blue", "red"]| para Rusia.
+
+\textbf{Superreto:} las líneas 8 a 16 quedan así
+\begin{codenonum}
+y = 60
+largo = 300
+for color in colores:
+    pencolor(color)
+    penup()
+    goto(-150, y)
+    pendown()
+    forward(largo)
+    y = y - 15
+    largo = largo - 30
+hideturtle()
+\end{codenonum}
+
+\subsection*{Parte 3, Misión: Inventor de historias al azar}
+Para los lugares, agrega \py|lugares = ["en la tina", "en el camión"]| antes del bucle, \py|lugar = random.choice(lugares)| dentro de él, y cambia el print por \py|print(heroe, accion, cosa, lugar)|. Después del bucle, \py|len(cosas)| es \texttt{4}, y \texttt{"mi tarea"} es el último elemento, porque \py|append| siempre añade al final:
+\begin{outputbox}
+4\\
+{[}'un plátano', 'la luna', 'un calcetín', 'mi tarea']
+\end{outputbox}
+
+\subsection*{Parte 3: Tradúcelo tú}
+\begin{codenonum}
+mascotas = []
+mascotas.append("gato")
+mascotas.append("perro")
+mascotas.append("pez")
+print(len(mascotas))
+print(mascotas[1])
+\end{codenonum}
+Imprime \texttt{3} y luego \texttt{perro}. El elemento 2 de Scratch es el \texttt{[1]} de Python. \py|mascotas = []| hace el trabajo de \chip[lists]{Eliminar todos de mascotas}, porque empieza una lista vacía nuevecita.
+
+\subsection*{Parte 3: Acertijo de dos líneas}
+\begin{codenonum}
+for palabra in palabras:
+    cuenta += 1
+\end{codenonum}
+El bucle da una vuelta por cada elemento, y en cada vuelta le suma 1 a \texttt{cuenta}. ¡Así es exactamente como cuenta \py|len|!
