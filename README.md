@@ -1,8 +1,8 @@
 # De Scratch a Python
 
-**🌐 Sitio web: <https://setopy.github.io/JesusArrows-de-scratch-a-python/>** (se puede instalar como app)
+**🌐 Sitio web: <https://setopy.github.io/de-scratch-a-python/>** (se puede instalar como app)
 
-[![Abrir el cuaderno en Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Setopy/JesusArrows-de-scratch-a-python/blob/main/Mis%20aventuras%20con%20Python.ipynb)
+[![Abrir el cuaderno en Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Setopy/de-scratch-a-python/blob/main/Mis%20aventuras%20con%20Python.ipynb)
 
 Un libro de trabajo para un niño o niña de 9 años que ya sabe usar [Scratch](https://scratch.mit.edu) y está listo para Python de verdad. Cada categoría de bloques de Scratch 3.0 aparece junto a su Python, listo para ejecutar en **Google Colab**, con la tortuga en el lugar del escenario de Scratch. No hay que instalar nada: basta con un navegador y una cuenta de Google.
 

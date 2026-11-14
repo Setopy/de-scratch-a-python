@@ -1,7 +1,7 @@
-// Service worker for "De Scratch a Python" (the /es/ site).
+// Service worker for the "De Scratch a Python" site (setopy.github.io/de-scratch-a-python).
 // Keeps the page, icons and the PDF on the device so the book opens offline.
 // Bump VERSION whenever the page or the PDF changes, so installed apps pick up the new files.
-const VERSION = 'v1-2026-11-14';
+const VERSION = 'v2-2026-11-14';
 const CACHE = 'de-scratch-a-python-' + VERSION;
 const CORE = [
   './',
